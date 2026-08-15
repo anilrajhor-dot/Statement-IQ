@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>StatementIQ v2.0.6 — Bank &amp; Credit Card Statement Analyser</title>
+<title>StatementIQ v2.0.7 — Bank &amp; Credit Card Statement Analyser</title>
 
 <!-- ==========================================================================
      StatementIQ — single-file, offline, browser-only statement analyser.
@@ -330,7 +330,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
   </div>
   <div class="brand-txt">
     <h1>StatementIQ</h1>
-    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.0.6</b></small>
+    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.0.7</b></small>
     <div class="developer-credit">Developed by Anil Sharma, Former General Manager, Central Bank of India</div>
   </div>
   <div class="header-actions">
@@ -427,8 +427,8 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
       <div class="card"><h3>Recurring commitments</h3><p class="hint">Estimated recurring outflow, annualised where cadence can be established.</p><div id="dashRecurring"></div></div>
       <div class="card"><h3>Financial health</h3><p class="hint">A simple analytical score based only on the loaded statements — not financial advice.</p><div id="healthBox"></div></div>
     </div>
-    <div class="card"><h3>Top spending categories</h3><p class="hint">Actual spending excludes transfers to self and credit-card bill settlements.</p><div class="tblwrap"><table id="dashCatTbl"></table></div></div>
-    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.0.6 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
+    <div class="card"><h3>Top spending categories</h3><p class="hint">Actual spending excludes transfers to self, credit-card settlements, investments, loan principal and matched reversals.</p><div class="tblwrap"><table id="dashCatTbl"></table></div></div>
+    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.0.7 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
   </div>
 </section>
 
@@ -438,6 +438,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
   <div id="bankBody" style="display:none">
     <div id="bankIntegrity"></div>
     <div class="card" id="bankActivity" style="margin-bottom:16px"></div>
+    <div class="card" id="bankIntelligence" style="margin-bottom:16px"></div>
     <div class="grid g4" style="margin-bottom:16px" id="bankStats"></div>
     <div class="grid g2">
       <div class="card"><h3>Cash movement by month</h3><p class="hint">Green bars are all credits and rust bars are all debits. This is cash movement, not genuine income/spending.</p><div class="chartbox"><canvas id="chMonthly"></canvas></div></div>
@@ -576,7 +577,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 <!-- ================= HELP PANEL ================= -->
 <section class="panel" id="pHelp">
   <div class="card">
-    <h2>How to use StatementIQ <span class="pill-big">v2.0.6</span></h2>
+    <h2>How to use StatementIQ <span class="pill-big">v2.0.7</span></h2>
     <ol style="line-height:1.9;padding-left:20px">
       <li><b>Upload.</b> Drop in bank and credit card statements together — PDF, XLSX or CSV. Password-protected PDFs prompt for the password; nothing is stored.</li>
       <li><b>Verify columns.</b> Check the detected column roles and fix any that are wrong with the dropdowns.</li>
@@ -609,7 +610,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 
 <footer>
   <p class="disc">This tool extracts and analyses data from statements you provide. Always verify the extracted figures against your original statement before using them for tax filing, loan applications, or any financial decision. This is not financial or tax advice.</p>
-  <p>StatementIQ v2.0.6 · runs entirely offline in your browser · no account, no upload, no tracking</p>
+  <p>StatementIQ v2.0.7 · runs entirely offline in your browser · no account, no upload, no tracking</p>
 </footer>
 
 <!-- password modal -->
@@ -1222,17 +1223,54 @@ function classify(t){
   return t;
 }
 function economicType(t){
-  const n=(t.narration||'').toLowerCase();
-  if(t.category==='Transfer to Self' || /own account|to self|self transfer|sweep/.test(n)) return 'Transfer';
-  if(t.category==='Credit Card Payment' || /credit ?card|cc ?payment|card ?bill/.test(n)) return 'Card settlement';
-  if(t.credit>0 && /refund|reversal|cashback/.test(n)) return 'Refund / reversal';
-  if(t.credit>0 && (t.category==='Salary' || /interest|int\. credit|interest credit/.test(n))) return t.category==='Salary'?'Income':'Interest income';
+  const n=(t.narration||'').toLowerCase().replace(/\s+/g,' ');
+  // Specific financial meanings must be tested before generic debit/credit rules.
+  if(t.category==='Credit Card Payment' || /credit ?card|cc ?payment|card ?bill|payment towards card|card ending with|card payment/.test(n)) return 'Card settlement';
+  if(t.category==='Transfer to Self' || /own ?account|ownaccounttransfer|own a\/?c|to self|self transfer|transfer to own|sweep|linked account/.test(n)) return 'Transfer';
+  if(t.category==='Investment/SIP' || /\bipo\b|asba|ipo application|mutual fund|\bsip\b|indomim|indmoney|zerodha|groww|upstox|nse|bse|cams|kfintech/.test(n)) return 'Investment';
+  if(t.credit>0 && /refund|reversal|cashback|bavrefund/.test(n)) return 'Refund / reversal';
+  if(t.credit>0 && (t.category==='Salary' || /monthly interest credit|interest credit|\binterest\b|\bint\.? credit/.test(n))) return t.category==='Salary'?'Income':'Interest income';
   if(t.credit>0) return 'Other income';
-  if(t.category==='Investment/SIP') return 'Investment';
   if(t.category==='EMI & Loan') return 'Loan repayment';
   if(t.category==='Bank Charges') return 'Bank charge';
   if(t.category==='Cash Withdrawal') return 'Cash withdrawal';
   return 'Expense';
+}
+function setEconomicMeta(t){
+  const n=(t.narration||'').toLowerCase();
+  const et=t.economicType;
+  if(et==='Card settlement') { t.economicReason='Narration identifies a credit-card payment/settlement.'; t.economicConfidence='High'; }
+  else if(et==='Transfer') { t.economicReason='Narration identifies an own-account/self/internal transfer.'; t.economicConfidence='High'; }
+  else if(et==='Investment') { t.economicReason='Narration contains an investment/IPO/SIP identifier.'; t.economicConfidence='High'; }
+  else if(et==='Interest income') { t.economicReason='Narration identifies bank interest credit.'; t.economicConfidence='High'; }
+  else if(et==='Refund / reversal') { t.economicReason='Narration identifies a refund/reversal.'; t.economicConfidence='High'; }
+  else if(et==='Matched reversal') { t.economicReason=t.economicReason||'Refund/reversal pair matched to an equal opposite transaction.'; t.economicConfidence='High'; }
+  else if(et==='Income') { t.economicReason='Narration matches a salary/payroll income pattern.'; t.economicConfidence='High'; }
+  else if(et==='Other income') { t.economicReason='Credit not matched to a transfer, settlement, investment or refund rule.'; t.economicConfidence='Medium'; }
+  else if(et==='Expense') { t.economicReason='Debit not matched to a transfer, settlement, investment, loan, charge or withdrawal rule.'; t.economicConfidence='Medium'; }
+  else { t.economicReason='Detected from transaction category.'; t.economicConfidence='High'; }
+  return t;
+}
+function applyTransactionIntelligence(txns){
+  // Pair a small refund/reversal credit with its matching debit so a test/refund
+  // cycle is not counted as either genuine income or genuine spending.
+  const credits=txns.filter(t=>t.credit>0 && t.economicType==='Refund / reversal');
+  credits.forEach(cr=>{
+    const cp=String(cr.counterparty||'').toLowerCase();
+    const match=txns.find(dr=>dr!==cr && dr.debit>0 && dr.debit===cr.credit &&
+      Math.abs((dr.date-cr.date)/(86400000))<=3 &&
+      String(dr.counterparty||'').toLowerCase()===cp);
+    if(match){
+      cr.economicType='Matched reversal';
+      cr.economicReason='Refund/reversal matched to an equal debit with the same counterparty.';
+      cr.economicConfidence='High';
+      match.economicType='Matched reversal';
+      match.economicReason='Debit matched to an equal refund/reversal with the same counterparty.';
+      match.economicConfidence='High';
+    }
+  });
+  txns.forEach(setEconomicMeta);
+  return txns;
 }
 function loadLearned(){
   try{ S.learned = JSON.parse(localStorage.getItem('siq_rules')||'{}'); }catch(e){ S.learned={}; }
@@ -1667,6 +1705,7 @@ document.getElementById('btnAnalyse').onclick = ()=>{ try{ runAnalysis(); }catch
    ========================================================================== */
 function runAnalysis(){
   S.txns = allRows().map(r=>classify(r));
+  applyTransactionIntelligence(S.txns);
   S.txns.sort((a,b)=>a.date-b.date);
   const bankN = S.txns.filter(t=>t.kind==='bank').length;
   const cardN = S.txns.filter(t=>t.kind==='card').length;
@@ -1774,7 +1813,7 @@ function renderDashboard(){
 function financialSummary(tx){
   const cashIn = tx.reduce((a,t)=>a+t.credit,0);
   const cashOut = tx.reduce((a,t)=>a+t.debit,0);
-  const income = tx.filter(t=>t.credit>0 && !['Transfer','Card settlement'].includes(t.economicType))
+  const income = tx.filter(t=>t.credit>0 && !['Transfer','Card settlement','Refund / reversal','Matched reversal'].includes(t.economicType))
     .reduce((a,t)=>a+t.credit,0);
   const refunds = tx.filter(t=>t.credit>0 && t.economicType==='Refund / reversal').reduce((a,t)=>a+t.credit,0);
   const transfersIn = tx.filter(t=>t.credit>0 && t.economicType==='Transfer').reduce((a,t)=>a+t.credit,0);
@@ -1782,7 +1821,7 @@ function financialSummary(tx){
   const cardSettlements = tx.filter(t=>t.debit>0 && t.economicType==='Card settlement').reduce((a,t)=>a+t.debit,0);
   const investments = tx.filter(t=>t.debit>0 && t.economicType==='Investment').reduce((a,t)=>a+t.debit,0);
   const loanRepayments = tx.filter(t=>t.debit>0 && t.economicType==='Loan repayment').reduce((a,t)=>a+t.debit,0);
-  const actualExpense = tx.filter(t=>t.debit>0 && !['Transfer','Card settlement','Investment','Loan repayment'].includes(t.economicType))
+  const actualExpense = tx.filter(t=>t.debit>0 && !['Transfer','Card settlement','Investment','Loan repayment','Refund / reversal','Matched reversal'].includes(t.economicType))
     .reduce((a,t)=>a+t.debit,0);
   // Net financial activity excludes movements that merely move/settle money or are investments/loan principal.
   const netFinancial = income - actualExpense;
@@ -1923,6 +1962,22 @@ function renderBank(){
     '</div>'+
     '<p class="hint" style="margin-top:12px">Excluded from genuine spending/income: transfers in/out '+inr(fs.transfersIn)+' / '+inr(fs.transfersOut)+' and card settlements '+inr(fs.cardSettlements)+'. Investments '+inr(fs.investments)+' and loan repayments '+inr(fs.loanRepayments)+' are shown separately.</p>';
 
+  // -------- transaction intelligence --------
+  const intelRows = t.map(x=>
+    '<tr>'+
+      '<td class="num">'+fmtDate(x.date)+'</td>'+
+      '<td>'+esc(x.narration)+'</td>'+
+      '<td><b>'+esc(x.economicType||'—')+'</b><div class="hint" style="margin:2px 0 0">'+esc(x.economicReason||'')+'</div></td>'+
+      '<td><span class="tag '+(x.economicConfidence==='High'?'ok':'warn')+'">'+esc(x.economicConfidence||'Medium')+'</span></td>'+
+      '<td class="r num">'+(x.debit?inr(x.debit):'')+'</td>'+
+      '<td class="r num">'+(x.credit?inr(x.credit):'')+'</td>'+
+    '</tr>'
+  ).join('');
+  document.getElementById('bankIntelligence').innerHTML =
+    '<h3>Transaction intelligence</h3>'+
+    '<p class="hint">StatementIQ classifies each transaction by economic meaning. High-confidence classifications are based on explicit narration patterns; medium-confidence items should be reviewed.</p>'+
+    '<div class="tblwrap" style="max-height:420px"><table><thead><tr><th>Date</th><th>Narration</th><th>Economic type &amp; reason</th><th>Confidence</th><th class="r">Debit</th><th class="r">Credit</th></tr></thead><tbody>'+intelRows+'</tbody></table></div>';
+
   // -------- headline stats --------
   const inflow = t.reduce((a,b)=>a+b.credit,0);
   const outflow = t.reduce((a,b)=>a+b.debit,0);
@@ -1942,8 +1997,8 @@ function renderBank(){
   document.getElementById('bankStats').innerHTML =
     stat('Cash inflow', inr(fs.cashIn), 'all credits on the statement', 'pos', true) +
     stat('Cash outflow', inr(fs.cashOut), 'all debits on the statement', 'neg') +
-    stat('Actual income', inr(fs.income), 'transfers & card settlements excluded', 'pos') +
-    stat('Actual spending', inr(fs.actualExpense), 'transfers, investments & loan repayments excluded', 'neg') +
+    stat('Actual income', inr(fs.income), 'transfers, card settlements & matched reversals excluded', 'pos') +
+    stat('Actual spending', inr(fs.actualExpense), 'transfers, investments, loan repayments & matched reversals excluded', 'neg') +
     stat('Bank charges &amp; fees', inr(charges), chargeN+' charge'+(chargeN===1?'':'s'), charges>0?'neg':'') +
     stat('Cash withdrawn', inr(cashTot), cash.length+' withdrawal'+(cash.length===1?'':'s')) +
     stat('Transfers out', inr(fs.transfersOut), 'not counted as spending') +
