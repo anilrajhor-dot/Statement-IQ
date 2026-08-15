@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>StatementIQ v2.2.2 — Bank &amp; Credit Card Statement Analyser</title>
+<title>StatementIQ v2.4.0 — Bank &amp; Credit Card Statement Analyser</title>
 
 <!-- ==========================================================================
      StatementIQ — single-file, offline, browser-only statement analyser.
@@ -314,7 +314,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 /* v2.0 dashboard */
 .health-score{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.score-ring{width:92px;height:92px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--amber) calc(var(--score)*1%),var(--line) 0);position:relative}.score-ring:after{content:"";position:absolute;inset:9px;border-radius:50%;background:var(--paper)}.score-ring b{position:relative;z-index:1;font-size:24px}.score-copy{min-width:220px}.metric-line{display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-bottom:1px solid var(--line)}.metric-line:last-child{border-bottom:0}.flag{padding:10px 12px;border-radius:10px;background:var(--surface-2);margin:7px 0;border-left:4px solid var(--amber)}.flag.bad{border-left-color:var(--rust)}.flag.ok{border-left-color:var(--green)}.flag b{display:block}.muted{color:var(--ink-soft);font-size:12px}.pill-big{display:inline-flex;padding:4px 9px;border-radius:999px;background:var(--surface-2);font-size:11px;font-weight:700}.dash-empty{padding:16px}.confidence{font-weight:700}.confidence.high{color:var(--green)}.confidence.low{color:var(--rust)}
 
-/* v2.2.2: keep financial metric values together on narrow screens */
+/* v2.4.0: keep financial metric values together on narrow screens */
 .financial-activity .metric-line { display:flex; align-items:center; gap:14px; }
 .financial-activity .metric-line span { flex:1 1 auto; min-width:0; }
 .financial-activity .metric-line b { flex:0 0 auto; white-space:nowrap; text-align:right; }
@@ -327,7 +327,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 }
 
 
-/* v2.2.2 — daily-product interest calculator */
+/* v2.4.0 — daily-product interest calculator */
 .interest-calc .slab-grid{display:grid;grid-template-columns:1.1fr 1.4fr 1.4fr 1fr auto;gap:8px;align-items:center}
 .interest-calc .slab-grid input{min-width:0}
 .interest-calc .interest-table th,.interest-calc .interest-table td{white-space:nowrap}
@@ -345,7 +345,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 }
 
 
-/* v2.2.2 — dedicated calculators */
+/* v2.4.0 — dedicated calculators */
 .calc-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .calc-card{border:1px solid var(--line);border-radius:14px;padding:14px;background:var(--surface)}
 .calc-result{margin-top:14px;padding:14px;border-radius:12px;background:var(--surface-soft);border:1px solid var(--line)}
@@ -357,7 +357,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 @media(max-width:560px){.calc-grid{grid-template-columns:1fr}.calc-result .big{font-size:21px}}
 
 
-/* v2.2.2 — responsive interest tables and totals */
+/* v2.4.0 — responsive interest tables and totals */
 .interest-calc .tblwrap,
 #interestStandalone .tblwrap{
   width:100%;
@@ -396,7 +396,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 }
 
 
-/* v2.2.2 — calculators prominently available on first page */
+/* v2.4.0 — calculators prominently available on first page */
 .first-page-tools{
   padding:14px 18px 4px;
 }
@@ -431,6 +431,19 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
   .calc-launch-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 
+
+/* v2.4.0 — clean calculator hub */
+.first-page-menu-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.first-page-menu-grid button{min-height:74px;justify-content:flex-start;text-align:left;font-size:14px}
+.first-page-menu-grid button>span:first-child{font-size:22px;flex:none}
+.first-page-menu-grid button>span:last-child{display:flex;flex-direction:column;line-height:1.25}
+.first-page-menu-grid small{display:block;margin-top:4px;color:var(--ink-faint);font-weight:400;font-size:11px}
+@media(max-width:760px){.first-page-menu-grid{grid-template-columns:1fr}}
+/* Calculator panels stay inside the same responsive application container. */
+#pInterestCalc,#pFinancialCalc,#pInterestCompare{width:100%;max-width:1400px;margin:0 auto;box-sizing:border-box}
+#pInterestCalc>.card,#pFinancialCalc>.card,#pInterestCompare>.card{width:100%;box-sizing:border-box}
+#pInterestCalc .tblwrap,#pInterestCompare .tblwrap{width:100%;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+
 </style>
 </head>
 <body>
@@ -448,7 +461,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
   </div>
   <div class="brand-txt">
     <h1>StatementIQ</h1>
-    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.2.2</b></small>
+    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.4.0</b></small>
     <div class="developer-credit">Developed by Anil Sharma, Former General Manager, Central Bank of India</div>
   </div>
   <div class="header-actions">
@@ -459,25 +472,29 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
     <button class="btn sm primary" id="btnFinancialCalc" type="button">🧮 Financial Calculators</button> <button class="btn sm danger" id="btnClear">Clear all data</button>
   </div>
 </header>
+
 <section class="first-page-tools" id="firstPageCalculators">
   <div class="first-page-calc">
     <div class="first-page-calc-head">
       <div>
-        <h2>🧮 Financial &amp; Interest Calculators</h2>
-        <p>Quick access to EMI, deposits, reinvestment, age, SIP, currency and daily-product interest calculations.</p>
+        <h2>🧮 Calculators &amp; Interest Tools</h2>
+        <p>Choose a tool. Financial Calculators opens its own EMI, Deposit, Age, SIP and Currency menus.</p>
       </div>
-      <button class="btn primary" type="button" onclick="switchPanel('pFinancialCalc')">Open Financial Calculators →</button>
     </div>
-    <div class="calc-launch-grid">
-      <button class="btn" type="button" onclick="switchPanel('pFinancialCalc');setTimeout(()=>showCalc('emi'),0)">EMI</button>
-      <button class="btn" type="button" onclick="switchPanel('pFinancialCalc');setTimeout(()=>showCalc('deposit'),0)">Deposit</button>
-      <button class="btn" type="button" onclick="switchPanel('pFinancialCalc');setTimeout(()=>showCalc('age'),0)">Age</button>
-      <button class="btn" type="button" onclick="switchPanel('pFinancialCalc');setTimeout(()=>showCalc('sip'),0)">SIP</button>
-      <button class="btn" type="button" onclick="switchPanel('pFinancialCalc');setTimeout(()=>showCalc('currency'),0)">Currency</button>
-      <button class="btn" type="button" onclick="switchPanel('pInterestCalc')">Interest</button>
+    <div class="calc-launch-grid first-page-menu-grid">
+      <button class="btn primary" type="button" onclick="switchPanel('pFinancialCalc')">
+        <span>🧮</span><span><b>Financial Calculators</b><small>EMI · Deposit · Loan Interest · Age · SIP · Currency</small></span>
+      </button>
+      <button class="btn" type="button" onclick="switchPanel('pInterestCalc')">
+        <span>📊</span><span><b>Interest Calculator</b><small>Daily product · editable slabs</small></span>
+      </button>
+      <button class="btn" type="button" onclick="switchPanel('pInterestCompare')">
+        <span>✓</span><span><b>Interest Comparison</b><small>Bank credited vs calculated</small></span>
+      </button>
     </div>
   </div>
 </section>
+
 
 
 <div id="steps">
@@ -494,7 +511,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
   <button class="tab" data-panel="pBank">Bank statement<span class="pill" id="pillBank">0</span></button>
   <button class="tab" data-panel="pCard">Credit card<span class="pill" id="pillCard">0</span></button>
   <button class="tab" data-panel="pRecon">Reconciliation</button>
-  <button class="tab" data-panel="pHelp">How to use</button> <button class="tab" data-panel="pInterestCalc">Interest Calculator</button> <button class="tab" data-panel="pFinancialCalc">Financial Calculators</button>
+  <button class="tab" data-panel="pHelp">How to use</button> <button class="tab" data-panel="pInterestCalc">Interest Calculator</button> <button class="tab" data-panel="pFinancialCalc">Financial Calculators</button> <button class="tab" data-panel="pInterestCompare">Interest Comparison</button>
 </div>
 
 <main>
@@ -566,7 +583,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
       <div class="card"><h3>Financial health</h3><p class="hint">A simple analytical score based only on the loaded statements — not financial advice.</p><div id="healthBox"></div></div>
     </div>
     <div class="card"><h3>Top spending categories</h3><p class="hint">Consumption spending excludes transfers to self, credit-card settlements, investments, loan principal and matched reversals.</p><div class="tblwrap"><table id="dashCatTbl"></table></div></div>
-    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.2.2 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
+    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.4.0 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
   </div>
 </section>
 
@@ -716,7 +733,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 <!-- ================= HELP PANEL ================= -->
 <section class="panel" id="pHelp">
   <div class="card">
-    <h2>How to use StatementIQ <span class="pill-big">v2.2.2</span></h2>
+    <h2>How to use StatementIQ <span class="pill-big">v2.4.0</span></h2>
     <ol style="line-height:1.9;padding-left:20px">
       <li><b>Upload.</b> Drop in bank and credit card statements together — PDF, XLSX or CSV. Password-protected PDFs prompt for the password; nothing is stored.</li>
       <li><b>Verify columns.</b> Check the detected column roles and fix any that are wrong with the dropdowns.</li>
@@ -745,9 +762,6 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
   </div>
 </section>
 
-</main>
-
-
 <!-- ================= DEDICATED INTEREST CALCULATOR ================= -->
 <section class="panel" id="pInterestCalc">
   <div class="card">
@@ -765,21 +779,57 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
     <div class="calc-tabs" role="tablist" style="display:flex;gap:8px;flex-wrap:wrap;margin:12px 0">
       <button class="btn primary calc-tab" type="button" onclick="showCalc('emi')">EMI</button>
       <button class="btn calc-tab" type="button" onclick="showCalc('deposit')">Deposit</button>
-      <button class="btn calc-tab" type="button" onclick="showCalc('age')">Age</button>
+      <button class="btn calc-tab" type="button" onclick="showCalc('loan')">Loan Interest</button> <button class="btn calc-tab" type="button" onclick="showCalc('age')">Age</button>
       <button class="btn calc-tab" type="button" onclick="showCalc('sip')">SIP</button>
       <button class="btn calc-tab" type="button" onclick="showCalc('currency')">Currency</button>
     </div>
     <div id="calcEmi" class="calc-pane"></div>
     <div id="calcDeposit" class="calc-pane" style="display:none"></div>
-    <div id="calcAge" class="calc-pane" style="display:none"></div>
+    <div id="calcLoan" class="calc-pane" style="display:none"></div> <div id="calcAge" class="calc-pane" style="display:none"></div>
     <div id="calcSip" class="calc-pane" style="display:none"></div>
     <div id="calcCurrency" class="calc-pane" style="display:none"></div>
   </div>
 </section>
 
+<section class="panel" id="pInterestCompare">
+  <div class="card">
+    <h2>Interest Comparison</h2>
+    <p class="hint">Compare interest calculated independently with interest actually credited or charged by the bank.</p>
+    <div class="calc-tabs" style="display:flex;gap:8px;flex-wrap:wrap;margin:12px 0">
+      <button class="btn primary interest-compare-tab" type="button" onclick="showInterestCompare('savings')">Savings / Deposit Interest</button>
+      <button class="btn interest-compare-tab" type="button" onclick="showInterestCompare('loan')">Loan Interest Charged</button>
+    </div>
+    <div id="compareSavingsPane">
+      <div class="row" style="justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+        <div><h3>Bank Interest Credited vs Calculated</h3><p class="hint">Uses interest-credit entries identified in the statement.</p></div>
+        <button class="btn primary" type="button" onclick="renderInterestComparison()">Compare interest</button>
+      </div>
+      <div id="interestComparisonResult" style="margin-top:12px"><div class="hint">Load a bank statement and click <b>Compare interest</b>.</div></div>
+    </div>
+    <div id="compareLoanPane" style="display:none">
+      <div class="row" style="justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+        <div><h3>Bank Loan Interest Charged vs Calculated</h3><p class="hint">Daily outstanding × annual rate ÷ actual days in the calendar month.</p></div>
+        <button class="btn primary" type="button" onclick="renderLoanInterestComparison()">Compare loan interest</button>
+      </div>
+      <div class="grid g3" style="margin-top:12px">
+        <div><label class="f">Annual loan rate %</label><input id="loanCompareRate" type="number" value="8.5" step="0.01" min="0"></div>
+        <div><label class="f">Interest narration keywords</label><input id="loanCompareKeywords" type="text" value="interest, int, loan interest"></div>
+        <div class="formula-box"><b>Method</b><br>Daily outstanding balance × rate ÷ actual calendar days.</div>
+      </div>
+      <div id="loanInterestComparisonResult" style="margin-top:12px"><div class="hint">Load a loan statement and click <b>Compare loan interest</b>.</div></div>
+    </div>
+  </div>
+</section>
+
+
+</main>
+
+
+
+
 <footer>
   <p class="disc">This tool extracts and analyses data from statements you provide. Always verify the extracted figures against your original statement before using them for tax filing, loan applications, or any financial decision. This is not financial or tax advice.</p>
-  <p>StatementIQ v2.2.2 · runs entirely offline in your browser · no account, no upload, no tracking</p>
+  <p>StatementIQ v2.4.0 · runs entirely offline in your browser · no account, no upload, no tracking</p>
 </footer>
 
 <!-- password modal -->
@@ -3730,14 +3780,69 @@ function calcPct(n){ return Number(n||0).toFixed(2)+'%'; }
 function calcDate(id){ const v=document.getElementById(id)?.value; return v?new Date(v+'T00:00:00'):null; }
 
 function showCalc(which){
-  ['emi','deposit','age','sip','currency'].forEach(x=>{
+  ['emi','deposit','loan','age','sip','currency'].forEach(x=>{
     const p=document.getElementById('calc'+x.charAt(0).toUpperCase()+x.slice(1));
     if(p) p.style.display=(x===which?'block':'none');
   });
   document.querySelectorAll('.calc-tab').forEach(b=>b.classList.remove('primary'));
-  const map={emi:'EMI',deposit:'Deposit',age:'Age',sip:'SIP',currency:'Currency'};
+  const map={emi:'EMI',deposit:'Deposit',loan:'Loan Interest',age:'Age',sip:'SIP',currency:'Currency'};
   document.querySelectorAll('.calc-tab').forEach(b=>{if(b.textContent.trim()===map[which])b.classList.add('primary');});
 }
+
+function initLoanInterestCalculator(){
+  const e=document.getElementById('calcLoan'); if(!e)return;
+  e.innerHTML=`<h3>Loan Interest Calculator</h3>
+  <p class="hint">Calculate interest on a reducing outstanding loan balance. Moratorium interest can be paid monthly or capitalised.</p>
+  <div class="calc-grid">
+    <div><label class="f">Opening loan balance</label><input id="loanP" type="number" value="1000000" min="0"></div>
+    <div><label class="f">Annual interest rate %</label><input id="loanR" type="number" value="8.5" step="0.01" min="0"></div>
+    <div><label class="f">Tenure (months)</label><input id="loanN" type="number" value="60" min="1"></div>
+    <div><label class="f">Moratorium (months)</label><input id="loanM" type="number" value="0" min="0"></div>
+    <div><label class="f">Moratorium interest</label><select id="loanMor"><option value="pay">Pay monthly</option><option value="accrue">Accrue / capitalise</option></select></div>
+    <div><label class="f">Calculation basis</label><select id="loanBasis"><option value="monthly">Monthly reducing balance</option><option value="daily">Daily product</option></select></div>
+  </div>
+  <div class="row" style="margin-top:12px"><button class="btn primary" onclick="calcLoanInterest()">Calculate loan interest</button></div>
+  <div id="loanResult"></div>`;
+}
+function calcLoanInterest(){
+  const P=calcNum('loanP'), annual=calcNum('loanR'), totalN=Math.max(1,Math.floor(calcNum('loanN')));
+  const mor=Math.min(totalN,Math.max(0,Math.floor(calcNum('loanM'))));
+  const basis=document.getElementById('loanBasis')?.value||'monthly';
+  const morMode=document.getElementById('loanMor')?.value||'pay';
+  const r=annual/1200;
+  let bal=P,morInterest=0,morPaid=0;
+  for(let m=1;m<=mor;m++){
+    const interest=basis==='daily' ? bal*(annual/100)*(30/365) : bal*r;
+    morInterest+=interest;
+    if(morMode==='pay') morPaid+=interest; else bal+=interest;
+  }
+  const post=Math.max(1,totalN-mor);
+  const emi=r===0?bal/post:bal*r*Math.pow(1+r,post)/(Math.pow(1+r,post)-1);
+  let postInterest=0,rows=[];
+  for(let m=1;m<=post;m++){
+    const opening=bal, interest=r===0?0:bal*r;
+    const principal=Math.min(bal,Math.max(0,emi-interest));
+    bal=Math.max(0,bal-principal); postInterest+=interest;
+    rows.push({m,opening,interest,principal,closing:bal});
+  }
+  const totalInterest=morInterest+postInterest;
+  document.getElementById('loanResult').innerHTML=`<div class="calc-result">
+    <div class="big">Total interest: ₹${calcMoney(totalInterest)}</div>
+    <table class="calc-table">
+      <tr><td>Original loan</td><td>₹${calcMoney(P)}</td></tr>
+      <tr><td>Moratorium interest</td><td>₹${calcMoney(morInterest)}</td></tr>
+      <tr><td>Interest paid during moratorium</td><td>₹${calcMoney(morPaid)}</td></tr>
+      <tr><td>Balance entering EMI period</td><td>₹${calcMoney(bal + rows.reduce((a,x)=>a+x.principal,0))}</td></tr>
+      <tr><td>Post-moratorium EMI</td><td>₹${calcMoney(emi)}</td></tr>
+      <tr><td>Post-moratorium interest</td><td>₹${calcMoney(postInterest)}</td></tr>
+      <tr><td>Total interest</td><td>₹${calcMoney(totalInterest)}</td></tr>
+    </table>
+    <div class="tblwrap" style="margin-top:12px"><table class="calc-table">
+      <thead><tr><th>Month</th><th>Opening</th><th>Interest</th><th>Principal</th><th>Closing</th></tr></thead>
+      <tbody>${rows.map(x=>`<tr><td>${x.m}</td><td>₹${calcMoney(x.opening)}</td><td>₹${calcMoney(x.interest)}</td><td>₹${calcMoney(x.principal)}</td><td>₹${calcMoney(x.closing)}</td></tr>`).join('')}</tbody>
+    </table></div></div>`;
+}
+
 function initCalculators(){
   const e=document.getElementById('calcEmi');
   if(e) e.innerHTML=`
@@ -3902,6 +4007,118 @@ function calcCurrency(){
 }
 
 
+
+
+function showInterestCompare(which){
+  const a=document.getElementById('compareSavingsPane'),b=document.getElementById('compareLoanPane');
+  if(a)a.style.display=which==='savings'?'block':'none';
+  if(b)b.style.display=which==='loan'?'block':'none';
+  document.querySelectorAll('.interest-compare-tab').forEach(x=>x.classList.remove('primary'));
+  document.querySelectorAll('.interest-compare-tab').forEach(x=>{
+    if(x.textContent.trim()===(which==='loan'?'Loan Interest Charged':'Savings / Deposit Interest'))x.classList.add('primary');
+  });
+}
+function loanNarrationMatch(narr,keywords){
+  const a=(narr||'').toLowerCase();
+  return (keywords||'interest, int, loan interest').split(',').map(x=>x.trim().toLowerCase()).filter(Boolean).some(k=>a.includes(k));
+}
+function renderLoanInterestComparison(){
+  const box=document.getElementById('loanInterestComparisonResult'); if(!box)return;
+  const ds=S.sets.find(x=>x.kind==='bank');
+  if(!ds){box.innerHTML='<div class="banner warn"><span>!</span><div>Load a loan statement first.</div></div>';return;}
+  const rate=calcNum('loanCompareRate'),keywords=document.getElementById('loanCompareKeywords')?.value||'interest, int, loan interest';
+  const rows=(ds.rows||[]).filter(r=>r.date instanceof Date&&!isNaN(r.date)).sort((a,b)=>a.date-b.date);
+  if(!rows.length){box.innerHTML='<div class="banner bad"><span>!</span><div>No dated transactions found.</div></div>';return;}
+  let bal=Number(ds.summary?.opening||0);
+  if(!bal){
+    const f=rows[0]; bal=Number(f.balance||0)+(Number(f.debit||0))-(Number(f.credit||0));
+  }
+  const first=rows[0].date,last=rows[rows.length-1].date;
+  let cur=new Date(first.getFullYear(),first.getMonth(),1),end=new Date(last.getFullYear(),last.getMonth()+1,0),months=[];
+  while(cur<=end){
+    const y=cur.getFullYear(),m=cur.getMonth(),days=new Date(y,m+1,0).getDate();
+    const mr=rows.filter(r=>r.date.getFullYear()===y&&r.date.getMonth()===m);
+    let product=0,bankInt=0;
+    for(let d=1;d<=days;d++){
+      mr.filter(r=>r.date.getDate()===d).forEach(r=>{
+        if(Number(r.debit)>0)bal+=Number(r.debit);
+        if(Number(r.credit)>0)bal-=Number(r.credit);
+        if(Number(r.debit)>0&&loanNarrationMatch(r.narration,keywords))bankInt+=Number(r.debit);
+      });
+      bal=Math.max(0,bal); product+=bal;
+    }
+    const calc=product*(rate/100)/days,diff=bankInt-calc;
+    months.push({month:`${y}-${String(m+1).padStart(2,'0')}`,days,product,calc,bankInt,diff});
+    cur.setMonth(cur.getMonth()+1);
+  }
+  const tc=months.reduce((a,x)=>a+x.calc,0),tb=months.reduce((a,x)=>a+x.bankInt,0),td=tb-tc;
+  let h='<div class="calc-grid" style="margin-bottom:12px">'+
+    '<div class="calc-result" style="margin-top:0"><div class="hint">CALCULATED LOAN INTEREST</div><div class="big">₹'+calcMoney(tc)+'</div></div>'+
+    '<div class="calc-result" style="margin-top:0"><div class="hint">BANK INTEREST CHARGED</div><div class="big">₹'+calcMoney(tb)+'</div></div>'+
+    '<div class="calc-result" style="margin-top:0"><div class="hint">BANK − CALCULATED</div><div class="big">'+(td<0?'−':'')+'₹'+calcMoney(Math.abs(td))+'</div></div></div>';
+  h+='<div class="tblwrap"><table class="interest-table"><thead><tr><th>Month</th><th class="r">Days</th><th class="r">Daily Product</th><th class="r">Calculated Interest</th><th class="r">Bank Interest Charged</th><th class="r">Difference</th><th>Status</th></tr></thead><tbody>';
+  months.forEach(x=>{
+    const status=x.bankInt===0?'<span class="hint">No charge found</span>':Math.abs(x.diff)<0.01?'<span style="color:var(--green);font-weight:700">Matches</span>':'<span style="color:var(--rust);font-weight:700">Review</span>';
+    h+=`<tr><td>${esc(monthLabel(x.month))}</td><td class="r num">${x.days}</td><td class="r num">${inr(x.product)}</td><td class="r num">${inr(x.calc)}</td><td class="r num">${x.bankInt?inr(x.bankInt):'—'}</td><td class="r num">${x.bankInt?inr(x.diff):'—'}</td><td>${status}</td></tr>`;
+  });
+  h+='</tbody><tfoot><tr><th>Total</th><th></th><th class="r num">'+inr(months.reduce((a,x)=>a+x.product,0))+'</th><th class="r num">'+inr(tc)+'</th><th class="r num">'+inr(tb)+'</th><th class="r num">'+inr(td)+'</th><th></th></tr></tfoot></table></div>';
+  h+='<div class="formula-box" style="margin-top:12px"><b>Important:</b> this is an independent check. A bank may use value dates, different rounding, rate-reset dates, penal interest or other contractual rules. A difference is a review point, not proof of an error.</div>';
+  box.innerHTML=h;
+}
+
+function renderInterestComparison(){
+  const box=document.getElementById('interestComparisonResult');
+  if(!box)return;
+  const ds=S.sets.find(x=>x.kind==='bank');
+  if(!ds){
+    box.innerHTML='<div class="banner warn"><span>!</span><div>Load a bank statement first. The comparison uses interest-credit entries found in the statement.</div></div>';
+    return;
+  }
+  const rows=[...document.querySelectorAll('#interestSlabs .interest-slab-row')];
+  const slabs=interestNormaliseSlabs(rows.length ? rows.map(r=>({
+    to:r.querySelector('.slab-to')?.value===''?null:interestNum(r.querySelector('.slab-to')?.value),
+    rate:interestNum(r.querySelector('.slab-rate')?.value)
+  })) : interestLoadConfig());
+  const validation=interestValidateSlabs(slabs);
+  if(validation.length){
+    box.innerHTML='<div class="banner bad"><span>!</span><div>'+validation.map(esc).join('<br>')+'</div></div>';
+    return;
+  }
+  const result=interestCalculateDaily(ds,slabs);
+  if(result.error){
+    box.innerHTML='<div class="banner bad"><span>!</span><div>'+esc(result.error)+'</div></div>';
+    return;
+  }
+  const months=result.monthly||[];
+  let totalCalc=0,totalBank=0;
+  months.forEach(m=>{totalCalc+=Number(m.interest||0);totalBank+=Number(m.actualInterest||0);});
+  const totalDiff=totalCalc-totalBank;
+  let h='<div class="calc-grid" style="margin-bottom:12px">'+
+    '<div class="calc-result" style="margin-top:0"><div class="hint">CALCULATED INTEREST</div><div class="big">₹'+calcMoney(totalCalc)+'</div></div>'+
+    '<div class="calc-result" style="margin-top:0"><div class="hint">BANK INTEREST CREDITED</div><div class="big">₹'+calcMoney(totalBank)+'</div></div>'+
+    '<div class="calc-result" style="margin-top:0"><div class="hint">DIFFERENCE</div><div class="big">'+(totalDiff<0?'−':'')+'₹'+calcMoney(Math.abs(totalDiff))+'</div></div>'+
+  '</div>';
+  h+='<div class="tblwrap"><table class="interest-table"><thead><tr>'+
+    '<th>Month</th><th class="r">Days</th><th class="r">Daily Product</th>'+
+    '<th class="r">Calculated Interest</th><th class="r">Bank Interest Credited</th>'+
+    '<th class="r">Difference</th><th>Status</th></tr></thead><tbody>';
+  months.forEach(m=>{
+    const calc=Number(m.interest||0),bank=Number(m.actualInterest||0),diff=calc-bank;
+    const status=bank===0?'<span class="hint">No interest credit found</span>':
+      Math.abs(diff)<0.01?'<span style="color:var(--green);font-weight:700">Matches</span>':
+      '<span style="color:var(--rust);font-weight:700">Review</span>';
+    h+='<tr><td>'+esc(monthLabel(m.month))+'</td><td class="r num">'+m.days+'</td>'+
+      '<td class="r num">'+inr(m.dailyProduct)+'</td><td class="r num">'+inr(calc)+'</td>'+
+      '<td class="r num">'+(bank?inr(bank):'—')+'</td><td class="r num">'+(bank?inr(diff):'—')+'</td><td>'+status+'</td></tr>';
+  });
+  h+='</tbody><tfoot><tr><th>Total</th><th></th>'+
+    '<th class="r num">'+inr(months.reduce((a,m)=>a+Number(m.dailyProduct||0),0))+'</th>'+
+    '<th class="r num">'+inr(totalCalc)+'</th><th class="r num">'+inr(totalBank)+'</th>'+
+    '<th class="r num">'+inr(totalDiff)+'</th><th></th></tr></tfoot></table></div>';
+  h+='<div class="formula-box" style="margin-top:12px"><b>Important:</b> a difference is a review point, not proof of a bank error. Check the statement period, applicable rates, rounding and the bank’s interest-credit convention.</div>';
+  box.innerHTML=h;
+}
+
 function renderStandaloneInterest(){
   const root=document.getElementById('interestStandalone');
   if(!root) return;
@@ -3945,7 +4162,7 @@ function standaloneRun(){
 
 
 document.addEventListener('DOMContentLoaded', function(){
-  try{ initCalculators(); }catch(e){}
+  try{ initCalculators(); initLoanInterestCalculator(); }catch(e){}
   try{ renderStandaloneInterest(); }catch(e){}
 });
 
