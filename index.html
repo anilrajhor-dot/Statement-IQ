@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>StatementIQ v2.0.4 — Bank &amp; Credit Card Statement Analyser</title>
+<title>StatementIQ v2.0.5 — Bank &amp; Credit Card Statement Analyser</title>
 
 <!-- ==========================================================================
      StatementIQ — single-file, offline, browser-only statement analyser.
@@ -330,7 +330,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
   </div>
   <div class="brand-txt">
     <h1>StatementIQ</h1>
-    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.0.4</b></small>
+    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.0.5</b></small>
     <div class="developer-credit">Developed by Anil Sharma, Former General Manager, Central Bank of India</div>
   </div>
   <div class="header-actions">
@@ -428,7 +428,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
       <div class="card"><h3>Financial health</h3><p class="hint">A simple analytical score based only on the loaded statements — not financial advice.</p><div id="healthBox"></div></div>
     </div>
     <div class="card"><h3>Top spending categories</h3><p class="hint">Actual spending excludes transfers to self and credit-card bill settlements.</p><div class="tblwrap"><table id="dashCatTbl"></table></div></div>
-    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.0.4 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
+    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.0.5 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
   </div>
 </section>
 
@@ -575,7 +575,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 <!-- ================= HELP PANEL ================= -->
 <section class="panel" id="pHelp">
   <div class="card">
-    <h2>How to use StatementIQ <span class="pill-big">v2.0.4</span></h2>
+    <h2>How to use StatementIQ <span class="pill-big">v2.0.5</span></h2>
     <ol style="line-height:1.9;padding-left:20px">
       <li><b>Upload.</b> Drop in bank and credit card statements together — PDF, XLSX or CSV. Password-protected PDFs prompt for the password; nothing is stored.</li>
       <li><b>Verify columns.</b> Check the detected column roles and fix any that are wrong with the dropdowns.</li>
@@ -608,7 +608,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 
 <footer>
   <p class="disc">This tool extracts and analyses data from statements you provide. Always verify the extracted figures against your original statement before using them for tax filing, loan applications, or any financial decision. This is not financial or tax advice.</p>
-  <p>StatementIQ v2.0.4 · runs entirely offline in your browser · no account, no upload, no tracking</p>
+  <p>StatementIQ v2.0.5 · runs entirely offline in your browser · no account, no upload, no tracking</p>
 </footer>
 
 <!-- password modal -->
@@ -1012,8 +1012,31 @@ function isStatementSummaryRow(g, dateRaw){
   return !parseDate(String(dateRaw||'')) && (summaryCell || summaryPhrase);
 }
 
+function extractStatementSummary(grid){
+  const out = {opening:null, closing:null, debit:null, credit:null};
+  if(!Array.isArray(grid)) return out;
+  for(let i=0;i<grid.length-1;i++){
+    const hdr = (grid[i]||[]).map(v=>String(v==null?'':v).trim().toLowerCase());
+    const hasOpening = hdr.some(v=>v==='opening balance');
+    const hasClosing = hdr.some(v=>v==='closing balance');
+    if(!hasOpening && !hasClosing) continue;
+    const vals = grid[i+1]||[];
+    hdr.forEach((h,ci)=>{
+      const p = parseAmt(vals[ci]);
+      if(!p) return;
+      if(h==='opening balance' && out.opening===null) out.opening=p.v;
+      if(h==='closing balance' && out.closing===null) out.closing=p.v;
+      if(h==='total debit' && out.debit===null) out.debit=Math.abs(p.v);
+      if(h==='total credit' && out.credit===null) out.credit=Math.abs(p.v);
+    });
+    if(out.opening!==null || out.closing!==null) return out;
+  }
+  return out;
+}
+
 function buildRows(ds){
   const {grid, headerIdx, roles} = ds;
+  ds.summary = extractStatementSummary(grid);
   const col = {};                                   // role -> column index
   roles.forEach((r,i)=>{ if(r!=='ignore' && col[r]===undefined) col[r]=i; });
   const rows = [], errors = [], ignoredRows = [];
@@ -1220,24 +1243,41 @@ function saveLearned(){
 /* ============================================================================
    7. INTEGRITY VALIDATION
    ========================================================================== */
-function checkIntegrity(rows, pagesText){
-  const res = {rows:rows.length, credits:0, debits:0, opening:null, closing:null, ok:null, diff:0, breaks:[], dupes:[]};
+function checkIntegrity(rows, pagesText, summary){
+  const res = {rows:rows.length, credits:0, debits:0, opening:null, closing:null, ok:null, diff:0, breaks:[], dupes:[], source:'calculated'};
   rows.forEach(r=>{ res.credits += r.credit; res.debits += r.debit; });
 
-  // Prefer the balance column: the row before the first transaction gives the
-  // opening balance implicitly (first balance minus that row's movement).
+  // Prefer an explicit statement summary block when the source provides one.
+  // This is especially important for XLSX statements where a summary table
+  // contains Opening Balance / Total Debit / Total Credit / Closing Balance
+  // above the transaction table. Never let a generic text search mistake the
+  // opening balance for the closing balance.
+  if(summary){
+    if(summary.opening!==null) res.opening = summary.opening;
+    if(summary.closing!==null) res.closing = summary.closing;
+    if(summary.opening!==null || summary.closing!==null) res.source='statement summary';
+  }
+
+  // Otherwise prefer the transaction balance column.
   const withBal = rows.filter(r=>r.balance!==null && !isNaN(r.balance));
   if(withBal.length){
     const f = withBal[0], l = withBal[withBal.length-1];
-    res.opening = f.balance - f.credit + f.debit;
-    res.closing = l.balance;
+    if(res.opening===null) res.opening = f.balance - f.credit + f.debit;
+    if(res.closing===null) res.closing = l.balance;
+    if(res.source==='calculated') res.source='balance column';
   }
-  // If the statement prints the words, trust those instead.
+  // Last fallback: use printed text, but only for values still missing.
+  // Do not override values already obtained from a structured summary or
+  // transaction balance column.
   if(pagesText){
-    const o = pagesText.match(/opening\s*balance[^0-9\-]{0,20}([\d,]+\.?\d*)/i);
-    const c = pagesText.match(/closing\s*balance[^0-9\-]{0,20}([\d,]+\.?\d*)/i);
-    if(o){ const p=parseAmt(o[1]); if(p) res.opening=p.v; }
-    if(c){ const p=parseAmt(c[1]); if(p) res.closing=p.v; }
+    if(res.opening===null){
+      const o = pagesText.match(/opening\s*balance[^0-9\-]{0,20}([\d,]+\.?\d*)/i);
+      if(o){ const p=parseAmt(o[1]); if(p){ res.opening=p.v; res.source='statement text'; } }
+    }
+    if(res.closing===null){
+      const c = pagesText.match(/closing\s*balance[^0-9\-]{0,20}([\d,]+\.?\d*)/i);
+      if(c){ const p=parseAmt(c[1]); if(p){ res.closing=p.v; res.source='statement text'; } }
+    }
   }
   if(res.opening!==null && res.closing!==null){
     const expected = res.opening + res.credits - res.debits;
@@ -1829,12 +1869,12 @@ function renderBank(){
   const bankSets = S.sets.filter(d=>d.kind==='bank');
   let ih = '';
   bankSets.forEach(ds=>{
-    const chk = checkIntegrity(ds.rows, ds.pagesText);
+    const chk = checkIntegrity(ds.rows, ds.pagesText, ds.summary);
     ds.integrity = chk;
     if(chk.ok===true){
-      ih += '<div class="banner ok"><span>✓</span><div><b>'+esc(ds.name)+' reconciles.</b> Opening '+inr(chk.opening)+' + credits '+inr(chk.credits)+' − debits '+inr(chk.debits)+' = closing '+inr(chk.closing)+'. '+chk.rows+' rows read.</div></div>';
+      ih += '<div class="banner ok"><span>✓</span><div><b>'+esc(ds.name)+' reconciles.</b> Opening '+inr(chk.opening)+' + credits '+inr(chk.credits)+' − debits '+inr(chk.debits)+' = closing '+inr(chk.closing)+'. '+chk.rows+' transactions read. '+(chk.source==='statement summary'?'Opening/closing balances taken from the statement summary.':'Balance verified from the transaction data.')+'</div></div>';
     }else if(chk.ok===false){
-      ih += '<div class="banner bad"><span>!</span><div><b>'+esc(ds.name)+' does not reconcile — difference '+inr(Math.abs(chk.diff))+'.</b> Expected closing '+inr(chk.opening+chk.credits-chk.debits)+', statement says '+inr(chk.closing)+'. Check the review table before you rely on these figures.</div></div>';
+      ih += '<div class="banner bad"><span>!</span><div><b>'+esc(ds.name)+' does not reconcile — difference '+inr(Math.abs(chk.diff))+'.</b> Expected closing '+inr(chk.opening+chk.credits-chk.debits)+', statement closing '+inr(chk.closing)+'. Check the review table before you rely on these figures.</div></div>';
     }else{
       ih += '<div class="banner warn"><span>?</span><div><b>'+esc(ds.name)+':</b> no opening or closing balance found, so the arithmetic check could not run. '+chk.rows+' rows read.</div></div>';
     }
@@ -2669,7 +2709,7 @@ async function exportExcel(){
   r++;
   sect('Integrity check');
   S.sets.filter(d=>d.kind==='bank').forEach(d=>{
-    const chk = d.integrity || checkIntegrity(d.rows, d.pagesText);
+    const chk = d.integrity || checkIntegrity(d.rows, d.pagesText, d.summary);
     line(d.name+' — opening', chk.opening, INR_FMT);
     line(d.name+' — closing', chk.closing, INR_FMT);
     line(d.name+' — result', chk.ok===true?'RECONCILES':chk.ok===false?('DOES NOT RECONCILE — difference '+inr(chk.diff)):'Not verifiable — no opening/closing balance found');
@@ -2817,7 +2857,7 @@ async function exportExcel(){
   s8.addRow(['File','Type','Line / Date','Detail','Amount 1','Amount 2']);
   S.sets.forEach(d=>{
     (d.errors||[]).forEach(e=> s8.addRow([d.name,'Row failed to parse','line '+e.line, e.raw.slice(0,220)+' — '+e.why,'','']));
-    const chk = d.integrity || checkIntegrity(d.rows, d.pagesText);
+    const chk = d.integrity || checkIntegrity(d.rows, d.pagesText, d.summary);
     chk.breaks.forEach(b=>{
       const row = s8.addRow([d.name,'Balance break', b.date, b.narration.slice(0,120), b.expected, b.found]);
       row.getCell(5).numFmt=INR_FMT; row.getCell(6).numFmt=INR_FMT;
