@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>StatementIQ v2.2.0 — Bank &amp; Credit Card Statement Analyser</title>
+<title>StatementIQ v2.2.2 — Bank &amp; Credit Card Statement Analyser</title>
 
 <!-- ==========================================================================
      StatementIQ — single-file, offline, browser-only statement analyser.
@@ -314,7 +314,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 /* v2.0 dashboard */
 .health-score{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.score-ring{width:92px;height:92px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--amber) calc(var(--score)*1%),var(--line) 0);position:relative}.score-ring:after{content:"";position:absolute;inset:9px;border-radius:50%;background:var(--paper)}.score-ring b{position:relative;z-index:1;font-size:24px}.score-copy{min-width:220px}.metric-line{display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-bottom:1px solid var(--line)}.metric-line:last-child{border-bottom:0}.flag{padding:10px 12px;border-radius:10px;background:var(--surface-2);margin:7px 0;border-left:4px solid var(--amber)}.flag.bad{border-left-color:var(--rust)}.flag.ok{border-left-color:var(--green)}.flag b{display:block}.muted{color:var(--ink-soft);font-size:12px}.pill-big{display:inline-flex;padding:4px 9px;border-radius:999px;background:var(--surface-2);font-size:11px;font-weight:700}.dash-empty{padding:16px}.confidence{font-weight:700}.confidence.high{color:var(--green)}.confidence.low{color:var(--rust)}
 
-/* v2.2.0: keep financial metric values together on narrow screens */
+/* v2.2.2: keep financial metric values together on narrow screens */
 .financial-activity .metric-line { display:flex; align-items:center; gap:14px; }
 .financial-activity .metric-line span { flex:1 1 auto; min-width:0; }
 .financial-activity .metric-line b { flex:0 0 auto; white-space:nowrap; text-align:right; }
@@ -327,7 +327,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 }
 
 
-/* v2.2.0 — daily-product interest calculator */
+/* v2.2.2 — daily-product interest calculator */
 .interest-calc .slab-grid{display:grid;grid-template-columns:1.1fr 1.4fr 1.4fr 1fr auto;gap:8px;align-items:center}
 .interest-calc .slab-grid input{min-width:0}
 .interest-calc .interest-table th,.interest-calc .interest-table td{white-space:nowrap}
@@ -345,7 +345,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 }
 
 
-/* v2.2.0 — dedicated calculators */
+/* v2.2.2 — dedicated calculators */
 .calc-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .calc-card{border:1px solid var(--line);border-radius:14px;padding:14px;background:var(--surface)}
 .calc-result{margin-top:14px;padding:14px;border-radius:12px;background:var(--surface-soft);border:1px solid var(--line)}
@@ -355,6 +355,81 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 .calc-table th:first-child,.calc-table td:first-child{text-align:left}
 @media(max-width:800px){.calc-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.calc-grid{grid-template-columns:1fr}.calc-result .big{font-size:21px}}
+
+
+/* v2.2.2 — responsive interest tables and totals */
+.interest-calc .tblwrap,
+#interestStandalone .tblwrap{
+  width:100%;
+  max-width:100%;
+  overflow-x:auto;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  box-sizing:border-box;
+  border-radius:12px;
+}
+.interest-calc .interest-table,
+#interestStandalone .interest-table{
+  width:100%;
+  min-width:860px;
+  table-layout:auto;
+}
+.interest-calc .interest-table th,
+.interest-calc .interest-table td,
+#interestStandalone .interest-table th,
+#interestStandalone .interest-table td{
+  white-space:nowrap;
+  box-sizing:border-box;
+}
+.interest-calc .daily-scroll-note{
+  display:none;
+  margin:8px 0 0;
+  font-size:12px;
+  color:var(--muted);
+}
+@media(max-width:700px){
+  .interest-calc .daily-scroll-note{display:block}
+  .interest-calc .interest-table,
+  #interestStandalone .interest-table{min-width:980px}
+  .interest-calc .tblwrap,
+  #interestStandalone .tblwrap{border:1px solid var(--line)}
+}
+
+
+/* v2.2.2 — calculators prominently available on first page */
+.first-page-tools{
+  padding:14px 18px 4px;
+}
+.first-page-calc{
+  border:1px solid var(--line);
+  border-left:5px solid var(--accent);
+  border-radius:16px;
+  background:var(--surface);
+  padding:16px;
+  box-shadow:var(--shadow);
+}
+.first-page-calc-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.first-page-calc h2{margin:0 0 4px;font-size:21px}
+.first-page-calc p{margin:0;color:var(--muted)}
+.calc-launch-grid{
+  display:grid;
+  grid-template-columns:repeat(6,minmax(0,1fr));
+  gap:8px;
+  margin-top:13px;
+}
+.calc-launch-grid button{width:100%;min-height:44px}
+@media(max-width:900px){.calc-launch-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:560px){
+  .first-page-tools{padding:12px 12px 3px}
+  .first-page-calc{padding:14px}
+  .calc-launch-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
 
 </style>
 </head>
@@ -373,7 +448,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
   </div>
   <div class="brand-txt">
     <h1>StatementIQ</h1>
-    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.2.0</b></small>
+    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.2.2</b></small>
     <div class="developer-credit">Developed by Anil Sharma, Former General Manager, Central Bank of India</div>
   </div>
   <div class="header-actions">
@@ -381,9 +456,29 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
     <button class="btn sm" id="btnTheme" title="Toggle dark mode">🌙 Dark</button>
     <button class="btn sm" onclick="window.print()">Print report</button>
     <button class="btn sm primary" id="btnExport">Export to Excel <span class="kbd">Ctrl+E</span></button>
-    <button class="btn sm danger" id="btnClear">Clear all data</button>
+    <button class="btn sm primary" id="btnFinancialCalc" type="button">🧮 Financial Calculators</button> <button class="btn sm danger" id="btnClear">Clear all data</button>
   </div>
 </header>
+<section class="first-page-tools" id="firstPageCalculators">
+  <div class="first-page-calc">
+    <div class="first-page-calc-head">
+      <div>
+        <h2>🧮 Financial &amp; Interest Calculators</h2>
+        <p>Quick access to EMI, deposits, reinvestment, age, SIP, currency and daily-product interest calculations.</p>
+      </div>
+      <button class="btn primary" type="button" onclick="switchPanel('pFinancialCalc')">Open Financial Calculators →</button>
+    </div>
+    <div class="calc-launch-grid">
+      <button class="btn" type="button" onclick="switchPanel('pFinancialCalc');setTimeout(()=>showCalc('emi'),0)">EMI</button>
+      <button class="btn" type="button" onclick="switchPanel('pFinancialCalc');setTimeout(()=>showCalc('deposit'),0)">Deposit</button>
+      <button class="btn" type="button" onclick="switchPanel('pFinancialCalc');setTimeout(()=>showCalc('age'),0)">Age</button>
+      <button class="btn" type="button" onclick="switchPanel('pFinancialCalc');setTimeout(()=>showCalc('sip'),0)">SIP</button>
+      <button class="btn" type="button" onclick="switchPanel('pFinancialCalc');setTimeout(()=>showCalc('currency'),0)">Currency</button>
+      <button class="btn" type="button" onclick="switchPanel('pInterestCalc')">Interest</button>
+    </div>
+  </div>
+</section>
+
 
 <div id="steps">
   <div class="step active" data-step="1"><span class="dot">1</span> Upload</div>
@@ -399,7 +494,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
   <button class="tab" data-panel="pBank">Bank statement<span class="pill" id="pillBank">0</span></button>
   <button class="tab" data-panel="pCard">Credit card<span class="pill" id="pillCard">0</span></button>
   <button class="tab" data-panel="pRecon">Reconciliation</button>
-  <button class="tab" data-panel="pHelp">How to use</button>
+  <button class="tab" data-panel="pHelp">How to use</button> <button class="tab" data-panel="pInterestCalc">Interest Calculator</button> <button class="tab" data-panel="pFinancialCalc">Financial Calculators</button>
 </div>
 
 <main>
@@ -471,7 +566,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
       <div class="card"><h3>Financial health</h3><p class="hint">A simple analytical score based only on the loaded statements — not financial advice.</p><div id="healthBox"></div></div>
     </div>
     <div class="card"><h3>Top spending categories</h3><p class="hint">Consumption spending excludes transfers to self, credit-card settlements, investments, loan principal and matched reversals.</p><div class="tblwrap"><table id="dashCatTbl"></table></div></div>
-    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.2.0 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
+    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.2.2 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
   </div>
 </section>
 
@@ -621,7 +716,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 <!-- ================= HELP PANEL ================= -->
 <section class="panel" id="pHelp">
   <div class="card">
-    <h2>How to use StatementIQ <span class="pill-big">v2.2.0</span></h2>
+    <h2>How to use StatementIQ <span class="pill-big">v2.2.2</span></h2>
     <ol style="line-height:1.9;padding-left:20px">
       <li><b>Upload.</b> Drop in bank and credit card statements together — PDF, XLSX or CSV. Password-protected PDFs prompt for the password; nothing is stored.</li>
       <li><b>Verify columns.</b> Check the detected column roles and fix any that are wrong with the dropdowns.</li>
@@ -684,7 +779,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 
 <footer>
   <p class="disc">This tool extracts and analyses data from statements you provide. Always verify the extracted figures against your original statement before using them for tax filing, loan applications, or any financial decision. This is not financial or tax advice.</p>
-  <p>StatementIQ v2.2.0 · runs entirely offline in your browser · no account, no upload, no tracking</p>
+  <p>StatementIQ v2.2.2 · runs entirely offline in your browser · no account, no upload, no tracking</p>
 </footer>
 
 <!-- password modal -->
@@ -1486,7 +1581,10 @@ function setStep(n){
 }
 function switchPanel(id){
   document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('on', p.id===id));
-  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on', t.dataset.panel===id));
+  
+const btnFinancialCalc = document.getElementById('btnFinancialCalc');
+if(btnFinancialCalc) btnFinancialCalc.onclick = ()=>switchPanel('pFinancialCalc');
+document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on', t.dataset.panel===id));
   window.scrollTo({top:0, behavior:'smooth'});
 }
 document.querySelectorAll('.tab').forEach(t=> t.onclick = ()=>switchPanel(t.dataset.panel));
@@ -2173,18 +2271,79 @@ function interestShowDaily(){
   const last=window.SIQInterestLast;
   if(!box||!last) return;
   const {result,slabs}=last;
-  let h='<div class="tblwrap" style="margin-top:12px;max-height:520px"><table class="interest-table"><thead><tr><th>Date</th><th class="r">Days in month</th><th class="r">Closing balance</th>';
-  slabs.forEach((s,i)=>{h+='<th class="r">Slab '+(i+1)+' product</th><th class="r">Rate</th><th class="r">Interest</th>';});
+  const days=result.daily||[];
+
+  const totalDailyProduct=days.reduce((a,d)=>a+(Number(d.balance)||0),0);
+  const totalDailyInterest=days.reduce((a,d)=>a+(Number(d.interest)||0),0);
+
+  // Slab-wise totals for the whole displayed period.
+  const slabTotals=slabs.map((s,i)=>({
+    product:days.reduce((a,d)=>a+((d.parts[i]||{}).portion||0),0),
+    interest:days.reduce((a,d)=>{
+      const part=d.parts[i];
+      return a+(part ? part.portion*part.rate/100/d.daysInMonth : 0);
+    },0)
+  }));
+
+  let h=
+    '<div class="row" style="justify-content:space-between;align-items:center;margin-top:14px">'+
+      '<h4 style="margin:0">Daily product calculation</h4>'+
+      '<span class="hint">'+days.length+' day(s) displayed</span>'+
+    '</div>'+
+    '<p class="daily-scroll-note">Swipe left/right to see all slab columns on a mobile screen.</p>'+
+    '<div class="tblwrap" style="margin-top:8px;max-height:560px">'+
+      '<table class="interest-table"><thead><tr>'+
+        '<th>Date</th><th class="r">Days in month</th><th class="r">Closing balance</th>'+
+        '<th class="r">Daily product</th>';
+
+  slabs.forEach((s,i)=>{
+    h+='<th class="r">Slab '+(i+1)+' product</th>'+
+       '<th class="r">Rate</th>'+
+       '<th class="r">Daily interest</th>';
+  });
+
   h+='<th class="r">Total daily interest</th></tr></thead><tbody>';
-  result.daily.forEach(d=>{
-    h+='<tr><td>'+fmtDate(d.date)+'</td><td class="r num">'+d.daysInMonth+'</td><td class="r num">'+inr(d.balance)+'</td>';
+
+  days.forEach(d=>{
+    h+='<tr>'+
+      '<td>'+fmtDate(d.date)+'</td>'+
+      '<td class="r num">'+d.daysInMonth+'</td>'+
+      '<td class="r num">'+inr(d.balance)+'</td>'+
+      '<td class="r num">'+inr(d.balance)+'</td>';
+
     slabs.forEach((s,i)=>{
       const p=d.parts[i]||{portion:0,rate:s.rate};
-      h+='<td class="r num">'+inr(p.portion)+'</td><td class="r num">'+Number(p.rate).toFixed(2)+'%</td><td class="r num">'+inr(p.portion*p.rate/100/d.daysInMonth)+'</td>';
+      const dailyInt=p.portion*p.rate/100/d.daysInMonth;
+      h+='<td class="r num">'+inr(p.portion)+'</td>'+
+         '<td class="r num">'+Number(p.rate).toFixed(2)+'%</td>'+
+         '<td class="r num">'+inr(dailyInt)+'</td>';
     });
+
     h+='<td class="r num"><b>'+inr(d.interest)+'</b></td></tr>';
   });
-  h+='</tbody></table></div>';
+
+  h+='</tbody><tfoot>';
+
+  // Overall total row — specifically requested.
+  h+='<tr>'+
+      '<th colspan="3">TOTAL</th>'+
+      '<th class="r num">'+inr(totalDailyProduct)+'</th>';
+
+  slabs.forEach((s,i)=>{
+    h+='<th class="r num">'+inr(slabTotals[i].product)+'</th>'+
+       '<th></th>'+
+       '<th class="r num">'+inr(slabTotals[i].interest)+'</th>';
+  });
+
+  h+='<th class="r num">'+inr(totalDailyInterest)+'</th></tr></tfoot></table></div>';
+
+  // Clear, separate totals summary so the user does not have to scan the footer.
+  h+='<div class="calc-grid" style="margin-top:12px">'+
+      '<div class="calc-result" style="margin-top:0"><div class="hint">TOTAL DAILY PRODUCT</div><div class="big">₹'+calcMoney(totalDailyProduct)+'</div></div>'+
+      '<div class="calc-result" style="margin-top:0"><div class="hint">TOTAL DAILY INTEREST</div><div class="big">₹'+calcMoney(totalDailyInterest)+'</div></div>'+
+      '<div class="calc-result" style="margin-top:0"><div class="hint">DAYS CALCULATED</div><div class="big">'+days.length+'</div></div>'+
+    '</div>';
+
   box.innerHTML=h;
 }
 function interestAddSlab(){
@@ -3780,7 +3939,7 @@ function standaloneRun(){
   if(r.error){box.innerHTML='<div class="banner bad">'+esc(r.error)+'</div>';return;}
   let h='<div class="tblwrap"><table class="interest-table"><thead><tr><th>Month</th><th class="r">Days</th><th class="r">Daily product</th><th class="r">Calculated interest</th><th class="r">Interest credited</th><th class="r">Difference</th></tr></thead><tbody>';
   r.monthly.forEach(m=>{const d=m.actualInterest?m.interest-m.actualInterest:null;h+='<tr><td>'+esc(monthLabel(m.month))+'</td><td class="r">'+m.days+'</td><td class="r">'+inr(m.dailyProduct)+'</td><td class="r">'+inr(m.interest)+'</td><td class="r">'+(m.actualInterest?inr(m.actualInterest):'—')+'</td><td class="r">'+(d===null?'—':inr(d))+'</td></tr>';});
-  h+='</tbody><tfoot><tr><th>Total</th><th></th><th class="r">'+inr(r.monthly.reduce((a,m)=>a+m.dailyProduct,0))+'</th><th class="r">'+inr(r.total)+'</th><th class="r">'+inr(r.monthly.reduce((a,m)=>a+(m.actualInterest||0),0))+'</th><th></th></tr></tfoot></table></div>';
+  h+='</tbody><tfoot><tr><th>Total</th><th></th><th class="r">'+inr(r.monthly.reduce((a,m)=>a+m.dailyProduct,0))+'</th><th class="r">'+inr(r.total)+'</th><th class="r">'+inr(r.monthly.reduce((a,m)=>a+(m.actualInterest||0),0))+'</th><th></th></tr></tfoot></table></div><p class="daily-scroll-note">Swipe left/right if the table extends beyond the mobile screen.</p>';
   box.innerHTML=h;
 }
 
