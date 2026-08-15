@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>StatementIQ v2.5.0 — Bank &amp; Credit Card Statement Analyser</title>
+<title>StatementIQ v2.5.2 — Bank &amp; Credit Card Statement Analyser</title>
 
 <!-- ==========================================================================
      StatementIQ — single-file, offline, browser-only statement analyser.
@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js">/* v2.5.0 zero-as-placeholder */
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js">/* v2.5.2 zero-as-placeholder */
 document.addEventListener('focusin',function(e){const x=e.target;if(x&&x.tagName==='INPUT'&&x.type==='number'&&x.value==='0')x.value='';});
 document.addEventListener('click',function(e){const x=e.target;if(x&&x.tagName==='INPUT'&&x.type==='number'&&x.value==='0')x.value='';});
 </script>
@@ -317,7 +317,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 /* v2.0 dashboard */
 .health-score{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.score-ring{width:92px;height:92px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--amber) calc(var(--score)*1%),var(--line) 0);position:relative}.score-ring:after{content:"";position:absolute;inset:9px;border-radius:50%;background:var(--paper)}.score-ring b{position:relative;z-index:1;font-size:24px}.score-copy{min-width:220px}.metric-line{display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-bottom:1px solid var(--line)}.metric-line:last-child{border-bottom:0}.flag{padding:10px 12px;border-radius:10px;background:var(--surface-2);margin:7px 0;border-left:4px solid var(--amber)}.flag.bad{border-left-color:var(--rust)}.flag.ok{border-left-color:var(--green)}.flag b{display:block}.muted{color:var(--ink-soft);font-size:12px}.pill-big{display:inline-flex;padding:4px 9px;border-radius:999px;background:var(--surface-2);font-size:11px;font-weight:700}.dash-empty{padding:16px}.confidence{font-weight:700}.confidence.high{color:var(--green)}.confidence.low{color:var(--rust)}
 
-/* v2.5.0: keep financial metric values together on narrow screens */
+/* v2.5.2: keep financial metric values together on narrow screens */
 .financial-activity .metric-line { display:flex; align-items:center; gap:14px; }
 .financial-activity .metric-line span { flex:1 1 auto; min-width:0; }
 .financial-activity .metric-line b { flex:0 0 auto; white-space:nowrap; text-align:right; }
@@ -330,7 +330,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 }
 
 
-/* v2.5.0 — daily-product interest calculator */
+/* v2.5.2 — daily-product interest calculator */
 .interest-calc .slab-grid{display:grid;grid-template-columns:1.1fr 1.4fr 1.4fr 1fr auto;gap:8px;align-items:center}
 .interest-calc .slab-grid input{min-width:0}
 .interest-calc .interest-table th,.interest-calc .interest-table td{white-space:nowrap}
@@ -348,7 +348,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 }
 
 
-/* v2.5.0 — dedicated calculators */
+/* v2.5.2 — dedicated calculators */
 .calc-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .calc-card{border:1px solid var(--line);border-radius:14px;padding:14px;background:var(--surface)}
 .calc-result{margin-top:14px;padding:14px;border-radius:12px;background:var(--surface-soft);border:1px solid var(--line)}
@@ -360,7 +360,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 @media(max-width:560px){.calc-grid{grid-template-columns:1fr}.calc-result .big{font-size:21px}}
 
 
-/* v2.5.0 — responsive interest tables and totals */
+/* v2.5.2 — responsive interest tables and totals */
 .interest-calc .tblwrap,
 #interestStandalone .tblwrap{
   width:100%;
@@ -399,7 +399,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 }
 
 
-/* v2.5.0 — calculators prominently available on first page */
+/* v2.5.2 — calculators prominently available on first page */
 .first-page-tools{
   padding:14px 18px 4px;
 }
@@ -435,7 +435,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 }
 
 
-/* v2.5.0 — clean calculator hub */
+/* v2.5.2 — clean calculator hub */
 .first-page-menu-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
 .first-page-menu-grid button{min-height:74px;justify-content:flex-start;text-align:left;font-size:14px}
 .first-page-menu-grid button>span:first-child{font-size:22px;flex:none}
@@ -447,9 +447,13 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 #pInterestCalc>.card,#pFinancialCalc>.card,#pInterestCompare>.card{width:100%;box-sizing:border-box}
 #pInterestCalc .tblwrap,#pInterestCompare .tblwrap{width:100%;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
 
-/* v2.5.0 */
+/* v2.5.2 */
 #btnFinancialCalc{background:var(--accent)!important;color:#0E0E10!important;border-color:var(--accent)!important;font-weight:800!important}
 @media(max-width:760px){.interest-settings-head{display:none!important}#interestSlabs .interest-slab-row{grid-template-columns:1fr 1fr}#interestSlabs .interest-slab-row .wide{grid-column:1/-1}}
+
+#tabs .tab[data-panel="pFinancialCalc"]{background:var(--accent)!important;color:#0E0E10!important;border-color:var(--accent)!important;font-weight:800}
+#tabs .tab[data-panel="pFinancialCalc"].on{box-shadow:inset 0 -3px 0 #0E0E10}
+#interestStatement:disabled{opacity:.7}
 </style>
 </head>
 <body>
@@ -467,7 +471,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
   </div>
   <div class="brand-txt">
     <h1>StatementIQ</h1>
-    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.5.0</b></small>
+    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.5.2</b></small>
     <div class="developer-credit">Developed by Anil Sharma, Former General Manager, Central Bank of India</div>
   </div>
   <div class="header-actions">
@@ -569,7 +573,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
       <div class="card"><h3>Financial health</h3><p class="hint">A simple analytical score based only on the loaded statements — not financial advice.</p><div id="healthBox"></div></div>
     </div>
     <div class="card"><h3>Top spending categories</h3><p class="hint">Consumption spending excludes transfers to self, credit-card settlements, investments, loan principal and matched reversals.</p><div class="tblwrap"><table id="dashCatTbl"></table></div></div>
-    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.5.0 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
+    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.5.2 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
   </div>
 </section>
 
@@ -719,7 +723,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 <!-- ================= HELP PANEL ================= -->
 <section class="panel" id="pHelp">
   <div class="card">
-    <h2>How to use StatementIQ <span class="pill-big">v2.5.0</span></h2>
+    <h2>How to use StatementIQ <span class="pill-big">v2.5.2</span></h2>
     <ol style="line-height:1.9;padding-left:20px">
       <li><b>Upload.</b> Drop in bank and credit card statements together — PDF, XLSX or CSV. Password-protected PDFs prompt for the password; nothing is stored.</li>
       <li><b>Verify columns.</b> Check the detected column roles and fix any that are wrong with the dropdowns.</li>
@@ -792,7 +796,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 
 <footer>
   <p class="disc">This tool extracts and analyses data from statements you provide. Always verify the extracted figures against your original statement before using them for tax filing, loan applications, or any financial decision. This is not financial or tax advice.</p>
-  <p>StatementIQ v2.5.0 · runs entirely offline in your browser · no account, no upload, no tracking</p>
+  <p>StatementIQ v2.5.2 · runs entirely offline in your browser · no account, no upload, no tracking</p>
 </footer>
 
 <!-- password modal -->
@@ -1593,7 +1597,7 @@ function setStep(n){
   });
 }
 function switchPanel(id){
-  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('on', p.id===id));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('on', p.id===id)); if(id==='pInterestCompare') renderInterestComparisonPanel(); if(id==='pFinancialCalc'){ try{initCalculators();}catch(e){} }
   
 const btnFinancialCalc = document.getElementById('btnFinancialCalc');
 if(btnFinancialCalc) btnFinancialCalc.onclick = ()=>switchPanel('pFinancialCalc');
@@ -2387,22 +2391,14 @@ function interestRun(){
   const result=interestCalculateDaily(ds,slabs);
   interestRenderResults(result,slabs);
 }
-function renderInterestCalculator(){
-  const root=document.getElementById('bankInterest');
-  if(!root) return;
+function renderInterestComparisonPanel(){
+  const sel=document.getElementById('interestStatement');
   const banks=S.sets.filter(x=>x.kind==='bank');
-  if(!banks.length){ root.innerHTML=''; return; }
-  const slabs=interestLoadConfig();
-  root.innerHTML=
-    '<h3>Interest calculator — daily product</h3>'+
-    '<p class="hint">Interest is calculated on the closing balance for every calendar day from the 1st through the last day of the month. Each balance is split progressively across the editable slabs. The annual rate is divided by the actual number of days in that month — 28/29/30/31, as applicable.</p>'+
-    '<div class="formula-box"><b>Example:</b> ₹4,00,000 daily balance = ₹3,00,000 @ 4% + ₹1,00,000 @ 5%. ₹8,00,000 = ₹3,00,000 @ 4% + ₹2,00,000 @ 5% + ₹3,00,000 @ 6%.</div>'+
-    '<div class="row" style="margin-top:12px"><label class="f" style="min-width:120px">Statement</label><select id="interestStatement">'+banks.map(d=>'<option value="'+esc(d.id)+'">'+esc(d.name)+'</option>').join('')+'</select><button class="btn primary" type="button" onclick="interestRun()">Calculate interest</button><button class="btn sm" type="button" onclick="interestAddSlab()">+ Add slab</button></div>'+
-    '<div id="interestSlabTotal" class="hint" style="margin-top:10px"></div><div style="margin-top:12px"><div class="slab-grid" style="font-weight:700;margin-bottom:6px"><div class="wide">Slab</div><div>Upto amount</div><div>Rate %</div><div>Coverage</div><div></div></div><div id="interestSlabs"></div></div>'+
-    '<div id="interestResults" style="margin-top:14px"><div class="hint">Enter/edit the slabs and press <b>Calculate interest</b>.</div></div>'+
-    '<div id="interestDaily"></div>'+
-    '<p class="hint" style="margin-top:12px">If the statement contains an interest-credit transaction, StatementIQ compares the calculated monthly interest with the amount actually credited. A difference is a review point, not proof of a bank error.</p>';
-  interestRenderSlabs(slabs);
+  if(sel){
+    sel.innerHTML=banks.length ? banks.map(d=>'<option value="'+esc(d.id)+'">'+esc(d.name)+'</option>').join('') : '<option value="">No bank statement loaded</option>';
+    sel.disabled=!banks.length;
+  }
+  interestRenderSlabs(interestLoadConfig());
 }
 
 function renderBank(){
