@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>StatementIQ — Bank &amp; Credit Card Statement Analyser</title>
+<title>StatementIQ v2.0.0 — Bank &amp; Credit Card Statement Analyser</title>
 
 <!-- ==========================================================================
      StatementIQ — single-file, offline, browser-only statement analyser.
@@ -277,6 +277,9 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
   th{background:#0E0E10!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* v2.0 dashboard */
+.health-score{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.score-ring{width:92px;height:92px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--amber) calc(var(--score)*1%),var(--line) 0);position:relative}.score-ring:after{content:"";position:absolute;inset:9px;border-radius:50%;background:var(--paper)}.score-ring b{position:relative;z-index:1;font-size:24px}.score-copy{min-width:220px}.metric-line{display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-bottom:1px solid var(--line)}.metric-line:last-child{border-bottom:0}.flag{padding:10px 12px;border-radius:10px;background:var(--surface-2);margin:7px 0;border-left:4px solid var(--amber)}.flag.bad{border-left-color:var(--rust)}.flag.ok{border-left-color:var(--green)}.flag b{display:block}.muted{color:var(--ink-soft);font-size:12px}.pill-big{display:inline-flex;padding:4px 9px;border-radius:999px;background:var(--surface-2);font-size:11px;font-weight:700}.dash-empty{padding:16px}.confidence{font-weight:700}.confidence.high{color:var(--green)}.confidence.low{color:var(--rust)}
 </style>
 </head>
 <body>
@@ -294,7 +297,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
   </div>
   <div class="brand-txt">
     <h1>StatementIQ</h1>
-    <small>Bank &amp; credit card statement analyser · runs offline in your browser</small>
+    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.0.0</b></small>
     <div class="developer-credit">Developed by Anil Sharma, Former General Manager, Central Bank of India</div>
   </div>
   <div class="header-actions">
@@ -316,6 +319,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 
 <div id="tabs">
   <button class="tab on" data-panel="pUpload">Upload &amp; verify</button>
+  <button class="tab" data-panel="pDash">Dashboard</button>
   <button class="tab" data-panel="pBank">Bank statement<span class="pill" id="pillBank">0</span></button>
   <button class="tab" data-panel="pCard">Credit card<span class="pill" id="pillCard">0</span></button>
   <button class="tab" data-panel="pRecon">Reconciliation</button>
@@ -372,6 +376,25 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
       <p>Add a PDF, Excel or CSV statement above. Want to see what the tool does first? Load the sample data — it is fabricated, not anyone's real account.</p>
       <button class="btn primary" onclick="loadSample()">Load sample data</button>
     </div>
+  </div>
+</section>
+
+<!-- ================= DASHBOARD PANEL ================= -->
+<section class="panel" id="pDash">
+  <div id="dashEmpty" class="card"><div class="empty"><h3>No analysis yet</h3><p>Upload a bank or credit card statement and analyse it to see your financial dashboard.</p><button class="btn primary" onclick="switchPanel('pUpload')">Go to upload</button></div></div>
+  <div id="dashBody" style="display:none">
+    <div class="card" id="dashHero"></div>
+    <div class="grid g4" id="dashStats" style="margin-bottom:16px"></div>
+    <div class="grid g2">
+      <div class="card"><h3>Cash-flow picture</h3><p class="hint">Transfers and credit-card settlements are separated from genuine income and spending.</p><div id="cashFlowBox"></div></div>
+      <div class="card"><h3>Attention required</h3><p class="hint">Transactions or statement conditions that deserve a quick review.</p><div id="attentionBox"></div></div>
+    </div>
+    <div class="grid g2">
+      <div class="card"><h3>Recurring commitments</h3><p class="hint">Estimated recurring outflow, annualised where cadence can be established.</p><div id="dashRecurring"></div></div>
+      <div class="card"><h3>Financial health</h3><p class="hint">A simple analytical score based only on the loaded statements — not financial advice.</p><div id="healthBox"></div></div>
+    </div>
+    <div class="card"><h3>Top spending categories</h3><p class="hint">Actual spending excludes transfers to self and credit-card bill settlements.</p><div class="tblwrap"><table id="dashCatTbl"></table></div></div>
+    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.0.0 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
   </div>
 </section>
 
@@ -518,7 +541,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 <!-- ================= HELP PANEL ================= -->
 <section class="panel" id="pHelp">
   <div class="card">
-    <h2>How to use StatementIQ</h2>
+    <h2>How to use StatementIQ <span class="pill-big">v2.0.0</span></h2>
     <ol style="line-height:1.9;padding-left:20px">
       <li><b>Upload.</b> Drop in bank and credit card statements together — PDF, XLSX or CSV. Password-protected PDFs prompt for the password; nothing is stored.</li>
       <li><b>Verify columns.</b> Check the detected column roles and fix any that are wrong with the dropdowns.</li>
@@ -551,7 +574,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 
 <footer>
   <p class="disc">This tool extracts and analyses data from statements you provide. Always verify the extracted figures against your original statement before using them for tax filing, loan applications, or any financial decision. This is not financial or tax advice.</p>
-  <p>StatementIQ · runs entirely offline in your browser · no account, no upload, no tracking</p>
+  <p>StatementIQ v2.0.0 · runs entirely offline in your browser · no account, no upload, no tracking</p>
 </footer>
 
 <!-- password modal -->
@@ -1125,7 +1148,21 @@ function classify(t){
   else if(t.channel==='Cash') t.counterparty = 'Cash';
   else t.counterparty = extractCounterparty(t.narration);
   t.category = categorise(t);
+  t.economicType = economicType(t);
   return t;
+}
+function economicType(t){
+  const n=(t.narration||'').toLowerCase();
+  if(t.category==='Transfer to Self' || /own account|to self|self transfer|sweep/.test(n)) return 'Transfer';
+  if(t.category==='Credit Card Payment' || /credit ?card|cc ?payment|card ?bill/.test(n)) return 'Card settlement';
+  if(t.credit>0 && /refund|reversal|cashback/.test(n)) return 'Refund / reversal';
+  if(t.credit>0 && (t.category==='Salary' || /interest|int\. credit|interest credit/.test(n))) return t.category==='Salary'?'Income':'Interest income';
+  if(t.credit>0) return 'Other income';
+  if(t.category==='Investment/SIP') return 'Investment';
+  if(t.category==='EMI & Loan') return 'Loan repayment';
+  if(t.category==='Bank Charges') return 'Bank charge';
+  if(t.category==='Cash Withdrawal') return 'Cash withdrawal';
+  return 'Expense';
 }
 function loadLearned(){
   try{ S.learned = JSON.parse(localStorage.getItem('siq_rules')||'{}'); }catch(e){ S.learned={}; }
@@ -1544,6 +1581,7 @@ function runAnalysis(){
   if(bankN) renderBank();
   if(cardN) renderCard();
   renderConsolidation();
+  renderDashboard();
   fillPeriodSelects();
   setStep(4);
   switchPanel(bankN ? 'pBank' : 'pCard');
@@ -2670,7 +2708,7 @@ document.addEventListener('keydown', e=>{
 
 function exportCsv(){
   if(!S.txns.length){ toast('Nothing to export yet.','err'); return; }
-  const head = ['Date','Narration','Reference','Category','Channel','Counterparty','Debit','Credit','Balance','Source'];
+  const head = ['Date','Narration','Reference','Category','Economic Type','Channel','Counterparty','Debit','Credit','Balance','Source'];
   const q = v => '"' + String(v===null||v===undefined?'':v).replace(/"/g,'""') + '"';
   const csv = [head.join(',')].concat(S.txns.map(t=>[
     fmtDate(t.date), t.narration, t.ref, t.category, t.channel, t.counterparty,
@@ -2833,8 +2871,8 @@ function clearAll(silent){
   Object.values(S.charts).forEach(c=>{ try{c.destroy();}catch(e){} });
   S.charts={};
   ['fileList','mapBody','c2bOut','b2bOut','consOut','perOut','bookMap','bankIntegrity'].forEach(id=>{ const el=document.getElementById(id); if(el) el.innerHTML=''; });
-  ['mapCard','reviewCard','bankBody','cardBody','bookRunRow'].forEach(id=>{ const el=document.getElementById(id); if(el) el.style.display='none'; });
-  ['bankEmpty','cardEmpty','uploadEmpty'].forEach(id=>{ const el=document.getElementById(id); if(el) el.style.display='block'; });
+  ['mapCard','reviewCard','bankBody','cardBody','bookRunRow','dashBody'].forEach(id=>{ const el=document.getElementById(id); if(el) el.style.display='none'; });
+  ['bankEmpty','cardEmpty','uploadEmpty','dashEmpty'].forEach(id=>{ const el=document.getElementById(id); if(el) el.style.display='block'; });
   document.getElementById('pillBank').textContent='0';
   document.getElementById('pillCard').textContent='0';
   document.getElementById('bookName').textContent='';
