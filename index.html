@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>StatementIQ v2.0.8 — Bank &amp; Credit Card Statement Analyser</title>
+<title>StatementIQ v2.0.9 — Bank &amp; Credit Card Statement Analyser</title>
 
 <!-- ==========================================================================
      StatementIQ — single-file, offline, browser-only statement analyser.
@@ -330,7 +330,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
   </div>
   <div class="brand-txt">
     <h1>StatementIQ</h1>
-    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.0.8</b></small>
+    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.0.9</b></small>
     <div class="developer-credit">Developed by Anil Sharma, Former General Manager, Central Bank of India</div>
   </div>
   <div class="header-actions">
@@ -428,7 +428,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
       <div class="card"><h3>Financial health</h3><p class="hint">A simple analytical score based only on the loaded statements — not financial advice.</p><div id="healthBox"></div></div>
     </div>
     <div class="card"><h3>Top spending categories</h3><p class="hint">Consumption spending excludes transfers to self, credit-card settlements, investments, loan principal and matched reversals.</p><div class="tblwrap"><table id="dashCatTbl"></table></div></div>
-    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.0.8 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
+    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.0.9 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
   </div>
 </section>
 
@@ -577,7 +577,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 <!-- ================= HELP PANEL ================= -->
 <section class="panel" id="pHelp">
   <div class="card">
-    <h2>How to use StatementIQ <span class="pill-big">v2.0.8</span></h2>
+    <h2>How to use StatementIQ <span class="pill-big">v2.0.9</span></h2>
     <ol style="line-height:1.9;padding-left:20px">
       <li><b>Upload.</b> Drop in bank and credit card statements together — PDF, XLSX or CSV. Password-protected PDFs prompt for the password; nothing is stored.</li>
       <li><b>Verify columns.</b> Check the detected column roles and fix any that are wrong with the dropdowns.</li>
@@ -610,7 +610,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 
 <footer>
   <p class="disc">This tool extracts and analyses data from statements you provide. Always verify the extracted figures against your original statement before using them for tax filing, loan applications, or any financial decision. This is not financial or tax advice.</p>
-  <p>StatementIQ v2.0.8 · runs entirely offline in your browser · no account, no upload, no tracking</p>
+  <p>StatementIQ v2.0.9 · runs entirely offline in your browser · no account, no upload, no tracking</p>
 </footer>
 
 <!-- password modal -->
@@ -1772,7 +1772,7 @@ function renderDashboard(){
 
   const stat=(l,v,s,cls)=>'<div class="stat"><div class="lbl">'+l+'</div><div class="stat-val '+(cls||'')+'">'+v+'</div><div class="sub">'+(s||'')+'</div></div>';
   document.getElementById('dashStats').innerHTML =
-    stat('Actual income',inr(income),'excluding self-transfers and card settlements','pos')+
+    stat('Income',inr(income),'excluding self-transfers and card settlements','pos')+
     stat('Consumption spending',inr(actualExpense),'day-to-day spending; transfers, settlements & investments excluded','neg')+
     stat('Net surplus',inr(net),savingsPct.toFixed(1)+'% of actual income',net>=0?'pos':'neg')+
     stat('Average monthly spending',inr(avgMonthlyExpense),months+' month'+(months===1?'':'s'));
@@ -1823,7 +1823,7 @@ function financialSummary(tx){
   const loanRepayments = tx.filter(t=>t.debit>0 && t.economicType==='Loan repayment').reduce((a,t)=>a+t.debit,0);
   const actualExpense = tx.filter(t=>t.debit>0 && !['Transfer','Card settlement','Investment','Loan repayment','Refund / reversal','Matched reversal'].includes(t.economicType))
     .reduce((a,t)=>a+t.debit,0);
-  // Net financial activity excludes movements that merely move/settle money or are investments/loan principal.
+  // Net income after consumption excludes movements that merely move/settle money or are investments/loan principal.
   const netFinancial = income - actualExpense;
   return {cashIn,cashOut,cashNet:cashIn-cashOut,income,actualExpense,netFinancial,refunds,transfersIn,transfersOut,cardSettlements,investments,loanRepayments};
 }
@@ -1955,10 +1955,11 @@ function renderBank(){
         '<div class="metric-line"><span>Net cash movement</span><b>'+inr(fs.cashNet)+'</b></div>'+
       '</div>'+
       '<div class="card" style="box-shadow:none;border:1px solid var(--line)"><div class="lbl">Financial activity</div>'+
-        '<div class="metric-line"><span>Actual income</span><b>'+inr(fs.income)+'</b></div>'+
+        '<div class="metric-line"><span>Income</span><b>'+inr(fs.income)+'</b></div>'+
         '<div class="metric-line"><span>Consumption spending</span><b>'+inr(fs.actualExpense)+'</b></div>'+
         '<div class="metric-line"><span>Investments</span><b>'+inr(fs.investments)+'</b></div>'+
-        '<div class="metric-line"><span>Net financial activity</span><b>'+inr(fs.netFinancial)+'</b></div>'+
+        '<div class="metric-line"><span>Net income after consumption</span><b>'+inr(fs.netFinancial)+'</b></div>'+
+        '<div class="metric-line"><span>Net after investment</span><b>'+inr(fs.netFinancial-fs.investments)+'</b></div>'+
       '</div>'+
     '</div>'+
     '<p class="hint" style="margin-top:12px">Excluded from income/consumption spending: transfers in/out '+inr(fs.transfersIn)+' / '+inr(fs.transfersOut)+' and card settlements '+inr(fs.cardSettlements)+'. Investments '+inr(fs.investments)+' and loan repayments '+inr(fs.loanRepayments)+' are shown separately from consumption spending.</p>';
@@ -1998,7 +1999,7 @@ function renderBank(){
   document.getElementById('bankStats').innerHTML =
     stat('Cash inflow', inr(fs.cashIn), 'all credits on the statement', 'pos', true) +
     stat('Cash outflow', inr(fs.cashOut), 'all debits on the statement', 'neg') +
-    stat('Actual income', inr(fs.income), 'transfers, card settlements & matched reversals excluded', 'pos') +
+    stat('Income', inr(fs.income), 'transfers, card settlements & matched reversals excluded', 'pos') +
     stat('Consumption spending', inr(fs.actualExpense), 'day-to-day spending; transfers, settlements, investments & loan repayments excluded', 'neg') +
     stat('Bank charges &amp; fees', inr(charges), chargeN+' charge'+(chargeN===1?'':'s'), charges>0?'neg':'') +
     stat('Cash withdrawn', inr(cashTot), cash.length+' withdrawal'+(cash.length===1?'':'s')) +
@@ -2800,9 +2801,9 @@ async function exportExcel(){
   line('Total cash outflow', outflow, INR_FMT);
   line('Net cash movement', inflow-outflow, INR_FMT);
   const exportFS = financialSummary(S.txns);
-  line('Actual income', exportFS.income, INR_FMT);
+  line('Income', exportFS.income, INR_FMT);
   line('Consumption spending', exportFS.actualExpense, INR_FMT);
-  line('Net financial activity', exportFS.netFinancial, INR_FMT);
+  line('Net income after consumption', exportFS.netFinancial, INR_FMT);
   line('Transfers in', exportFS.transfersIn, INR_FMT);
   line('Transfers out', exportFS.transfersOut, INR_FMT);
   line('Card settlements', exportFS.cardSettlements, INR_FMT);
