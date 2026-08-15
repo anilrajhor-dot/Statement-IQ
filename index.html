@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>StatementIQ v2.1.0 — Bank &amp; Credit Card Statement Analyser</title>
+<title>StatementIQ v2.2.0 — Bank &amp; Credit Card Statement Analyser</title>
 
 <!-- ==========================================================================
      StatementIQ — single-file, offline, browser-only statement analyser.
@@ -314,7 +314,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 /* v2.0 dashboard */
 .health-score{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.score-ring{width:92px;height:92px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--amber) calc(var(--score)*1%),var(--line) 0);position:relative}.score-ring:after{content:"";position:absolute;inset:9px;border-radius:50%;background:var(--paper)}.score-ring b{position:relative;z-index:1;font-size:24px}.score-copy{min-width:220px}.metric-line{display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-bottom:1px solid var(--line)}.metric-line:last-child{border-bottom:0}.flag{padding:10px 12px;border-radius:10px;background:var(--surface-2);margin:7px 0;border-left:4px solid var(--amber)}.flag.bad{border-left-color:var(--rust)}.flag.ok{border-left-color:var(--green)}.flag b{display:block}.muted{color:var(--ink-soft);font-size:12px}.pill-big{display:inline-flex;padding:4px 9px;border-radius:999px;background:var(--surface-2);font-size:11px;font-weight:700}.dash-empty{padding:16px}.confidence{font-weight:700}.confidence.high{color:var(--green)}.confidence.low{color:var(--rust)}
 
-/* v2.1.0: keep financial metric values together on narrow screens */
+/* v2.2.0: keep financial metric values together on narrow screens */
 .financial-activity .metric-line { display:flex; align-items:center; gap:14px; }
 .financial-activity .metric-line span { flex:1 1 auto; min-width:0; }
 .financial-activity .metric-line b { flex:0 0 auto; white-space:nowrap; text-align:right; }
@@ -327,7 +327,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 }
 
 
-/* v2.1.0 — daily-product interest calculator */
+/* v2.2.0 — daily-product interest calculator */
 .interest-calc .slab-grid{display:grid;grid-template-columns:1.1fr 1.4fr 1.4fr 1fr auto;gap:8px;align-items:center}
 .interest-calc .slab-grid input{min-width:0}
 .interest-calc .interest-table th,.interest-calc .interest-table td{white-space:nowrap}
@@ -343,6 +343,18 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
   .interest-calc .slab-grid .wide{grid-column:1/-1}
   .interest-calc .interest-table th,.interest-calc .interest-table td{padding:8px 7px}
 }
+
+
+/* v2.2.0 — dedicated calculators */
+.calc-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.calc-card{border:1px solid var(--line);border-radius:14px;padding:14px;background:var(--surface)}
+.calc-result{margin-top:14px;padding:14px;border-radius:12px;background:var(--surface-soft);border:1px solid var(--line)}
+.calc-result .big{font-size:24px;font-weight:800}
+.calc-table{width:100%;border-collapse:collapse;margin-top:12px}
+.calc-table th,.calc-table td{padding:8px;border-bottom:1px solid var(--line);text-align:right}
+.calc-table th:first-child,.calc-table td:first-child{text-align:left}
+@media(max-width:800px){.calc-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.calc-grid{grid-template-columns:1fr}.calc-result .big{font-size:21px}}
 
 </style>
 </head>
@@ -361,7 +373,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
   </div>
   <div class="brand-txt">
     <h1>StatementIQ</h1>
-    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.1.0</b></small>
+    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.2.0</b></small>
     <div class="developer-credit">Developed by Anil Sharma, Former General Manager, Central Bank of India</div>
   </div>
   <div class="header-actions">
@@ -459,7 +471,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
       <div class="card"><h3>Financial health</h3><p class="hint">A simple analytical score based only on the loaded statements — not financial advice.</p><div id="healthBox"></div></div>
     </div>
     <div class="card"><h3>Top spending categories</h3><p class="hint">Consumption spending excludes transfers to self, credit-card settlements, investments, loan principal and matched reversals.</p><div class="tblwrap"><table id="dashCatTbl"></table></div></div>
-    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.1.0 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
+    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.2.0 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
   </div>
 </section>
 
@@ -609,7 +621,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 <!-- ================= HELP PANEL ================= -->
 <section class="panel" id="pHelp">
   <div class="card">
-    <h2>How to use StatementIQ <span class="pill-big">v2.1.0</span></h2>
+    <h2>How to use StatementIQ <span class="pill-big">v2.2.0</span></h2>
     <ol style="line-height:1.9;padding-left:20px">
       <li><b>Upload.</b> Drop in bank and credit card statements together — PDF, XLSX or CSV. Password-protected PDFs prompt for the password; nothing is stored.</li>
       <li><b>Verify columns.</b> Check the detected column roles and fix any that are wrong with the dropdowns.</li>
@@ -640,9 +652,39 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 
 </main>
 
+
+<!-- ================= DEDICATED INTEREST CALCULATOR ================= -->
+<section class="panel" id="pInterestCalc">
+  <div class="card">
+    <h2>Interest Calculator</h2>
+    <p class="hint">Daily-product savings interest: balance for each calendar day is allocated progressively across editable slabs. Annual rate is divided by the actual number of days in that month.</p>
+    <div id="interestStandalone"></div>
+  </div>
+</section>
+
+<!-- ================= FINANCIAL CALCULATORS ================= -->
+<section class="panel" id="pFinancialCalc">
+  <div class="card">
+    <h2>Financial Calculators</h2>
+    <p class="hint">EMI, deposit, reinvestment, age, SIP and currency calculators. Inputs are editable and calculations are shown transparently.</p>
+    <div class="calc-tabs" role="tablist" style="display:flex;gap:8px;flex-wrap:wrap;margin:12px 0">
+      <button class="btn primary calc-tab" type="button" onclick="showCalc('emi')">EMI</button>
+      <button class="btn calc-tab" type="button" onclick="showCalc('deposit')">Deposit</button>
+      <button class="btn calc-tab" type="button" onclick="showCalc('age')">Age</button>
+      <button class="btn calc-tab" type="button" onclick="showCalc('sip')">SIP</button>
+      <button class="btn calc-tab" type="button" onclick="showCalc('currency')">Currency</button>
+    </div>
+    <div id="calcEmi" class="calc-pane"></div>
+    <div id="calcDeposit" class="calc-pane" style="display:none"></div>
+    <div id="calcAge" class="calc-pane" style="display:none"></div>
+    <div id="calcSip" class="calc-pane" style="display:none"></div>
+    <div id="calcCurrency" class="calc-pane" style="display:none"></div>
+  </div>
+</section>
+
 <footer>
   <p class="disc">This tool extracts and analyses data from statements you provide. Always verify the extracted figures against your original statement before using them for tax filing, loan applications, or any financial decision. This is not financial or tax advice.</p>
-  <p>StatementIQ v2.1.0 · runs entirely offline in your browser · no account, no upload, no tracking</p>
+  <p>StatementIQ v2.2.0 · runs entirely offline in your browser · no account, no upload, no tracking</p>
 </footer>
 
 <!-- password modal -->
@@ -1957,9 +1999,10 @@ function detectSalary(txns){
    of days in that month (28/29/30/31), not uniformly by 365.
    ========================================================================== */
 const INTEREST_DEFAULT_SLABS = [
-  {from:0, to:300000, rate:4},
-  {from:300001, to:500000, rate:5},
-  {from:500001, to:null, rate:6}
+  {from:0, to:300000, rate:2.50},
+  {from:300001, to:500000, rate:5.00},
+  {from:500001, to:2500000, rate:6.00},
+  {from:2500001, to:null, rate:7.00}
 ];
 
 function interestLoadConfig(){
@@ -1983,14 +2026,13 @@ function interestSlabRows(){
   }));
 }
 function interestNormaliseSlabs(slabs){
-  const a=slabs.map((x,i)=>({
-    from:Math.max(0,interestNum(x.from)),
+  const a=slabs.map(x=>({
+    from:0,
     to:(x.to===null || x.to===undefined || x.to==='')?null:Math.max(0,interestNum(x.to)),
     rate:interestNum(x.rate)
   })).filter(x=>x.rate>=0);
   a.forEach((x,i)=>{
-    if(i===0) x.from=0;
-    else x.from = a[i-1].to===null ? a[i-1].from : a[i-1].to+0.01;
+    x.from = i===0 ? 0 : (a[i-1].to===null ? a[i-1].from : a[i-1].to+0.01);
   });
   return a;
 }
@@ -2097,12 +2139,15 @@ function interestRenderSlabs(slabs){
   el.innerHTML=slabs.map((x,i)=>
     '<div class="interest-slab-row slab-grid" data-i="'+i+'">'+
       '<div class="wide"><label class="f">Slab '+(i+1)+'</label></div>'+
-      '<div><input class="slab-from" type="number" min="0" step="0.01" value="'+esc(x.from)+'" aria-label="Slab '+(i+1)+' from"></div>'+
-      '<div><input class="slab-to" type="number" min="0" step="0.01" value="'+(x.to===null?'':esc(x.to))+'" placeholder="No limit" aria-label="Slab '+(i+1)+' to"></div>'+
+      '<div><input class="slab-to" type="number" min="0" step="1" value="'+(x.to===null?'':esc(x.to))+'" placeholder="No limit" aria-label="Slab '+(i+1)+' upto amount"></div>'+
       '<div><input class="slab-rate" type="number" min="0" step="0.01" value="'+esc(x.rate)+'" aria-label="Slab '+(i+1)+' annual rate"></div>'+
+      '<div><span class="hint">'+(x.to===null?'Above previous slab':'Upto '+inr(x.to))+'</span></div>'+
       '<div><button class="btn sm" type="button" onclick="interestRemoveSlab('+i+')" '+(slabs.length<=1?'disabled':'')+'>Remove</button></div>'+
     '</div>'
   ).join('');
+  const totalFinite=slabs.reduce((a,x)=>a+(x.to===null?0:Number(x.to||0)),0);
+  const totalEl=document.getElementById('interestSlabTotal');
+  if(totalEl) totalEl.innerHTML='<b>Total of finite “Upto amount” values:</b> '+inr(totalFinite)+' <span class="hint">(No-limit slab excluded)</span>';
 }
 function interestRenderResults(result,slabs){
   const box=document.getElementById('interestResults');
@@ -2177,7 +2222,7 @@ function renderInterestCalculator(){
     '<p class="hint">Interest is calculated on the closing balance for every calendar day from the 1st through the last day of the month. Each balance is split progressively across the editable slabs. The annual rate is divided by the actual number of days in that month — 28/29/30/31, as applicable.</p>'+
     '<div class="formula-box"><b>Example:</b> ₹4,00,000 daily balance = ₹3,00,000 @ 4% + ₹1,00,000 @ 5%. ₹8,00,000 = ₹3,00,000 @ 4% + ₹2,00,000 @ 5% + ₹3,00,000 @ 6%.</div>'+
     '<div class="row" style="margin-top:12px"><label class="f" style="min-width:120px">Statement</label><select id="interestStatement">'+banks.map(d=>'<option value="'+esc(d.id)+'">'+esc(d.name)+'</option>').join('')+'</select><button class="btn primary" type="button" onclick="interestRun()">Calculate interest</button><button class="btn sm" type="button" onclick="interestAddSlab()">+ Add slab</button></div>'+
-    '<div style="margin-top:12px"><div class="slab-grid" style="font-weight:700;margin-bottom:6px"><div class="wide">Slab</div><div>From balance</div><div>Up to balance</div><div>Annual rate %</div><div></div></div><div id="interestSlabs"></div></div>'+
+    '<div id="interestSlabTotal" class="hint" style="margin-top:10px"></div><div style="margin-top:12px"><div class="slab-grid" style="font-weight:700;margin-bottom:6px"><div class="wide">Slab</div><div>Upto amount</div><div>Rate %</div><div>Coverage</div><div></div></div><div id="interestSlabs"></div></div>'+
     '<div id="interestResults" style="margin-top:14px"><div class="hint">Enter/edit the slabs and press <b>Calculate interest</b>.</div></div>'+
     '<div id="interestDaily"></div>'+
     '<p class="hint" style="margin-top:12px">If the statement contains an interest-credit transaction, StatementIQ compares the calculated monthly interest with the amount actually credited. A difference is a review point, not proof of a bank error.</p>';
@@ -3516,6 +3561,235 @@ document.getElementById('helpTbl').innerHTML =
   renderFiles();
   console.log('%cStatementIQ','background:#0E0E10;color:#F5B301;padding:3px 8px;border-radius:4px','running offline. No network calls are made with your statement data.');
 })();
+
+/* ============================================================================
+   14. DEDICATED FINANCIAL CALCULATORS
+   ========================================================================== */
+function calcNum(id){ const e=document.getElementById(id); const n=Number((e?.value||'').toString().replace(/,/g,'')); return isFinite(n)?n:0; }
+function calcMoney(n){ return Number(n||0).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function calcPct(n){ return Number(n||0).toFixed(2)+'%'; }
+function calcDate(id){ const v=document.getElementById(id)?.value; return v?new Date(v+'T00:00:00'):null; }
+
+function showCalc(which){
+  ['emi','deposit','age','sip','currency'].forEach(x=>{
+    const p=document.getElementById('calc'+x.charAt(0).toUpperCase()+x.slice(1));
+    if(p) p.style.display=(x===which?'block':'none');
+  });
+  document.querySelectorAll('.calc-tab').forEach(b=>b.classList.remove('primary'));
+  const map={emi:'EMI',deposit:'Deposit',age:'Age',sip:'SIP',currency:'Currency'};
+  document.querySelectorAll('.calc-tab').forEach(b=>{if(b.textContent.trim()===map[which])b.classList.add('primary');});
+}
+function initCalculators(){
+  const e=document.getElementById('calcEmi');
+  if(e) e.innerHTML=`
+    <h3>EMI Calculator</h3>
+    <div class="calc-grid">
+      <div><label class="f">Loan amount</label><input id="emiP" type="number" value="1000000" min="0"></div>
+      <div><label class="f">Annual interest rate %</label><input id="emiR" type="number" value="8.5" step="0.01" min="0"></div>
+      <div><label class="f">Tenure (months)</label><input id="emiN" type="number" value="60" min="1"></div>
+      <div><label class="f">Moratorium (months)</label><input id="emiM" type="number" value="0" min="0"></div>
+      <div><label class="f">Moratorium interest payment</label><select id="emiMip"><option value="pay">Pay monthly interest</option><option value="accrue">Accrue/capitalize interest</option></select></div>
+      <div><label class="f">Post-moratorium tenure (months)</label><input id="emiPost" type="number" value="60" min="1"></div>
+    </div>
+    <div class="row" style="margin-top:12px"><button class="btn primary" onclick="calcEMI()">Calculate EMI</button></div>
+    <div id="emiResult"></div>
+    <p class="hint">During moratorium, monthly interest can either be paid each month or accrued/capitalized. The result explicitly separates moratorium interest from post-moratorium EMI.</p>`;
+
+  const d=document.getElementById('calcDeposit');
+  if(d) d.innerHTML=`
+    <h3>Deposit Calculator</h3>
+    <div class="calc-grid">
+      <div><label class="f">Principal / deposit</label><input id="depP" type="number" value="100000" min="0"></div>
+      <div><label class="f">Annual interest rate %</label><input id="depR" type="number" value="7" step="0.01" min="0"></div>
+      <div><label class="f">Term (months)</label><input id="depN" type="number" value="12" min="1"></div>
+      <div><label class="f">Interest payout frequency</label><select id="depMode"><option value="monthly">Monthly</option><option value="quarterly">Quarterly</option><option value="halfyearly">Half-yearly</option><option value="yearly">Yearly</option></select></div>
+      <div><label class="f">Calculation basis</label><select id="depBasis"><option value="monthly">Periodic payout</option><option value="daily">Daily basis</option></select></div>
+      <div><label class="f">Days (for daily calculation)</label><input id="depDays" type="number" value="365" min="1"></div>
+    </div>
+    <div class="row" style="margin-top:12px"><button class="btn primary" onclick="calcDeposit()">Calculate deposit</button></div>
+    <div id="depResult"></div>
+    <h4>Reinvestment deposit</h4>
+    <p class="hint">For reinvestment, quarterly interest is accrued into the deposit instead of being paid out. This is calculated separately from the interest-payout deposit.</p>
+    <div class="calc-grid">
+      <div><label class="f">Principal</label><input id="rdP" type="number" value="100000" min="0"></div>
+      <div><label class="f">Annual rate %</label><input id="rdR" type="number" value="7" step="0.01" min="0"></div>
+      <div><label class="f">Term (months)</label><input id="rdN" type="number" value="36" min="1"></div>
+    </div>
+    <div class="row" style="margin-top:12px"><button class="btn primary" onclick="calcReinvest()">Calculate reinvestment</button></div>
+    <div id="rdResult"></div>`;
+
+  const a=document.getElementById('calcAge');
+  if(a) a.innerHTML=`
+    <h3>Age Calculator</h3>
+    <div class="calc-grid">
+      <div><label class="f">Date of birth</label><input id="ageDob" type="date"></div>
+      <div><label class="f">Calculate age on</label><input id="ageOn" type="date"></div>
+    </div>
+    <div class="row" style="margin-top:12px"><button class="btn primary" onclick="calcAge()">Calculate age</button></div>
+    <div id="ageResult"></div>`;
+
+  const sp=document.getElementById('calcSip');
+  if(sp) sp.innerHTML=`
+    <h3>SIP Calculator</h3>
+    <div class="calc-grid">
+      <div><label class="f">Monthly SIP</label><input id="sipP" type="number" value="10000" min="0"></div>
+      <div><label class="f">Expected annual return %</label><input id="sipR" type="number" value="12" step="0.01"></div>
+      <div><label class="f">Tenure (years)</label><input id="sipY" type="number" value="10" min="1"></div>
+      <div><label class="f">Investment timing</label><select id="sipTiming"><option value="begin">Beginning of month</option><option value="end" selected>End of month</option></select></div>
+    </div>
+    <div class="row" style="margin-top:12px"><button class="btn primary" onclick="calcSIP()">Calculate SIP</button></div>
+    <div id="sipResult"></div>`;
+
+  const c=document.getElementById('calcCurrency');
+  if(c) c.innerHTML=`
+    <h3>Currency Calculator</h3>
+    <div class="calc-grid">
+      <div><label class="f">Amount</label><input id="fxAmount" type="number" value="1" min="0"></div>
+      <div><label class="f">From currency</label><input id="fxFrom" value="INR" maxlength="8"></div>
+      <div><label class="f">To currency</label><input id="fxTo" value="USD" maxlength="8"></div>
+      <div><label class="f">Exchange rate (1 From = To)</label><input id="fxRate" type="number" value="0.0115" step="0.000001" min="0"></div>
+    </div>
+    <div class="row" style="margin-top:12px"><button class="btn primary" onclick="calcCurrency()">Convert</button></div>
+    <div id="fxResult"></div>
+    <p class="hint">The offline calculator uses the rate you enter. For a live rate, update the rate before calculating.</p>`;
+
+  const today=new Date();
+  const iso=d=>d.toISOString().slice(0,10);
+  const on=document.getElementById('ageOn'); if(on) on.value=iso(today);
+  const dob=document.getElementById('ageDob'); if(dob){const x=new Date(today.getFullYear()-30,today.getMonth(),today.getDate());dob.value=iso(x);}
+  showCalc('emi');
+}
+
+function calcEMI(){
+  const P=calcNum('emiP'), annual=calcNum('emiR'), totalN=Math.max(1,Math.floor(calcNum('emiN')));
+  const mor=Math.min(totalN,Math.max(0,Math.floor(calcNum('emiM'))));
+  const post=Math.max(1,Math.floor(calcNum('emiPost')||totalN-mor));
+  const r=annual/1200;
+  let principal=P, morInterest=0, morPaid=0, schedule=[];
+  for(let m=1;m<=mor;m++){
+    const i=principal*r;
+    morInterest+=i;
+    if(document.getElementById('emiMip')?.value==='pay') morPaid+=i;
+    else principal+=i;
+    schedule.push({month:m,interest:i,payment:document.getElementById('emiMip')?.value==='pay'?i:0,balance:principal});
+  }
+  const n=post;
+  const emi = r===0 ? principal/n : principal*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);
+  let totalPost=0, postInterest=0, bal=principal;
+  for(let m=1;m<=n;m++){
+    const i=bal*r, p=Math.min(bal,emi-i); bal=Math.max(0,bal-p); postInterest+=i; totalPost+=emi;
+  }
+  const totalInterest=morInterest+postInterest;
+  document.getElementById('emiResult').innerHTML=`
+    <div class="calc-result">
+      <div class="big">Post-moratorium EMI: ₹${calcMoney(emi)}</div>
+      <table class="calc-table">
+        <tr><td>Original loan</td><td>₹${calcMoney(P)}</td></tr>
+        <tr><td>Moratorium</td><td>${mor} months</td></tr>
+        <tr><td>Interest during moratorium</td><td>₹${calcMoney(morInterest)}</td></tr>
+        <tr><td>Interest paid during moratorium</td><td>₹${calcMoney(morPaid)}</td></tr>
+        <tr><td>Balance entering EMI period</td><td>₹${calcMoney(principal)}</td></tr>
+        <tr><td>Post-moratorium interest</td><td>₹${calcMoney(postInterest)}</td></tr>
+        <tr><td>Total interest</td><td>₹${calcMoney(totalInterest)}</td></tr>
+        <tr><td>Post-moratorium tenure</td><td>${n} months</td></tr>
+      </table>
+    </div>`;
+}
+function calcDeposit(){
+  const P=calcNum('depP'), annual=calcNum('depR')/100, n=Math.max(1,Math.floor(calcNum('depN')));
+  const mode=document.getElementById('depMode')?.value||'monthly';
+  const basis=document.getElementById('depBasis')?.value||'monthly';
+  const days=Math.max(1,Math.floor(calcNum('depDays')));
+  const intervals={monthly:12,quarterly:4,halfyearly:2,yearly:1}[mode]||12;
+  let amount=P, interest=0, payment=0;
+  if(basis==='daily'){
+    interest=P*annual*days/365;
+    amount=P;
+    payment=interest;
+  }else{
+    // Interest-payout deposit: interest is paid out at the selected frequency,
+    // so it is NOT added to principal. Reinvestment is handled separately.
+    const periods=Math.floor((n/12)*intervals);
+    payment=P*annual/intervals;
+    interest=payment*periods;
+    amount=P;
+  }
+  document.getElementById('depResult').innerHTML=`<div class="calc-result"><div class="big">Principal at maturity: ₹${calcMoney(amount)}</div><table class="calc-table"><tr><td>Principal</td><td>₹${calcMoney(P)}</td></tr><tr><td>Total interest paid</td><td>₹${calcMoney(interest)}</td></tr><tr><td>Interest per ${mode==='halfyearly'?'half-year':mode.replace('ly','') || mode}</td><td>₹${calcMoney(payment)}</td></tr><tr><td>Payment frequency</td><td>${mode}</td></tr><tr><td>Basis</td><td>${basis}</td></tr></table></div>`;
+}
+function calcReinvest(){
+  const P=calcNum('rdP'), annual=calcNum('rdR')/100, n=Math.max(1,Math.floor(calcNum('rdN')));
+  const q=annual/4, quarters=n/3, amount=P*Math.pow(1+q,quarters), interest=amount-P;
+  document.getElementById('rdResult').innerHTML=`<div class="calc-result"><div class="big">Reinvestment maturity: ₹${calcMoney(amount)}</div><table class="calc-table"><tr><td>Principal</td><td>₹${calcMoney(P)}</td></tr><tr><td>Interest accrued/reinvested</td><td>₹${calcMoney(interest)}</td></tr><tr><td>Compounding</td><td>Quarterly</td></tr><tr><td>Term</td><td>${n} months</td></tr></table></div>`;
+}
+function calcAge(){
+  const dob=calcDate('ageDob'), on=calcDate('ageOn');
+  const box=document.getElementById('ageResult');
+  if(!dob||!on||on<dob){box.innerHTML='<div class="banner bad">Please enter valid dates.</div>';return;}
+  let y=on.getFullYear()-dob.getFullYear(), m=on.getMonth()-dob.getMonth(), d=on.getDate()-dob.getDate();
+  if(d<0){m--; const prev=new Date(on.getFullYear(),on.getMonth(),0).getDate(); d+=prev;}
+  if(m<0){y--;m+=12;}
+  const totalDays=Math.floor((on-dob)/86400000);
+  box.innerHTML=`<div class="calc-result"><div class="big">${y} years, ${m} months, ${d} days</div><p>Total elapsed days: ${totalDays.toLocaleString('en-IN')}</p></div>`;
+}
+function calcSIP(){
+  const p=calcNum('sipP'), annual=calcNum('sipR')/100, years=Math.max(0,calcNum('sipY')), n=Math.round(years*12), r=annual/12;
+  let fv=r===0?p*n:p*((Math.pow(1+r,n)-1)/r)*(document.getElementById('sipTiming')?.value==='begin'?(1+r):1);
+  const invested=p*n, gain=fv-invested;
+  document.getElementById('sipResult').innerHTML=`<div class="calc-result"><div class="big">Estimated value: ₹${calcMoney(fv)}</div><table class="calc-table"><tr><td>Total invested</td><td>₹${calcMoney(invested)}</td></tr><tr><td>Estimated gain</td><td>₹${calcMoney(gain)}</td></tr><tr><td>Tenure</td><td>${years} years</td></tr></table><p class="hint">SIP return is an estimate based on the assumed annual return; actual market returns vary.</p></div>`;
+}
+function calcCurrency(){
+  const a=calcNum('fxAmount'), rate=calcNum('fxRate'), from=(document.getElementById('fxFrom')?.value||'').toUpperCase(), to=(document.getElementById('fxTo')?.value||'').toUpperCase();
+  document.getElementById('fxResult').innerHTML=`<div class="calc-result"><div class="big">${calcMoney(a)} ${esc(from)} = ${calcMoney(a*rate)} ${esc(to)}</div><p>Rate used: 1 ${esc(from)} = ${calcMoney(rate)} ${esc(to)}</p></div>`;
+}
+
+
+function renderStandaloneInterest(){
+  const root=document.getElementById('interestStandalone');
+  if(!root) return;
+  root.innerHTML=`
+    <div class="formula-box"><b>Progressive daily-product method:</b> each day's balance is split by slab, and each slab's annual rate is divided by the actual days in that calendar month.</div>
+    <div style="margin-top:12px">
+      <div class="slab-grid" style="font-weight:700;margin-bottom:6px"><div class="wide">Slab</div><div>Upto amount</div><div>Rate %</div><div>Coverage</div><div></div></div>
+      <div id="standaloneInterestSlabs"></div>
+      <div id="standaloneInterestSlabTotal" class="hint" style="margin-top:10px"></div>
+    </div>
+    <div class="row" style="margin-top:12px"><button class="btn" type="button" onclick="standaloneAddSlab()">+ Add slab</button><button class="btn primary" type="button" onclick="standaloneRun()">Calculate from loaded bank statement</button></div>
+    <div id="standaloneInterestResult" style="margin-top:14px"></div>`;
+  standaloneRenderSlabs(interestLoadConfig());
+}
+function standaloneRows(){
+  return [...document.querySelectorAll('#standaloneInterestSlabs .interest-slab-row')].map(r=>({
+    to:r.querySelector('.slab-to')?.value===''?null:interestNum(r.querySelector('.slab-to')?.value),
+    rate:interestNum(r.querySelector('.slab-rate')?.value)
+  }));
+}
+function standaloneRenderSlabs(slabs){
+  const el=document.getElementById('standaloneInterestSlabs'); if(!el)return;
+  el.innerHTML=slabs.map((x,i)=>'<div class="interest-slab-row slab-grid"><div class="wide"><label class="f">Slab '+(i+1)+'</label></div><div><input class="slab-to" type="number" value="'+(x.to===null?'':x.to)+'" placeholder="No limit"></div><div><input class="slab-rate" type="number" step="0.01" value="'+x.rate+'"></div><div class="hint">'+(x.to===null?'Above previous slab':'Upto '+inr(x.to))+'</div><div><button class="btn sm" onclick="standaloneRemoveSlab('+i+')">Remove</button></div></div>').join('');
+  const total=slabs.reduce((a,x)=>a+(x.to===null?0:Number(x.to||0)),0);
+  document.getElementById('standaloneInterestSlabTotal').innerHTML='<b>Total of finite Upto amounts:</b> '+inr(total);
+}
+function standaloneAddSlab(){let x=standaloneRows();x.push({to:null,rate:7});standaloneRenderSlabs(x);}
+function standaloneRemoveSlab(i){let x=standaloneRows();if(x.length>1)x.splice(i,1);standaloneRenderSlabs(x);}
+function standaloneRun(){
+  const slabs=interestNormaliseSlabs(standaloneRows()), err=interestValidateSlabs(slabs), box=document.getElementById('standaloneInterestResult');
+  if(err.length){box.innerHTML='<div class="banner bad">'+err.map(esc).join('<br>')+'</div>';return;}
+  const ds=S.sets.find(x=>x.kind==='bank');
+  if(!ds){box.innerHTML='<div class="banner warn">Load a bank statement first.</div>';return;}
+  const r=interestCalculateDaily(ds,slabs);
+  if(r.error){box.innerHTML='<div class="banner bad">'+esc(r.error)+'</div>';return;}
+  let h='<div class="tblwrap"><table class="interest-table"><thead><tr><th>Month</th><th class="r">Days</th><th class="r">Daily product</th><th class="r">Calculated interest</th><th class="r">Interest credited</th><th class="r">Difference</th></tr></thead><tbody>';
+  r.monthly.forEach(m=>{const d=m.actualInterest?m.interest-m.actualInterest:null;h+='<tr><td>'+esc(monthLabel(m.month))+'</td><td class="r">'+m.days+'</td><td class="r">'+inr(m.dailyProduct)+'</td><td class="r">'+inr(m.interest)+'</td><td class="r">'+(m.actualInterest?inr(m.actualInterest):'—')+'</td><td class="r">'+(d===null?'—':inr(d))+'</td></tr>';});
+  h+='</tbody><tfoot><tr><th>Total</th><th></th><th class="r">'+inr(r.monthly.reduce((a,m)=>a+m.dailyProduct,0))+'</th><th class="r">'+inr(r.total)+'</th><th class="r">'+inr(r.monthly.reduce((a,m)=>a+(m.actualInterest||0),0))+'</th><th></th></tr></tfoot></table></div>';
+  box.innerHTML=h;
+}
+
+
+document.addEventListener('DOMContentLoaded', function(){
+  try{ initCalculators(); }catch(e){}
+  try{ renderStandaloneInterest(); }catch(e){}
+});
+
 </script>
 </body>
 </html>
