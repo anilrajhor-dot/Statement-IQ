@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>StatementIQ v2.0.10 — Bank &amp; Credit Card Statement Analyser</title>
+<title>StatementIQ v2.0.11 — Bank &amp; Credit Card Statement Analyser</title>
 
 <!-- ==========================================================================
      StatementIQ — single-file, offline, browser-only statement analyser.
@@ -313,6 +313,19 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 
 /* v2.0 dashboard */
 .health-score{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.score-ring{width:92px;height:92px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--amber) calc(var(--score)*1%),var(--line) 0);position:relative}.score-ring:after{content:"";position:absolute;inset:9px;border-radius:50%;background:var(--paper)}.score-ring b{position:relative;z-index:1;font-size:24px}.score-copy{min-width:220px}.metric-line{display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-bottom:1px solid var(--line)}.metric-line:last-child{border-bottom:0}.flag{padding:10px 12px;border-radius:10px;background:var(--surface-2);margin:7px 0;border-left:4px solid var(--amber)}.flag.bad{border-left-color:var(--rust)}.flag.ok{border-left-color:var(--green)}.flag b{display:block}.muted{color:var(--ink-soft);font-size:12px}.pill-big{display:inline-flex;padding:4px 9px;border-radius:999px;background:var(--surface-2);font-size:11px;font-weight:700}.dash-empty{padding:16px}.confidence{font-weight:700}.confidence.high{color:var(--green)}.confidence.low{color:var(--rust)}
+
+/* v2.0.11: keep financial metric values together on narrow screens */
+.financial-activity .metric-line { display:flex; align-items:center; gap:14px; }
+.financial-activity .metric-line span { flex:1 1 auto; min-width:0; }
+.financial-activity .metric-line b { flex:0 0 auto; white-space:nowrap; text-align:right; }
+@media (max-width:560px){
+  .financial-activity .metric-line { gap:10px; }
+  .financial-activity .metric-line span { font-size:clamp(16px,4.4vw,20px); line-height:1.28; }
+  .financial-activity .metric-line b { font-size:clamp(17px,4.5vw,22px); }
+  .financial-activity .formula-note { font-size:15px; line-height:1.35; }
+  .why-difference { font-size:15px; line-height:1.4; }
+}
+
 </style>
 </head>
 <body>
@@ -330,7 +343,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
   </div>
   <div class="brand-txt">
     <h1>StatementIQ</h1>
-    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.0.10</b></small>
+    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.0.11</b></small>
     <div class="developer-credit">Developed by Anil Sharma, Former General Manager, Central Bank of India</div>
   </div>
   <div class="header-actions">
@@ -428,7 +441,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
       <div class="card"><h3>Financial health</h3><p class="hint">A simple analytical score based only on the loaded statements — not financial advice.</p><div id="healthBox"></div></div>
     </div>
     <div class="card"><h3>Top spending categories</h3><p class="hint">Consumption spending excludes transfers to self, credit-card settlements, investments, loan principal and matched reversals.</p><div class="tblwrap"><table id="dashCatTbl"></table></div></div>
-    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.0.10 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
+    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.0.11 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
   </div>
 </section>
 
@@ -577,7 +590,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 <!-- ================= HELP PANEL ================= -->
 <section class="panel" id="pHelp">
   <div class="card">
-    <h2>How to use StatementIQ <span class="pill-big">v2.0.10</span></h2>
+    <h2>How to use StatementIQ <span class="pill-big">v2.0.11</span></h2>
     <ol style="line-height:1.9;padding-left:20px">
       <li><b>Upload.</b> Drop in bank and credit card statements together — PDF, XLSX or CSV. Password-protected PDFs prompt for the password; nothing is stored.</li>
       <li><b>Verify columns.</b> Check the detected column roles and fix any that are wrong with the dropdowns.</li>
@@ -610,7 +623,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 
 <footer>
   <p class="disc">This tool extracts and analyses data from statements you provide. Always verify the extracted figures against your original statement before using them for tax filing, loan applications, or any financial decision. This is not financial or tax advice.</p>
-  <p>StatementIQ v2.0.10 · runs entirely offline in your browser · no account, no upload, no tracking</p>
+  <p>StatementIQ v2.0.11 · runs entirely offline in your browser · no account, no upload, no tracking</p>
 </footer>
 
 <!-- password modal -->
@@ -1960,11 +1973,11 @@ function renderBank(){
         '<div class="metric-line"><span>Investments</span><b>'+inr(fs.investments)+'</b></div>'+
         '<div class="metric-line"><span>Net income after consumption</span><b>'+inr(fs.netFinancial)+'</b></div>'+
         '<div class="metric-line"><span>Net income after consumption & investment</span><b>'+inr(fs.netFinancial-fs.investments)+'</b></div>'+
-        '<div class="hint" style="margin-top:10px">Formula: Income − Consumption spending − Investments</div>'+
+        '<div class="hint formula-note" style="margin-top:10px">Formula: Income − Consumption spending − Investments = Net income after consumption &amp; investment</div>'+
       '</div>'+
     '</div>'+
     '<p class="hint" style="margin-top:12px">Excluded from income/consumption spending: transfers in/out '+inr(fs.transfersIn)+' / '+inr(fs.transfersOut)+' and card settlements '+inr(fs.cardSettlements)+'. Investments '+inr(fs.investments)+' and loan repayments '+inr(fs.loanRepayments)+' are shown separately from consumption spending.'+
-        '<div class="banner ok" style="margin-top:14px"><b>Why the difference?</b> Cash movement includes transfers and settlements. For this statement, own-account transfers increase cash but are not income.</div></p>';
+        '<div class="banner ok why-difference" style="margin-top:14px"><b>Why the difference?</b> Cash movement includes the ₹1,00,000 own-account transfer and ₹56,700 card settlement. These are not income or consumption spending.</div></p>';
 
   // -------- transaction intelligence --------
   const intelRows = t.map(x=>
