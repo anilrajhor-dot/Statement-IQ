@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>StatementIQ v2.0.1 — Bank &amp; Credit Card Statement Analyser</title>
+<title>StatementIQ v2.0.2 — Bank &amp; Credit Card Statement Analyser</title>
 
 <!-- ==========================================================================
      StatementIQ — single-file, offline, browser-only statement analyser.
@@ -209,6 +209,8 @@ main{max-width:1400px;margin:0 auto;padding:20px 18px 60px}
 
 /* ---------- TABLES ---------- */
 .tblwrap{overflow:auto;border:1px solid var(--line);border-radius:10px;max-height:600px}
+.mobile-scroll-hint{display:none}
+@media(max-width:760px){.mobile-scroll-hint{display:block;font-size:11px;color:var(--ink-faint);margin:-4px 0 8px;text-align:right}.tblwrap table{min-width:720px}}
 table{border-collapse:collapse;width:100%;font-size:12.5px}
 th{
   background:var(--charcoal);color:#fff;text-align:left;padding:9px 10px;font-weight:600;
@@ -328,7 +330,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
   </div>
   <div class="brand-txt">
     <h1>StatementIQ</h1>
-    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.0.1</b></small>
+    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.0.2</b></small>
     <div class="developer-credit">Developed by Anil Sharma, Former General Manager, Central Bank of India</div>
   </div>
   <div class="header-actions">
@@ -425,7 +427,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
       <div class="card"><h3>Financial health</h3><p class="hint">A simple analytical score based only on the loaded statements — not financial advice.</p><div id="healthBox"></div></div>
     </div>
     <div class="card"><h3>Top spending categories</h3><p class="hint">Actual spending excludes transfers to self and credit-card bill settlements.</p><div class="tblwrap"><table id="dashCatTbl"></table></div></div>
-    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.0.1 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
+    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.0.2 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
   </div>
 </section>
 
@@ -572,7 +574,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 <!-- ================= HELP PANEL ================= -->
 <section class="panel" id="pHelp">
   <div class="card">
-    <h2>How to use StatementIQ <span class="pill-big">v2.0.1</span></h2>
+    <h2>How to use StatementIQ <span class="pill-big">v2.0.2</span></h2>
     <ol style="line-height:1.9;padding-left:20px">
       <li><b>Upload.</b> Drop in bank and credit card statements together — PDF, XLSX or CSV. Password-protected PDFs prompt for the password; nothing is stored.</li>
       <li><b>Verify columns.</b> Check the detected column roles and fix any that are wrong with the dropdowns.</li>
@@ -605,7 +607,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 
 <footer>
   <p class="disc">This tool extracts and analyses data from statements you provide. Always verify the extracted figures against your original statement before using them for tax filing, loan applications, or any financial decision. This is not financial or tax advice.</p>
-  <p>StatementIQ v2.0.1 · runs entirely offline in your browser · no account, no upload, no tracking</p>
+  <p>StatementIQ v2.0.2 · runs entirely offline in your browser · no account, no upload, no tracking</p>
 </footer>
 
 <!-- password modal -->
@@ -1002,11 +1004,18 @@ function rolesFromHeader(headerRow){
    Includes the wrapped-narration merge, which is the single biggest cause of
    broken output on Indian statements.
    ========================================================================== */
+function isStatementSummaryRow(g, dateRaw){
+  const cells = g.map(v=>String(v==null?'':v).trim()).filter(Boolean);
+  const summaryCell = cells.some(v => /^(grand\s+)?total(?:\s+amount)?$|^sub[- ]?total$|^opening\s+balance$|^closing\s+balance$|^brought\s+forward$|^carried\s+forward$|^balance\s*(b\/f|c\/f)$|^statement\s+total$/i.test(v));
+  const summaryPhrase = /\b(grand\s+total|sub[- ]?total|opening\s+balance|closing\s+balance|brought\s+forward|carried\s+forward|statement\s+total)\b/i.test(cells.join(' '));
+  return !parseDate(String(dateRaw||'')) && (summaryCell || summaryPhrase);
+}
+
 function buildRows(ds){
   const {grid, headerIdx, roles} = ds;
   const col = {};                                   // role -> column index
   roles.forEach((r,i)=>{ if(r!=='ignore' && col[r]===undefined) col[r]=i; });
-  const rows = [], errors = [];
+  const rows = [], errors = [], ignoredRows = [];
   let ambiguousDates = 0;
   const get = (arr,role)=> col[role]===undefined ? '' : (arr[col[role]]||'');
 
@@ -1017,6 +1026,10 @@ function buildRows(ds){
     const dateRaw = get(g,'date') || get(g,'valuedate');
     const date = parseDate(dateRaw);
     const narr = String(get(g,'narration')||'').trim();
+    if(isStatementSummaryRow(g, dateRaw)){
+      ignoredRows.push({line:i+1, raw:g.join(' | '), why:'Statement summary row — not a transaction'});
+      continue;
+    }
     const dP = parseAmt(get(g,'debit'));
     const cP = parseAmt(get(g,'credit'));
     const aP = parseAmt(get(g,'amount'));
@@ -1079,6 +1092,7 @@ function buildRows(ds){
   }
   ds.ambiguousDates = ambiguousDates;
   ds.errors = errors;
+  ds.ignoredRows = ignoredRows;
   return rows;
 }
 
@@ -1521,7 +1535,7 @@ function renderMapping(){
     const sample = ds.grid[ds.headerIdx+1]||[];
     return '<div style="margin-bottom:18px"><div class="row" style="margin-bottom:8px">'+
       '<b>'+esc(ds.name)+'</b><span class="tag">'+(ds.kind==='card'?'Credit card':'Bank')+'</span>'+
-      '<span class="tag '+(ds.errors&&ds.errors.length?'bad':'ok')+'">'+ds.rows.length+' rows parsed'+(ds.errors&&ds.errors.length?' · '+ds.errors.length+' problem':'')+'</span></div>'+
+      '<span class="tag '+(ds.errors&&ds.errors.length?'bad':'ok')+'">'+ds.rows.length+' rows parsed'+(ds.errors&&ds.errors.length?' · '+ds.errors.length+' problem':'')+(ds.ignoredRows&&ds.ignoredRows.length?' · '+ds.ignoredRows.length+' summary ignored':'')+'</span></div>'+
       '<div class="tblwrap" style="max-height:none"><table><thead><tr><th>Column in file</th><th>First value</th><th>Role</th></tr></thead><tbody>'+
       head.map((h,ci)=>'<tr><td><b>'+esc(h||'(blank)')+'</b></td><td class="num">'+esc(sample[ci]||'')+'</td><td>'+
         '<select data-set="'+si+'" data-col="'+ci+'" class="mapsel">'+
@@ -1578,6 +1592,11 @@ function renderReview(){
   if(errs.length){
     html += '<tr><td colspan="7" style="background:var(--charcoal);color:#fff;font-weight:600">Rows that could not be parsed ('+errs.length+') — these are listed, never dropped</td></tr>';
     html += errs.slice(0,60).map(e=>'<tr><td class="num">line '+e.line+'</td><td colspan="5" style="color:var(--rust)">'+esc(e.raw.slice(0,180))+'</td><td style="font-size:11px">'+esc(e.why)+'</td></tr>').join('');
+  }
+  const ignored = S.sets.flatMap(d=>(d.ignoredRows||[]).map(e=>Object.assign({file:d.name},e)));
+  if(ignored.length){
+    html += '<tr><td colspan="7" style="background:var(--surface-2);color:var(--ink-soft);font-weight:600">Statement summary rows ignored ('+ignored.length+') — not counted as transactions</td></tr>';
+    html += ignored.slice(0,30).map(e=>'<tr><td class="num">line '+e.line+'</td><td colspan="5" style="color:var(--ink-faint)">'+esc(e.raw.slice(0,180))+'</td><td style="font-size:11px">'+esc(e.why)+'</td></tr>').join('');
   }
   html += '</tbody>';
   document.getElementById('revTbl').innerHTML = html;
@@ -1730,6 +1749,7 @@ function renderBank(){
     if(chk.breaks.length) ih += '<div class="banner warn"><span>!</span><div><b>'+chk.breaks.length+' balance break'+(chk.breaks.length>1?'s':'')+'</b> in '+esc(ds.name)+' — usually a missed or mis-parsed row. First at '+esc(chk.breaks[0].date)+', off by '+inr(chk.breaks[0].diff)+'.</div></div>';
     if(chk.dupes.length) ih += '<div class="banner warn"><span>⧉</span><div><b>'+chk.dupes.length+' possible duplicate row'+(chk.dupes.length>1?'s':'')+'</b> — same date, amount and narration. Listed on the Errors &amp; Warnings sheet of the export.</div></div>';
     if(ds.errors && ds.errors.length) ih += '<div class="banner bad"><span>✕</span><div><b>'+ds.errors.length+' row'+(ds.errors.length>1?'s':'')+' failed to parse</b> in '+esc(ds.name)+'. They are listed at the bottom of the review table and in the export.</div></div>';
+    if(ds.ignoredRows && ds.ignoredRows.length) ih += '<div class="banner ok"><span>✓</span><div><b>'+ds.ignoredRows.length+' statement summary row'+(ds.ignoredRows.length>1?'s':'')+' ignored</b> in '+esc(ds.name)+' — totals/opening/closing summary lines are not treated as transactions.</div></div>';
   });
   document.getElementById('bankIntegrity').innerHTML = ih;
 
@@ -2718,6 +2738,7 @@ async function exportExcel(){
     if(d.ambiguousDates) s8.addRow([d.name,'Ambiguous dates','—', d.ambiguousDates+' dates could be read either DD/MM or MM/DD. Read as DD/MM — verify against the original.','','']);
   });
   if(s8.rowCount===1) s8.addRow(['—','None','','Every row parsed cleanly and all integrity checks passed.','','']);
+  S.sets.forEach(d=>(d.ignoredRows||[]).forEach(x=>s8.addRow([d.name,'Ignored summary row','line '+x.line,x.raw.slice(0,180),'',''])));
   styleHeader(s8, 6); widths(s8,[26,22,14,70,16,16]);
 
   const buf = await wb.xlsx.writeBuffer();
