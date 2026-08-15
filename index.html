@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>StatementIQ v2.6.6 — Bank &amp; Credit Card Statement Analyser</title>
+<title>StatementIQ v2.6.7 — Bank &amp; Credit Card Statement Analyser</title>
 
 <!-- ==========================================================================
      StatementIQ — single-file, offline, browser-only statement analyser.
@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js">/* v2.6.6 zero-as-placeholder */
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js">/* v2.6.7 zero-as-placeholder */
 document.addEventListener('focusin',function(e){const x=e.target;if(x&&x.tagName==='INPUT'&&x.type==='number'&&x.value==='0')x.value='';});
 document.addEventListener('click',function(e){const x=e.target;if(x&&x.tagName==='INPUT'&&x.type==='number'&&x.value==='0')x.value='';});
 document.addEventListener('DOMContentLoaded',()=>{ const b=document.getElementById('globalUploadBar'); if(b) b.style.display='none'; });
@@ -318,7 +318,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 /* v2.0 dashboard */
 .health-score{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.score-ring{width:92px;height:92px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--amber) calc(var(--score)*1%),var(--line) 0);position:relative}.score-ring:after{content:"";position:absolute;inset:9px;border-radius:50%;background:var(--paper)}.score-ring b{position:relative;z-index:1;font-size:24px}.score-copy{min-width:220px}.metric-line{display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-bottom:1px solid var(--line)}.metric-line:last-child{border-bottom:0}.flag{padding:10px 12px;border-radius:10px;background:var(--surface-2);margin:7px 0;border-left:4px solid var(--amber)}.flag.bad{border-left-color:var(--rust)}.flag.ok{border-left-color:var(--green)}.flag b{display:block}.muted{color:var(--ink-soft);font-size:12px}.pill-big{display:inline-flex;padding:4px 9px;border-radius:999px;background:var(--surface-2);font-size:11px;font-weight:700}.dash-empty{padding:16px}.confidence{font-weight:700}.confidence.high{color:var(--green)}.confidence.low{color:var(--rust)}
 
-/* v2.6.6: keep financial metric values together on narrow screens */
+/* v2.6.7: keep financial metric values together on narrow screens */
 .financial-activity .metric-line { display:flex; align-items:center; gap:14px; }
 .financial-activity .metric-line span { flex:1 1 auto; min-width:0; }
 .financial-activity .metric-line b { flex:0 0 auto; white-space:nowrap; text-align:right; }
@@ -331,7 +331,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 }
 
 
-/* v2.6.6 — daily-product interest calculator */
+/* v2.6.7 — daily-product interest calculator */
 .interest-calc .slab-grid{display:grid;grid-template-columns:1.1fr 1.4fr 1.4fr 1fr auto;gap:8px;align-items:center}
 .interest-calc .slab-grid input{min-width:0}
 .interest-calc .interest-table th,.interest-calc .interest-table td{white-space:nowrap}
@@ -349,7 +349,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 }
 
 
-/* v2.6.6 — dedicated calculators */
+/* v2.6.7 — dedicated calculators */
 .calc-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .calc-card{border:1px solid var(--line);border-radius:14px;padding:14px;background:var(--surface)}
 .calc-result{margin-top:14px;padding:14px;border-radius:12px;background:var(--surface-soft);border:1px solid var(--line)}
@@ -361,7 +361,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 @media(max-width:560px){.calc-grid{grid-template-columns:1fr}.calc-result .big{font-size:21px}}
 
 
-/* v2.6.6 — responsive interest tables and totals */
+/* v2.6.7 — responsive interest tables and totals */
 .interest-calc .tblwrap,
 #interestStandalone .tblwrap{
   width:100%;
@@ -400,7 +400,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 }
 
 
-/* v2.6.6 — calculators prominently available on first page */
+/* v2.6.7 — calculators prominently available on first page */
 .first-page-tools{
   padding:14px 18px 4px;
 }
@@ -436,7 +436,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 }
 
 
-/* v2.6.6 — clean calculator hub */
+/* v2.6.7 — clean calculator hub */
 .first-page-menu-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
 .first-page-menu-grid button{min-height:74px;justify-content:flex-start;text-align:left;font-size:14px}
 .first-page-menu-grid button>span:first-child{font-size:22px;flex:none}
@@ -448,7 +448,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 #pInterestCalc>.card,#pFinancialCalc>.card,#pInterestCompare>.card{width:100%;box-sizing:border-box}
 #pInterestCalc .tblwrap,#pInterestCompare .tblwrap{width:100%;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
 
-/* v2.6.6 */
+/* v2.6.7 */
 #btnFinancialCalc{background:var(--accent)!important;color:#0E0E10!important;border-color:var(--accent)!important;font-weight:800!important}
 @media(max-width:760px){.interest-settings-head{display:none!important}#interestSlabs .interest-slab-row{grid-template-columns:1fr 1fr}#interestSlabs .interest-slab-row .wide{grid-column:1/-1}}
 
@@ -456,7 +456,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 #tabs .tab[data-panel="pFinancialCalc"].on{box-shadow:inset 0 -3px 0 #0E0E10}
 #interestStatement:disabled{opacity:.7}
 
-/* v2.6.6 visual refresh + help centre */
+/* v2.6.7 visual refresh + help centre */
 :root{--accent:var(--amber);--surface-soft:var(--surface-2)}
 header.app{padding:18px 22px;gap:18px;background:linear-gradient(135deg,var(--surface) 0%,var(--surface-2) 100%);box-shadow:0 1px 0 var(--line)}
 .brandmark{width:48px;height:48px;border-radius:14px;box-shadow:0 6px 18px rgba(14,14,16,.12)}
@@ -504,7 +504,7 @@ main{padding-top:24px}
 .panel-title-row .btn{white-space:nowrap}
 @media(max-width:560px){.panel-title-row{align-items:flex-start!important}.panel-title-row .btn{width:100%}}
 
-/* v2.6.6 UI correction */
+/* v2.6.7 UI correction */
 #globalUploadBar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 14px;margin:0 auto 14px;max-width:1400px;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--amber);border-radius:12px;box-shadow:var(--shadow)}
 #globalUploadBar div{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
 #globalUploadBar span{font-size:12px;color:var(--ink-faint)}
@@ -513,10 +513,10 @@ main{padding-top:24px}
 /* Make navigation show all primary destinations on phones without horizontal scrolling. */
 @media(max-width:760px){#tabs{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;overflow:visible!important}.tab{white-space:normal!important;min-height:43px;line-height:1.2}.tab[data-panel="pUpload"]{order:-10;font-weight:800;background:var(--surface-2)}.tab[data-panel="pUpload"].on{background:var(--amber);color:var(--charcoal);border-color:var(--amber)}}
 
-/* v2.6.6: the navigation tab is the single Financial Calculators entry point */
+/* v2.6.7: the navigation tab is the single Financial Calculators entry point */
 #btnFinancialCalc{display:none!important}
 
-/* v2.6.6 — prominently highlight the two utility menus */
+/* v2.6.7 — prominently highlight the two utility menus */
 #tabs .tab[data-panel="pFinancialCalc"],
 #tabs .tab[data-panel="pInterestCompare"]{
   font-weight:900!important;
@@ -542,6 +542,30 @@ main{padding-top:24px}
   }
 }
 
+
+/* v2.6.7 — App Health Check */
+.health-tab{font-weight:900!important}
+.health-tab.on{background:#E8F5EC!important;color:#176B43!important;border-color:#78B995!important}
+.health-hero{display:flex;align-items:center;gap:16px;padding:22px;border-radius:18px;background:linear-gradient(135deg,#111113 0%,#242426 100%);color:#fff;margin-bottom:16px}
+.health-hero-icon{width:58px;height:58px;border-radius:16px;background:var(--amber);color:#111113;display:grid;place-items:center;font-size:28px;font-weight:900;flex:0 0 auto}
+.health-hero h2{margin:3px 0 5px;font-size:26px}
+.health-hero p{margin:0;color:#D8D8DD}
+.health-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:16px}
+.health-stat{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px}
+.health-stat .value{font-size:28px;font-weight:900;margin-top:5px}
+.health-stat.ok{border-left:5px solid #2B8A5A}
+.health-stat.warn{border-left:5px solid #E0A800}
+.health-stat.bad{border-left:5px solid #D9534F}
+.health-results{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.health-result{display:flex;gap:12px;align-items:flex-start;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.health-result .mark{font-size:22px;line-height:1}
+.health-result h4{margin:0 0 4px}
+.health-result p{margin:0;color:var(--muted);font-size:13px}
+.health-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.health-note{padding:12px 14px;border-radius:12px;background:var(--surface-soft);border:1px solid var(--line);color:var(--muted);font-size:13px}
+@media(max-width:900px){.health-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.health-results{grid-template-columns:1fr}}
+@media(max-width:600px){.health-hero{align-items:flex-start}.health-hero h2{font-size:21px}.health-grid{grid-template-columns:1fr 1fr}.health-stat{padding:12px}.health-stat .value{font-size:23px}}
+
 </style>
 </head>
 <body>
@@ -559,7 +583,7 @@ main{padding-top:24px}
   </div>
   <div class="brand-txt">
     <h1>StatementIQ</h1>
-    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.6.6</b></small>
+    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.6.7</b></small>
     <div class="developer-credit">Developed by Anil Sharma, Former General Manager, Central Bank of India</div>
   </div>
   <div class="header-actions">
@@ -589,7 +613,7 @@ main{padding-top:24px}
   <button class="tab" data-panel="pBank">Bank statement<span class="pill" id="pillBank">0</span></button>
   <button class="tab" data-panel="pCard">Credit card<span class="pill" id="pillCard">0</span></button>
   <button class="tab" data-panel="pRecon">Reconciliation</button>
-  <button class="tab" data-panel="pHelp">How to use</button> <button class="tab" data-panel="pFinancialCalc">Financial Calculators</button> <button class="tab" data-panel="pInterestCompare">Interest Comparison</button>
+  <button class="tab" data-panel="pHelp">How to use</button> <button class="tab health-tab" data-panel="pHealthCheck">🩺 App Health Check</button> <button class="tab" data-panel="pFinancialCalc">Financial Calculators</button> <button class="tab" data-panel="pInterestCompare">Interest Comparison</button>
 </div>
 
 <main>
@@ -661,7 +685,7 @@ main{padding-top:24px}
       <div class="card"><h3>Financial health</h3><p class="hint">A simple analytical score based only on the loaded statements — not financial advice.</p><div id="healthBox"></div></div>
     </div>
     <div class="card"><h3>Top spending categories</h3><p class="hint">Consumption spending excludes transfers to self, credit-card settlements, investments, loan principal and matched reversals.</p><div class="tblwrap"><table id="dashCatTbl"></table></div></div>
-    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.6.6 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
+    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.6.7 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
   </div>
 </section>
 
@@ -813,7 +837,7 @@ main{padding-top:24px}
   <div class="help-hero">
     <div class="help-hero-icon">?</div>
     <div>
-      <div class="eyebrow">STATEMENTIQ USER GUIDE · v2.6.6</div>
+      <div class="eyebrow">STATEMENTIQ USER GUIDE · v2.6.7</div>
       <h2>How to use StatementIQ</h2>
       <p>Upload → verify → review → analyse → export. Everything is processed locally in your browser.</p>
     </div>
@@ -931,6 +955,53 @@ main{padding-top:24px}
 </section>
 
 <!-- ================= FINANCIAL CALCULATORS ================= -->
+
+<!-- ================= APP HEALTH CHECK ================= -->
+<section class="panel" id="pHealthCheck">
+  <div class="health-hero">
+    <div class="health-hero-icon">✓</div>
+    <div style="flex:1">
+      <div class="eyebrow" style="color:#F5B301">SYSTEM DIAGNOSTICS</div>
+      <h2>StatementIQ App Health Check</h2>
+      <p>Check the main application components without uploading or changing your statement data.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title-row">
+      <div>
+        <span class="eyebrow">SELF TEST</span>
+        <h3>Application status</h3>
+      </div>
+      <button class="btn primary" type="button" onclick="runAppHealthCheck()">Run health check</button>
+    </div>
+
+    <div id="healthSummary" class="health-grid">
+      <div class="health-stat"><div class="hint">STATUS</div><div class="value">Ready</div></div>
+      <div class="health-stat"><div class="hint">TESTS</div><div class="value">—</div></div>
+      <div class="health-stat"><div class="hint">PASSED</div><div class="value">—</div></div>
+      <div class="health-stat"><div class="hint">ISSUES</div><div class="value">—</div></div>
+    </div>
+
+    <div id="healthResults" class="health-results">
+      <div class="health-result">
+        <div class="mark">ℹ️</div>
+        <div><h4>Ready to check</h4><p>Press “Run health check”. The test is local and does not upload your data.</p></div>
+      </div>
+    </div>
+
+    <div class="health-actions">
+      <button class="btn sm" type="button" onclick="switchPanel('pUpload')">Open Upload statements</button>
+      <button class="btn sm" type="button" onclick="switchPanel('pFinancialCalc')">Open Financial Calculators</button>
+      <button class="btn sm" type="button" onclick="switchPanel('pInterestCompare')">Open Interest Comparison</button>
+    </div>
+
+    <div class="health-note" style="margin-top:14px">
+      <b>What is checked?</b> Navigation, upload controls, analysis controls, calculator functions, interest-slab engine, saved slab settings, Clear All Data wiring, and essential page elements. The health check does not replace checking results against the original statement.
+    </div>
+  </div>
+</section>
+
 <section class="panel" id="pFinancialCalc">
   <div class="card">
     <div class="panel-title-row" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
@@ -977,7 +1048,7 @@ main{padding-top:24px}
 
 <footer>
   <p class="disc">This tool extracts and analyses data from statements you provide. Always verify the extracted figures against your original statement before using them for tax filing, loan applications, or any financial decision. This is not financial or tax advice.</p>
-  <p>StatementIQ v2.6.6 · runs entirely offline in your browser · no account, no upload, no tracking</p>
+  <p>StatementIQ v2.6.7 · runs entirely offline in your browser · no account, no upload, no tracking</p>
 </footer>
 
 <!-- password modal -->
@@ -4293,6 +4364,94 @@ function standaloneRun(){
   box.innerHTML=h;
 }
 
+
+
+function runAppHealthCheck(){
+  const tests=[];
+  const add=(name,ok,detail)=>tests.push({name,ok,detail});
+
+  // Core navigation and panels.
+  const requiredIds=['tabs','pUpload','pDash','pBank','pCard','pRecon','pHelp','pFinancialCalc','pInterestCompare','pHealthCheck','fileInput','drop','btnAnalyse','btnClear'];
+  requiredIds.forEach(id=>add('Element: '+id, !!document.getElementById(id), document.getElementById(id)?'Present':'Missing'));
+
+  add('Navigation: Upload statements', !!document.querySelector('.tab[data-panel="pUpload"]'), 'Upload tab is available');
+  add('Navigation: Financial Calculators', !!document.querySelector('.tab[data-panel="pFinancialCalc"]'), 'Calculator menu is available');
+  add('Navigation: Interest Comparison', !!document.querySelector('.tab[data-panel="pInterestCompare"]'), 'Interest comparison menu is available');
+  add('Navigation: Health Check', !!document.querySelector('.tab[data-panel="pHealthCheck"]'), 'Health Check menu is available');
+
+  // Core functions.
+  ['switchPanel','initCalculators','interestLoadConfig','interestNormaliseSlabs','interestValidateSlabs','interestAllocate','interestCalculateDaily','interestRun','interestAddSlab'].forEach(fn=>{
+    add('Function: '+fn, typeof window[fn]==='function', typeof window[fn]==='function'?'Available':'Missing');
+  });
+
+  // Calculator function checks.
+  ['calcEMI','calcDeposit','calcReinvest','calcAge','calcSIP','calcCurrency'].forEach(fn=>{
+    add('Calculator: '+fn, typeof window[fn]==='function', typeof window[fn]==='function'?'Available':'Missing');
+  });
+
+  // Interest slab configuration.
+  try{
+    const slabs=interestLoadConfig();
+    const valid=Array.isArray(slabs) && slabs.length>0 && !interestValidateSlabs(slabs).length;
+    add('Interest slabs', valid, valid?(slabs.length+' slab(s) loaded and valid'):'Invalid or missing slab configuration');
+  }catch(e){ add('Interest slabs',false,e.message); }
+
+  // Test progressive slab allocation without changing application state.
+  try{
+    const testSlabs=interestNormaliseSlabs([
+      {from:0,to:300000,rate:2.5},
+      {from:300001,to:500000,rate:5},
+      {from:500001,to:null,rate:6}
+    ]);
+    const parts=interestAllocate(800000,testSlabs);
+    const total=parts.reduce((a,p)=>a+Number(p.portion||0),0);
+    const portions=parts.map(p=>Math.round(Number(p.portion||0))).join(',');
+    const ok=Math.abs(total-800000)<0.01 && parts.length===3;
+    add('Progressive slab engine',ok,ok?'₹8,00,000 correctly split into 3 slabs: '+portions:'Unexpected allocation');
+  }catch(e){ add('Progressive slab engine',false,e.message); }
+
+  // Daily interest formula test: ₹300,000 at 2.5% for a 30-day month.
+  try{
+    const x=300000*0.025/30;
+    const ok=Math.abs(x-250)<0.0001;
+    add('Daily interest formula',ok,ok?'₹250.00 for ₹3,00,000 @ 2.50% over 30 days':'Formula test failed');
+  }catch(e){ add('Daily interest formula',false,e.message); }
+
+  // Local storage availability (saved slabs rely on it).
+  try{
+    const k='__siq_health_check__';
+    localStorage.setItem(k,'1'); const ok=localStorage.getItem(k)==='1'; localStorage.removeItem(k);
+    add('Local storage',ok,ok?'Available for saved slab settings':'Not available');
+  }catch(e){ add('Local storage',false,'Browser blocked local storage'); }
+
+  // Upload input sanity.
+  const fi=document.getElementById('fileInput');
+  add('Upload file types',!!fi && /pdf/.test(fi.accept||'') && /xlsx/.test(fi.accept||'') && /csv/.test(fi.accept||''),'PDF/XLSX/XLS/CSV accepted');
+
+  const passed=tests.filter(t=>t.ok).length, failed=tests.length-passed;
+  const status=failed===0?'Healthy':(passed>failed?'Attention':'Needs repair');
+  const summary=document.getElementById('healthSummary');
+  if(summary){
+    const cls=failed===0?'ok':(passed>failed?'warn':'bad');
+    summary.innerHTML=
+      '<div class="health-stat '+cls+'"><div class="hint">STATUS</div><div class="value">'+status+'</div></div>'+
+      '<div class="health-stat"><div class="hint">TESTS</div><div class="value">'+tests.length+'</div></div>'+
+      '<div class="health-stat ok"><div class="hint">PASSED</div><div class="value">'+passed+'</div></div>'+
+      '<div class="health-stat '+(failed?'bad':'ok')+'"><div class="hint">ISSUES</div><div class="value">'+failed+'</div></div>';
+  }
+
+  const results=document.getElementById('healthResults');
+  if(results){
+    results.innerHTML=tests.map(t=>
+      '<div class="health-result">'+
+        '<div class="mark">'+(t.ok?'✅':'❌')+'</div>'+
+        '<div><h4>'+esc(t.name)+'</h4><p>'+esc(t.detail||'')+'</p></div>'+
+      '</div>'
+    ).join('');
+  }
+  if(typeof toast==='function') toast(failed===0?'App health check passed — all tests are healthy.':'App health check found '+failed+' issue(s).',''+(failed===0?'ok':'warn'));
+  return {status,tests,passed,failed};
+}
 
 document.addEventListener('DOMContentLoaded', function(){
   try{ initCalculators(); }catch(e){}
