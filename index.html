@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>StatementIQ v2.0.2 — Bank &amp; Credit Card Statement Analyser</title>
+<title>StatementIQ v2.0.3 — Bank &amp; Credit Card Statement Analyser</title>
 
 <!-- ==========================================================================
      StatementIQ — single-file, offline, browser-only statement analyser.
@@ -330,7 +330,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
   </div>
   <div class="brand-txt">
     <h1>StatementIQ</h1>
-    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.0.2</b></small>
+    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.0.3</b></small>
     <div class="developer-credit">Developed by Anil Sharma, Former General Manager, Central Bank of India</div>
   </div>
   <div class="header-actions">
@@ -382,7 +382,8 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 
   <div class="card" id="reviewCard" style="display:none">
     <h2>Review &amp; correct</h2>
-    <p class="hint">Click any cell to edit it. Rows flagged in rust failed to parse. Nothing is dropped silently.</p>
+    <p class="hint">Click any cell to edit it. Rows flagged in rust failed to parse. Statement summary rows such as Total, Sub-total, Opening Balance and Closing Balance are excluded from transactions.</p>
+    <div id="reviewNote" style="margin:10px 0 12px"></div>
     <div class="row" style="margin-bottom:12px">
       <input type="text" id="revSearch" placeholder="Search narration…" style="min-width:240px">
       <label style="font-size:12.5px;display:flex;gap:6px;align-items:center"><input type="checkbox" id="revErrOnly"> Show problem rows only</label>
@@ -427,7 +428,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
       <div class="card"><h3>Financial health</h3><p class="hint">A simple analytical score based only on the loaded statements — not financial advice.</p><div id="healthBox"></div></div>
     </div>
     <div class="card"><h3>Top spending categories</h3><p class="hint">Actual spending excludes transfers to self and credit-card bill settlements.</p><div class="tblwrap"><table id="dashCatTbl"></table></div></div>
-    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.0.2 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
+    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.0.3 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
   </div>
 </section>
 
@@ -574,7 +575,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 <!-- ================= HELP PANEL ================= -->
 <section class="panel" id="pHelp">
   <div class="card">
-    <h2>How to use StatementIQ <span class="pill-big">v2.0.2</span></h2>
+    <h2>How to use StatementIQ <span class="pill-big">v2.0.3</span></h2>
     <ol style="line-height:1.9;padding-left:20px">
       <li><b>Upload.</b> Drop in bank and credit card statements together — PDF, XLSX or CSV. Password-protected PDFs prompt for the password; nothing is stored.</li>
       <li><b>Verify columns.</b> Check the detected column roles and fix any that are wrong with the dropdowns.</li>
@@ -607,7 +608,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 
 <footer>
   <p class="disc">This tool extracts and analyses data from statements you provide. Always verify the extracted figures against your original statement before using them for tax filing, loan applications, or any financial decision. This is not financial or tax advice.</p>
-  <p>StatementIQ v2.0.2 · runs entirely offline in your browser · no account, no upload, no tracking</p>
+  <p>StatementIQ v2.0.3 · runs entirely offline in your browser · no account, no upload, no tracking</p>
 </footer>
 
 <!-- password modal -->
@@ -1594,12 +1595,14 @@ function renderReview(){
     html += errs.slice(0,60).map(e=>'<tr><td class="num">line '+e.line+'</td><td colspan="5" style="color:var(--rust)">'+esc(e.raw.slice(0,180))+'</td><td style="font-size:11px">'+esc(e.why)+'</td></tr>').join('');
   }
   const ignored = S.sets.flatMap(d=>(d.ignoredRows||[]).map(e=>Object.assign({file:d.name},e)));
-  if(ignored.length){
-    html += '<tr><td colspan="7" style="background:var(--surface-2);color:var(--ink-soft);font-weight:600">Statement summary rows ignored ('+ignored.length+') — not counted as transactions</td></tr>';
-    html += ignored.slice(0,30).map(e=>'<tr><td class="num">line '+e.line+'</td><td colspan="5" style="color:var(--ink-faint)">'+esc(e.raw.slice(0,180))+'</td><td style="font-size:11px">'+esc(e.why)+'</td></tr>').join('');
-  }
   html += '</tbody>';
   document.getElementById('revTbl').innerHTML = html;
+  const note = document.getElementById('reviewNote');
+  if(note){
+    if(ignored.length){
+      note.innerHTML = '<div class="banner ok"><span>✓</span><div><b>'+ignored.length+' statement summary row'+(ignored.length>1?'s':'')+' excluded from transactions.</b> Total/Sub-total/opening/closing summary lines are kept out of the review table and are not analysed as transactions.</div></div>';
+    } else note.innerHTML = '';
+  }
   if(rows.length>400) toast('Showing the first 400 rows here. All '+rows.length+' are analysed and exported.');
 
   // Inline edits write straight back into the parsed row objects.
