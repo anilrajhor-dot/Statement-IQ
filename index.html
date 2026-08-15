@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>StatementIQ v2.0.3 — Bank &amp; Credit Card Statement Analyser</title>
+<title>StatementIQ v2.0.4 — Bank &amp; Credit Card Statement Analyser</title>
 
 <!-- ==========================================================================
      StatementIQ — single-file, offline, browser-only statement analyser.
@@ -330,7 +330,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
   </div>
   <div class="brand-txt">
     <h1>StatementIQ</h1>
-    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.0.3</b></small>
+    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.0.4</b></small>
     <div class="developer-credit">Developed by Anil Sharma, Former General Manager, Central Bank of India</div>
   </div>
   <div class="header-actions">
@@ -428,7 +428,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
       <div class="card"><h3>Financial health</h3><p class="hint">A simple analytical score based only on the loaded statements — not financial advice.</p><div id="healthBox"></div></div>
     </div>
     <div class="card"><h3>Top spending categories</h3><p class="hint">Actual spending excludes transfers to self and credit-card bill settlements.</p><div class="tblwrap"><table id="dashCatTbl"></table></div></div>
-    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.0.3 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
+    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.0.4 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
   </div>
 </section>
 
@@ -575,7 +575,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 <!-- ================= HELP PANEL ================= -->
 <section class="panel" id="pHelp">
   <div class="card">
-    <h2>How to use StatementIQ <span class="pill-big">v2.0.3</span></h2>
+    <h2>How to use StatementIQ <span class="pill-big">v2.0.4</span></h2>
     <ol style="line-height:1.9;padding-left:20px">
       <li><b>Upload.</b> Drop in bank and credit card statements together — PDF, XLSX or CSV. Password-protected PDFs prompt for the password; nothing is stored.</li>
       <li><b>Verify columns.</b> Check the detected column roles and fix any that are wrong with the dropdowns.</li>
@@ -608,7 +608,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 
 <footer>
   <p class="disc">This tool extracts and analyses data from statements you provide. Always verify the extracted figures against your original statement before using them for tax filing, loan applications, or any financial decision. This is not financial or tax advice.</p>
-  <p>StatementIQ v2.0.3 · runs entirely offline in your browser · no account, no upload, no tracking</p>
+  <p>StatementIQ v2.0.4 · runs entirely offline in your browser · no account, no upload, no tracking</p>
 </footer>
 
 <!-- password modal -->
@@ -1619,7 +1619,7 @@ function renderReview(){
 }
 document.getElementById('revSearch').oninput = renderReview;
 document.getElementById('revErrOnly').onchange = renderReview;
-document.getElementById('btnAnalyse').onclick = ()=>{ runAnalysis(); };
+document.getElementById('btnAnalyse').onclick = ()=>{ try{ runAnalysis(); }catch(e){ console.error('StatementIQ analysis error',e); toast('Analysis could not be completed: '+(e&&e.message?e.message:'Unexpected error'),'err'); } };
 
 /* ============================================================================
    13. ANALYSIS ORCHESTRATOR
@@ -1639,6 +1639,95 @@ function runAnalysis(){
   setStep(4);
   switchPanel(bankN ? 'pBank' : 'pCard');
   toast('Analysed '+S.txns.length+' transactions across '+S.sets.length+' statement(s).','ok');
+}
+
+function renderDashboard(){
+  const dashEmpty = document.getElementById('dashEmpty');
+  const dashBody = document.getElementById('dashBody');
+  if(!dashEmpty || !dashBody) return;
+  if(!S.txns.length){
+    dashEmpty.style.display='block';
+    dashBody.style.display='none';
+    return;
+  }
+  dashEmpty.style.display='none';
+  dashBody.style.display='block';
+
+  const tx = S.txns;
+  const income = tx.filter(t=>t.credit>0 && ['Transfer','Card settlement','Refund / reversal'].indexOf(t.economicType)<0)
+    .reduce((a,t)=>a+t.credit,0);
+  const transfersIn = tx.filter(t=>t.credit>0 && t.economicType==='Transfer').reduce((a,t)=>a+t.credit,0);
+  const refunds = tx.filter(t=>t.credit>0 && t.economicType==='Refund / reversal').reduce((a,t)=>a+t.credit,0);
+  const interest = tx.filter(t=>t.economicType==='Interest income').reduce((a,t)=>a+t.credit,0);
+  const actualExpense = tx.filter(t=>t.debit>0 && !['Transfer','Card settlement','Investment','Loan repayment'].includes(t.economicType))
+    .reduce((a,t)=>a+t.debit,0);
+  const transfersOut = tx.filter(t=>t.debit>0 && t.economicType==='Transfer').reduce((a,t)=>a+t.debit,0);
+  const cardSettlements = tx.filter(t=>t.debit>0 && t.economicType==='Card settlement').reduce((a,t)=>a+t.debit,0);
+  const investments = tx.filter(t=>t.debit>0 && t.economicType==='Investment').reduce((a,t)=>a+t.debit,0);
+  const loanRepayments = tx.filter(t=>t.debit>0 && t.economicType==='Loan repayment').reduce((a,t)=>a+t.debit,0);
+  const net = income - actualExpense - investments - loanRepayments;
+  const months = new Set(tx.filter(t=>t.date).map(t=>monthKey(t.date))).size || 1;
+  const avgMonthlyExpense = actualExpense/months;
+  const savingsPct = income ? (net/income*100) : 0;
+
+  const bank = tx.filter(t=>t.kind==='bank' && t.balance!==null).sort((a,b)=>a.date-b.date);
+  const lowest = bank.length ? Math.min(...bank.map(t=>t.balance)) : null;
+  const highestDebit = tx.reduce((m,t)=>Math.max(m,t.debit||0),0);
+  const recurring = detectRecurring(tx.filter(t=>t.debit>0 && !['Transfer','Card settlement'].includes(t.economicType)));
+  const recurringMonthly = recurring.reduce((sum,r)=>sum+(r.monthly||0),0);
+
+  let score=60;
+  if(income>0) score += Math.max(-10, Math.min(20, savingsPct/2));
+  if(lowest!==null && lowest>=0) score += 10;
+  if(recurringMonthly>0 && income>0 && recurringMonthly/income<0.4) score += 5;
+  if(net>=0) score += 5; else score -= 10;
+  score=Math.round(Math.max(0,Math.min(100,score)));
+  const scoreClass=score>=75?'high':score<50?'low':'medium';
+
+  document.getElementById('dashHero').innerHTML =
+    '<div class="health-score">'+
+      '<div class="score-ring" style="--score:'+score+'"><b>'+score+'</b></div>'+
+      '<div class="score-copy"><div class="lbl">Financial health</div><h2 style="margin:3px 0">'+(score>=75?'Strong':score>=50?'Moderate':'Needs attention')+'</h2><div class="hint">Based on '+tx.length+' analysed transactions across '+S.sets.length+' statement(s).</div></div>'+
+      '<div class="spacer"></div><div class="pill-big">'+months+' month'+(months===1?'':'s')+' covered</div>'+ 
+    '</div>';
+
+  const stat=(l,v,s,cls)=>'<div class="stat"><div class="lbl">'+l+'</div><div class="stat-val '+(cls||'')+'">'+v+'</div><div class="sub">'+(s||'')+'</div></div>';
+  document.getElementById('dashStats').innerHTML =
+    stat('Actual income',inr(income),'excluding self-transfers and card settlements','pos')+
+    stat('Actual spending',inr(actualExpense),'excluding transfers, investments & loan repayment','neg')+
+    stat('Net surplus',inr(net),savingsPct.toFixed(1)+'% of actual income',net>=0?'pos':'neg')+
+    stat('Average monthly spending',inr(avgMonthlyExpense),months+' month'+(months===1?'':'s'));
+
+  document.getElementById('cashFlowBox').innerHTML =
+    '<div class="metric-line"><span>Genuine income</span><b>'+inr(income)+'</b></div>'+
+    '<div class="metric-line"><span>Transfers in</span><b>'+inr(transfersIn)+'</b></div>'+
+    '<div class="metric-line"><span>Refunds / reversals</span><b>'+inr(refunds)+'</b></div>'+
+    '<div class="metric-line"><span>Interest income</span><b>'+inr(interest)+'</b></div>'+
+    '<div class="metric-line"><span>Transfers out</span><b>'+inr(transfersOut)+'</b></div>'+
+    '<div class="metric-line"><span>Card settlements</span><b>'+inr(cardSettlements)+'</b></div>'+
+    '<div class="metric-line"><span>Investments</span><b>'+inr(investments)+'</b></div>'+
+    '<div class="metric-line"><span>Loan repayments</span><b>'+inr(loanRepayments)+'</b></div>';
+
+  const flags=[];
+  if(highestDebit>0 && actualExpense>0 && highestDebit>actualExpense*0.5) flags.push('<div class="flag bad"><b>Large debit detected</b>'+inr(highestDebit)+' is unusually large compared with total actual spending.</div>');
+  if(lowest!==null && lowest<0) flags.push('<div class="flag bad"><b>Negative balance detected</b>Lowest recorded balance is '+inr(lowest)+'.</div>');
+  if(recurringMonthly>0) flags.push('<div class="flag"><b>Recurring commitments</b>Estimated recurring outflow is about '+inr(recurringMonthly)+' per month.</div>');
+  if(!flags.length) flags.push('<div class="flag ok"><b>No major automatic flags</b>The loaded statements passed the current dashboard screening rules.</div>');
+  document.getElementById('attentionBox').innerHTML=flags.join('');
+
+  document.getElementById('dashRecurring').innerHTML = recurring.length ? recurring.slice(0,10).map(r=>
+    '<div class="metric-line"><span>'+esc(r.counterparty||'Recurring payment')+'</span><b>'+inr(r.monthly||0)+'/month</b></div>'
+  ).join('') : '<div class="dash-empty muted">No recurring commitment was confidently detected.</div>';
+
+  document.getElementById('healthBox').innerHTML =
+    '<div class="health-score"><div class="score-ring" style="--score:'+score+'"><b>'+score+'</b></div><div><b class="confidence '+scoreClass+'">'+(score>=75?'Healthy':score>=50?'Moderate':'Needs attention')+'</b><div class="muted" style="margin-top:5px">Savings ratio: '+savingsPct.toFixed(1)+'% · Lowest balance: '+(lowest===null?'Not available':inr(lowest))+'</div></div></div>';
+
+  const cats={};
+  tx.filter(t=>t.debit>0 && !['Transfer','Card settlement','Investment','Loan repayment'].includes(t.economicType)).forEach(t=>{cats[t.category]=(cats[t.category]||0)+t.debit;});
+  const ce=Object.entries(cats).sort((a,b)=>b[1]-a[1]);
+  document.getElementById('dashCatTbl').innerHTML='<thead><tr><th>Category</th><th class="r">Amount</th><th class="r">Share</th></tr></thead><tbody>'+
+    ce.slice(0,15).map(([k,v])=>'<tr><td>'+esc(k)+'</td><td class="r num">'+inr(v)+'</td><td class="r num">'+(actualExpense?pct(v,actualExpense):'0%')+'</td></tr>').join('')+
+    '</tbody>';
 }
 
 function bankTxns(){ return S.txns.filter(t=>t.kind==='bank'); }
