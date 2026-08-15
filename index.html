@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>StatementIQ v2.0.11 — Bank &amp; Credit Card Statement Analyser</title>
+<title>StatementIQ v2.1.0 — Bank &amp; Credit Card Statement Analyser</title>
 
 <!-- ==========================================================================
      StatementIQ — single-file, offline, browser-only statement analyser.
@@ -314,7 +314,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 /* v2.0 dashboard */
 .health-score{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.score-ring{width:92px;height:92px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--amber) calc(var(--score)*1%),var(--line) 0);position:relative}.score-ring:after{content:"";position:absolute;inset:9px;border-radius:50%;background:var(--paper)}.score-ring b{position:relative;z-index:1;font-size:24px}.score-copy{min-width:220px}.metric-line{display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-bottom:1px solid var(--line)}.metric-line:last-child{border-bottom:0}.flag{padding:10px 12px;border-radius:10px;background:var(--surface-2);margin:7px 0;border-left:4px solid var(--amber)}.flag.bad{border-left-color:var(--rust)}.flag.ok{border-left-color:var(--green)}.flag b{display:block}.muted{color:var(--ink-soft);font-size:12px}.pill-big{display:inline-flex;padding:4px 9px;border-radius:999px;background:var(--surface-2);font-size:11px;font-weight:700}.dash-empty{padding:16px}.confidence{font-weight:700}.confidence.high{color:var(--green)}.confidence.low{color:var(--rust)}
 
-/* v2.0.11: keep financial metric values together on narrow screens */
+/* v2.1.0: keep financial metric values together on narrow screens */
 .financial-activity .metric-line { display:flex; align-items:center; gap:14px; }
 .financial-activity .metric-line span { flex:1 1 auto; min-width:0; }
 .financial-activity .metric-line b { flex:0 0 auto; white-space:nowrap; text-align:right; }
@@ -324,6 +324,24 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
   .financial-activity .metric-line b { font-size:clamp(17px,4.5vw,22px); }
   .financial-activity .formula-note { font-size:15px; line-height:1.35; }
   .why-difference { font-size:15px; line-height:1.4; }
+}
+
+
+/* v2.1.0 — daily-product interest calculator */
+.interest-calc .slab-grid{display:grid;grid-template-columns:1.1fr 1.4fr 1.4fr 1fr auto;gap:8px;align-items:center}
+.interest-calc .slab-grid input{min-width:0}
+.interest-calc .interest-table th,.interest-calc .interest-table td{white-space:nowrap}
+.interest-calc .interest-table .r{text-align:right}
+.interest-calc .formula-box{padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface-soft)}
+@media(max-width:700px){
+  .interest-calc .slab-grid{grid-template-columns:1fr 1fr 1fr 1fr auto}
+  .interest-calc .slab-grid .head{font-size:12px}
+  .interest-calc .interest-table{font-size:12px}
+}
+@media(max-width:560px){
+  .interest-calc .slab-grid{grid-template-columns:1fr 1fr;gap:8px}
+  .interest-calc .slab-grid .wide{grid-column:1/-1}
+  .interest-calc .interest-table th,.interest-calc .interest-table td{padding:8px 7px}
 }
 
 </style>
@@ -343,7 +361,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
   </div>
   <div class="brand-txt">
     <h1>StatementIQ</h1>
-    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.0.11</b></small>
+    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.1.0</b></small>
     <div class="developer-credit">Developed by Anil Sharma, Former General Manager, Central Bank of India</div>
   </div>
   <div class="header-actions">
@@ -441,7 +459,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
       <div class="card"><h3>Financial health</h3><p class="hint">A simple analytical score based only on the loaded statements — not financial advice.</p><div id="healthBox"></div></div>
     </div>
     <div class="card"><h3>Top spending categories</h3><p class="hint">Consumption spending excludes transfers to self, credit-card settlements, investments, loan principal and matched reversals.</p><div class="tblwrap"><table id="dashCatTbl"></table></div></div>
-    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.0.11 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
+    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.1.0 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
   </div>
 </section>
 
@@ -451,6 +469,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
   <div id="bankBody" style="display:none">
     <div id="bankIntegrity"></div>
     <div class="card" id="bankActivity" style="margin-bottom:16px"></div>
+    <div class="card interest-calc" id="bankInterest" style="margin-bottom:16px"></div>
     <div class="card" id="bankIntelligence" style="margin-bottom:16px"></div>
     <div class="grid g4" style="margin-bottom:16px" id="bankStats"></div>
     <div class="grid g2">
@@ -590,7 +609,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 <!-- ================= HELP PANEL ================= -->
 <section class="panel" id="pHelp">
   <div class="card">
-    <h2>How to use StatementIQ <span class="pill-big">v2.0.11</span></h2>
+    <h2>How to use StatementIQ <span class="pill-big">v2.1.0</span></h2>
     <ol style="line-height:1.9;padding-left:20px">
       <li><b>Upload.</b> Drop in bank and credit card statements together — PDF, XLSX or CSV. Password-protected PDFs prompt for the password; nothing is stored.</li>
       <li><b>Verify columns.</b> Check the detected column roles and fix any that are wrong with the dropdowns.</li>
@@ -623,7 +642,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 
 <footer>
   <p class="disc">This tool extracts and analyses data from statements you provide. Always verify the extracted figures against your original statement before using them for tax filing, loan applications, or any financial decision. This is not financial or tax advice.</p>
-  <p>StatementIQ v2.0.11 · runs entirely offline in your browser · no account, no upload, no tracking</p>
+  <p>StatementIQ v2.1.0 · runs entirely offline in your browser · no account, no upload, no tracking</p>
 </footer>
 
 <!-- password modal -->
@@ -1930,6 +1949,241 @@ function detectSalary(txns){
 /* ============================================================================
    14. BANK MODULE RENDER
    ========================================================================== */
+
+/* ============================================================================
+   13A. SAVINGS INTEREST — DAILY PRODUCT / PROGRESSIVE SLABS
+   User-defined slabs. Daily product runs from the 1st through the last day
+   of each calendar month, and annual rate is divided by the actual number
+   of days in that month (28/29/30/31), not uniformly by 365.
+   ========================================================================== */
+const INTEREST_DEFAULT_SLABS = [
+  {from:0, to:300000, rate:4},
+  {from:300001, to:500000, rate:5},
+  {from:500001, to:null, rate:6}
+];
+
+function interestLoadConfig(){
+  try{
+    const x=JSON.parse(localStorage.getItem('siq_interest_slabs')||'null');
+    if(Array.isArray(x) && x.length) return x;
+  }catch(e){}
+  return INTEREST_DEFAULT_SLABS.map(x=>({...x}));
+}
+function interestSaveConfig(slabs){
+  try{ localStorage.setItem('siq_interest_slabs', JSON.stringify(slabs)); }catch(e){}
+}
+function interestNum(v){ const n=Number(String(v??'').replace(/,/g,'')); return isFinite(n)?n:0; }
+function interestMoney(n){ return Number(n||0).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+
+function interestSlabRows(){
+  return [...document.querySelectorAll('#interestSlabs .interest-slab-row')].map((r,i)=>({
+    from:interestNum(r.querySelector('.slab-from')?.value),
+    to:(r.querySelector('.slab-to')?.value==='' || r.querySelector('.slab-to')?.value===null) ? null : interestNum(r.querySelector('.slab-to')?.value),
+    rate:interestNum(r.querySelector('.slab-rate')?.value)
+  }));
+}
+function interestNormaliseSlabs(slabs){
+  const a=slabs.map((x,i)=>({
+    from:Math.max(0,interestNum(x.from)),
+    to:(x.to===null || x.to===undefined || x.to==='')?null:Math.max(0,interestNum(x.to)),
+    rate:interestNum(x.rate)
+  })).filter(x=>x.rate>=0);
+  a.forEach((x,i)=>{
+    if(i===0) x.from=0;
+    else x.from = a[i-1].to===null ? a[i-1].from : a[i-1].to+0.01;
+  });
+  return a;
+}
+function interestValidateSlabs(slabs){
+  const errors=[];
+  if(!slabs.length) errors.push('Add at least one interest slab.');
+  slabs.forEach((x,i)=>{
+    if(x.rate<0) errors.push('Slab '+(i+1)+': rate cannot be negative.');
+    if(x.to!==null && x.to < x.from) errors.push('Slab '+(i+1)+': upper balance must be greater than or equal to the lower balance.');
+    if(i<slabs.length-1 && x.to===null) errors.push('Only the final slab can have no upper limit.');
+  });
+  if(slabs.length && slabs[slabs.length-1].to!==null) errors.push('The final slab should normally have no upper limit.');
+  return errors;
+}
+function interestAllocate(balance, slabs){
+  const b=Math.max(0,Number(balance)||0);
+  const parts=[];
+  let previousUpper=0;
+  for(const s of slabs){
+    if(b<=previousUpper) break;
+    const upper=s.to===null?Infinity:s.to;
+    const portion=Math.max(0, Math.min(b,upper)-previousUpper);
+    if(portion>0) parts.push({portion,rate:s.rate});
+    if(!isFinite(upper)) break;
+    previousUpper=upper;
+  }
+  return parts;
+}
+function interestBuildDaily(ds){
+  const rows=(ds.rows||[]).filter(r=>r.date instanceof Date && !isNaN(r.date)).sort((a,b)=>a.date-b.date);
+  if(!rows.length) return {days:[],partial:true,from:null,to:null};
+  const first=new Date(rows[0].date.getFullYear(),rows[0].date.getMonth(),rows[0].date.getDate());
+  const last=new Date(rows[rows.length-1].date.getFullYear(),rows[rows.length-1].date.getMonth(),rows[rows.length-1].date.getDate());
+  const opening=(ds.integrity && ds.integrity.opening!==null)?Number(ds.integrity.opening):
+    (rows[0].balance!==null ? Number(rows[0].balance)-Number(rows[0].credit||0)+Number(rows[0].debit||0) : null);
+  if(opening===null || !isFinite(opening)) return {days:[],partial:true,from:first,to:last,missingOpening:true};
+
+  const byDay={};
+  rows.forEach(r=>{
+    const k=dayKey(r.date);
+    (byDay[k]=byDay[k]||[]).push(r);
+  });
+
+  const days=[];
+  let balance=opening;
+  let d=new Date(first.getFullYear(),first.getMonth(),1);
+  const end=new Date(last.getFullYear(),last.getMonth()+1,0);
+  while(d<=end){
+    const k=dayKey(d);
+    const tx=byDay[k]||[];
+    if(tx.length){
+      const withBal=tx.filter(r=>r.balance!==null && isFinite(Number(r.balance)));
+      if(withBal.length) balance=Number(withBal[withBal.length-1].balance);
+      else {
+        tx.forEach(r=>{ balance += Number(r.credit||0)-Number(r.debit||0); });
+      }
+    }
+    days.push({
+      date:new Date(d),
+      month:monthKey(d),
+      daysInMonth:new Date(d.getFullYear(),d.getMonth()+1,0).getDate(),
+      balance,
+      hasTransaction:tx.length>0,
+      txCount:tx.length
+    });
+    d.setDate(d.getDate()+1);
+  }
+  const completeFirst = first.getDate()===1;
+  const completeLast = last.getDate()===end.getDate();
+  return {days,partial:!(completeFirst&&completeLast),from:first,to:last,opening,closing:balance};
+}
+function interestCalculateDaily(ds, slabs){
+  const daily=interestBuildDaily(ds);
+  if(!daily.days.length) return {...daily, monthly:[], total:0, error:daily.missingOpening?'Opening balance could not be established from this statement.':'No dated transactions found.'};
+  const out=[];
+  let total=0;
+  daily.days.forEach(x=>{
+    const parts=interestAllocate(x.balance,slabs);
+    let interest=0;
+    parts.forEach(p=> interest += p.portion*p.rate/100/x.daysInMonth);
+    total += interest;
+    out.push({...x, parts, interest});
+  });
+  const by={};
+  out.forEach(x=>{
+    const m=by[x.month]||(by[x.month]={month:x.month,days:x.daysInMonth,dailyProduct:0,interest:0,slabProducts:slabs.map(()=>0),slabInterest:slabs.map(()=>0),actualInterest:0});
+    m.dailyProduct += x.balance;
+    m.interest += x.interest;
+    x.parts.forEach((p,i)=>{m.slabProducts[i]+=p.portion;m.slabInterest[i]+=p.portion*p.rate/100/x.daysInMonth;});
+  });
+  // Interest actually credited in the statement for comparison.
+  (ds.rows||[]).forEach(r=>{
+    if(r.credit>0 && /monthly interest credit|interest credit|\binterest\b|\bint\.? credit/i.test(r.narration||'')){
+      const k=monthKey(r.date);
+      const m=by[k]||(by[k]={month:k,days:new Date(r.date.getFullYear(),r.date.getMonth()+1,0).getDate(),dailyProduct:0,interest:0,slabProducts:slabs.map(()=>0),slabInterest:slabs.map(()=>0),actualInterest:0});
+      m.actualInterest += Number(r.credit||0);
+    }
+  });
+  return {...daily, daily:out, monthly:Object.values(by).sort((a,b)=>a.month.localeCompare(b.month)), total};
+}
+function interestRenderSlabs(slabs){
+  const el=document.getElementById('interestSlabs');
+  if(!el) return;
+  el.innerHTML=slabs.map((x,i)=>
+    '<div class="interest-slab-row slab-grid" data-i="'+i+'">'+
+      '<div class="wide"><label class="f">Slab '+(i+1)+'</label></div>'+
+      '<div><input class="slab-from" type="number" min="0" step="0.01" value="'+esc(x.from)+'" aria-label="Slab '+(i+1)+' from"></div>'+
+      '<div><input class="slab-to" type="number" min="0" step="0.01" value="'+(x.to===null?'':esc(x.to))+'" placeholder="No limit" aria-label="Slab '+(i+1)+' to"></div>'+
+      '<div><input class="slab-rate" type="number" min="0" step="0.01" value="'+esc(x.rate)+'" aria-label="Slab '+(i+1)+' annual rate"></div>'+
+      '<div><button class="btn sm" type="button" onclick="interestRemoveSlab('+i+')" '+(slabs.length<=1?'disabled':'')+'>Remove</button></div>'+
+    '</div>'
+  ).join('');
+}
+function interestRenderResults(result,slabs){
+  const box=document.getElementById('interestResults');
+  if(!box) return;
+  if(result.error){ box.innerHTML='<div class="banner bad"><span>!</span><div>'+esc(result.error)+'</div></div>'; return; }
+  const months=result.monthly||[];
+  let h='<div class="formula-box"><b>Method:</b> Daily closing balance × applicable slab rate ÷ actual days in that calendar month. Progressive slabs are applied to each daily balance.</div>';
+  if(result.partial) h+='<div class="banner warn" style="margin-top:10px"><span>!</span><div><b>Partial statement period.</b> The calculator carries the opening balance through the calendar month, but the statement does not contain transactions from the first through the last day of every month. Verify the period before relying on the result.</div></div>';
+  h+='<div class="tblwrap" style="margin-top:12px"><table class="interest-table"><thead><tr><th>Month</th><th class="r">Days</th><th class="r">Daily product</th><th class="r">Calculated interest</th><th class="r">Interest credited</th><th class="r">Difference</th></tr></thead><tbody>';
+  months.forEach(m=>{
+    const diff=m.actualInterest ? m.interest-m.actualInterest : null;
+    h+='<tr><td>'+esc(monthLabel(m.month))+'</td><td class="r num">'+m.days+'</td><td class="r num">'+inr(m.dailyProduct)+'</td><td class="r num">'+inr(m.interest)+'</td><td class="r num">'+(m.actualInterest?inr(m.actualInterest):'—')+'</td><td class="r num">'+(diff===null?'—':inr(diff))+'</td></tr>';
+  });
+  h+='</tbody><tfoot><tr><th>Total</th><th></th><th class="r num">'+inr(months.reduce((a,m)=>a+m.dailyProduct,0))+'</th><th class="r num">'+inr(result.total)+'</th><th class="r num">'+inr(months.reduce((a,m)=>a+(m.actualInterest||0),0))+'</th><th></th></tr></tfoot></table></div>';
+  h+='<div class="row" style="margin-top:12px"><button class="btn sm" type="button" onclick="interestShowDaily()">Show daily calculation</button></div>';
+  box.innerHTML=h;
+  const dailyBox=document.getElementById('interestDaily');
+  if(dailyBox) dailyBox.innerHTML='';
+  window.SIQInterestLast={result,slabs};
+}
+function interestShowDaily(){
+  const box=document.getElementById('interestDaily');
+  const last=window.SIQInterestLast;
+  if(!box||!last) return;
+  const {result,slabs}=last;
+  let h='<div class="tblwrap" style="margin-top:12px;max-height:520px"><table class="interest-table"><thead><tr><th>Date</th><th class="r">Days in month</th><th class="r">Closing balance</th>';
+  slabs.forEach((s,i)=>{h+='<th class="r">Slab '+(i+1)+' product</th><th class="r">Rate</th><th class="r">Interest</th>';});
+  h+='<th class="r">Total daily interest</th></tr></thead><tbody>';
+  result.daily.forEach(d=>{
+    h+='<tr><td>'+fmtDate(d.date)+'</td><td class="r num">'+d.daysInMonth+'</td><td class="r num">'+inr(d.balance)+'</td>';
+    slabs.forEach((s,i)=>{
+      const p=d.parts[i]||{portion:0,rate:s.rate};
+      h+='<td class="r num">'+inr(p.portion)+'</td><td class="r num">'+Number(p.rate).toFixed(2)+'%</td><td class="r num">'+inr(p.portion*p.rate/100/d.daysInMonth)+'</td>';
+    });
+    h+='<td class="r num"><b>'+inr(d.interest)+'</b></td></tr>';
+  });
+  h+='</tbody></table></div>';
+  box.innerHTML=h;
+}
+function interestAddSlab(){
+  const slabs=interestSlabRows();
+  const last=slabs[slabs.length-1]||{to:500000};
+  const from=last.to===null?0:last.to+0.01;
+  slabs.push({from,to:null,rate:(last.rate||4)+1});
+  interestRenderSlabs(slabs); interestSaveConfig(slabs);
+}
+function interestRemoveSlab(i){
+  const slabs=interestSlabRows();
+  if(slabs.length<=1) return;
+  slabs.splice(i,1);
+  interestRenderSlabs(interestNormaliseSlabs(slabs)); interestSaveConfig(interestNormaliseSlabs(slabs));
+}
+function interestRun(){
+  const slabs=interestNormaliseSlabs(interestSlabRows());
+  const errors=interestValidateSlabs(slabs);
+  if(errors.length){ document.getElementById('interestResults').innerHTML='<div class="banner bad"><span>!</span><div>'+errors.map(esc).join('<br>')+'</div></div>'; return; }
+  interestSaveConfig(slabs);
+  const sel=document.getElementById('interestStatement');
+  const ds=S.sets.find(x=>x.id===sel?.value && x.kind==='bank') || S.sets.find(x=>x.kind==='bank');
+  if(!ds){ document.getElementById('interestResults').innerHTML='<div class="banner warn"><span>?</span><div>No bank statement is loaded.</div></div>'; return; }
+  const result=interestCalculateDaily(ds,slabs);
+  interestRenderResults(result,slabs);
+}
+function renderInterestCalculator(){
+  const root=document.getElementById('bankInterest');
+  if(!root) return;
+  const banks=S.sets.filter(x=>x.kind==='bank');
+  if(!banks.length){ root.innerHTML=''; return; }
+  const slabs=interestLoadConfig();
+  root.innerHTML=
+    '<h3>Interest calculator — daily product</h3>'+
+    '<p class="hint">Interest is calculated on the closing balance for every calendar day from the 1st through the last day of the month. Each balance is split progressively across the editable slabs. The annual rate is divided by the actual number of days in that month — 28/29/30/31, as applicable.</p>'+
+    '<div class="formula-box"><b>Example:</b> ₹4,00,000 daily balance = ₹3,00,000 @ 4% + ₹1,00,000 @ 5%. ₹8,00,000 = ₹3,00,000 @ 4% + ₹2,00,000 @ 5% + ₹3,00,000 @ 6%.</div>'+
+    '<div class="row" style="margin-top:12px"><label class="f" style="min-width:120px">Statement</label><select id="interestStatement">'+banks.map(d=>'<option value="'+esc(d.id)+'">'+esc(d.name)+'</option>').join('')+'</select><button class="btn primary" type="button" onclick="interestRun()">Calculate interest</button><button class="btn sm" type="button" onclick="interestAddSlab()">+ Add slab</button></div>'+
+    '<div style="margin-top:12px"><div class="slab-grid" style="font-weight:700;margin-bottom:6px"><div class="wide">Slab</div><div>From balance</div><div>Up to balance</div><div>Annual rate %</div><div></div></div><div id="interestSlabs"></div></div>'+
+    '<div id="interestResults" style="margin-top:14px"><div class="hint">Enter/edit the slabs and press <b>Calculate interest</b>.</div></div>'+
+    '<div id="interestDaily"></div>'+
+    '<p class="hint" style="margin-top:12px">If the statement contains an interest-credit transaction, StatementIQ compares the calculated monthly interest with the amount actually credited. A difference is a review point, not proof of a bank error.</p>';
+  interestRenderSlabs(slabs);
+}
+
 function renderBank(){
   const t = bankTxns();
   if(!t.length) return;
@@ -1976,8 +2230,10 @@ function renderBank(){
         '<div class="hint formula-note" style="margin-top:10px">Formula: Income − Consumption spending − Investments = Net income after consumption &amp; investment</div>'+
       '</div>'+
     '</div>'+
-    '<p class="hint" style="margin-top:12px">Excluded from income/consumption spending: transfers in/out '+inr(fs.transfersIn)+' / '+inr(fs.transfersOut)+' and card settlements '+inr(fs.cardSettlements)+'. Investments '+inr(fs.investments)+' and loan repayments '+inr(fs.loanRepayments)+' are shown separately from consumption spending.'+
-        '<div class="banner ok why-difference" style="margin-top:14px"><b>Why the difference?</b> Cash movement includes the ₹1,00,000 own-account transfer and ₹56,700 card settlement. These are not income or consumption spending.</div></p>';
+    '<p class="hint" style="margin-top:12px">Excluded from income/consumption spending: transfers in/out '+inr(fs.transfersIn)+' / '+inr(fs.transfersOut)+' and card settlements '+inr(fs.cardSettlements)+'. Investments '+inr(fs.investments)+' and loan repayments '+inr(fs.loanRepayments)+' are shown separately from consumption spending.</p>'+
+    '<div class="banner ok why-difference" style="margin-top:14px"><b>Why the difference?</b> Cash movement includes transfers and settlements. These are not income or consumption spending.</div>';
+
+  renderInterestCalculator();
 
   // -------- transaction intelligence --------
   const intelRows = t.map(x=>
@@ -2869,6 +3125,49 @@ async function exportExcel(){
   tot.getCell(7).numFmt = INR_FMT; tot.getCell(8).numFmt = INR_FMT;
   styleHeader(s2, 11);
   widths(s2, [12,52,18,20,22,15,26,15,15,16,26]);
+
+
+  /* ---------- 2A. INTEREST CALCULATION ---------- */
+  const sInt = wb.addWorksheet('Interest Calculation', {properties:{tabColor:{argb:GREEN}}});
+  sInt.addRow(['StatementIQ — Daily Product Interest Calculation']);
+  sInt.getCell('A1').font={bold:true,size:14};
+  sInt.addRow(['Method','Progressive slabs; daily closing balance; annual rate divided by actual calendar days in each month.']);
+  const exportSlabs = (typeof interestLoadConfig==='function') ? interestLoadConfig() : INTEREST_DEFAULT_SLABS;
+  const exportBank = S.sets.find(d=>d.kind==='bank');
+  if(exportBank){
+    const ir = interestCalculateDaily(exportBank, interestNormaliseSlabs(exportSlabs));
+    sInt.addRow([]);
+    sInt.addRow(['Monthly Summary']);
+    sInt.addRow(['Month','Days','Total Daily Product','Calculated Interest','Interest Credited','Difference']);
+    (ir.monthly||[]).forEach(m=>{
+      sInt.addRow([monthLabel(m.month),m.days,m.dailyProduct,m.interest,m.actualInterest||null,m.actualInterest?(m.interest-m.actualInterest):null]);
+    });
+    sInt.addRow([]);
+    sInt.addRow(['Daily Calculation']);
+    const hdr=['Date','Days in month','Closing balance'];
+    exportSlabs.forEach((x,i)=>hdr.push('Slab '+(i+1)+' Product','Slab '+(i+1)+' Rate %','Slab '+(i+1)+' Interest'));
+    hdr.push('Total daily interest');
+    sInt.addRow(hdr);
+    (ir.daily||[]).forEach(d=>{
+      const row=[d.date,d.daysInMonth,d.balance];
+      exportSlabs.forEach((sl,i)=>{
+        const p=d.parts[i]||{portion:0,rate:sl.rate};
+        row.push(p.portion,p.rate,p.portion*p.rate/100/d.daysInMonth);
+      });
+      row.push(d.interest);
+      sInt.addRow(row);
+    });
+    // Format dates/currency.
+    for(let r=1;r<=sInt.rowCount;r++){
+      sInt.getCell(r,1).alignment={vertical:'top'};
+      for(let c=3;c<=sInt.columnCount;c++){
+        if(c!==4 || r>4) sInt.getCell(r,c).numFmt=INR_FMT;
+      }
+      if(r>0 && sInt.getCell(r,1).value instanceof Date) sInt.getCell(r,1).numFmt='dd-mmm-yyyy';
+    }
+    styleHeader(sInt, 6);
+    widths(sInt, [18,16,20,20,20,20,20,20,20,20,20,20,20,20]);
+  }
 
   /* ---------- 3. CATEGORY SUMMARY ---------- */
   const s3 = wb.addWorksheet('Category Summary', {properties:{tabColor:{argb:RUST}}});
