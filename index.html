@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>StatementIQ v2.0.5 — Bank &amp; Credit Card Statement Analyser</title>
+<title>StatementIQ v2.0.6 — Bank &amp; Credit Card Statement Analyser</title>
 
 <!-- ==========================================================================
      StatementIQ — single-file, offline, browser-only statement analyser.
@@ -330,7 +330,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
   </div>
   <div class="brand-txt">
     <h1>StatementIQ</h1>
-    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.0.5</b></small>
+    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.0.6</b></small>
     <div class="developer-credit">Developed by Anil Sharma, Former General Manager, Central Bank of India</div>
   </div>
   <div class="header-actions">
@@ -428,7 +428,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
       <div class="card"><h3>Financial health</h3><p class="hint">A simple analytical score based only on the loaded statements — not financial advice.</p><div id="healthBox"></div></div>
     </div>
     <div class="card"><h3>Top spending categories</h3><p class="hint">Actual spending excludes transfers to self and credit-card bill settlements.</p><div class="tblwrap"><table id="dashCatTbl"></table></div></div>
-    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.0.5 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
+    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.0.6 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
   </div>
 </section>
 
@@ -437,9 +437,10 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
   <div id="bankEmpty" class="card"><div class="empty"><h3>No bank statement loaded</h3><p>Upload a savings or current account statement to see cash flow, categories, recurring debits and bank charges.</p><button class="btn primary" onclick="switchPanel('pUpload')">Go to upload</button></div></div>
   <div id="bankBody" style="display:none">
     <div id="bankIntegrity"></div>
+    <div class="card" id="bankActivity" style="margin-bottom:16px"></div>
     <div class="grid g4" style="margin-bottom:16px" id="bankStats"></div>
     <div class="grid g2">
-      <div class="card"><h3>Income vs expense by month</h3><p class="hint">Green bars are money in, rust bars are money out.</p><div class="chartbox"><canvas id="chMonthly"></canvas></div></div>
+      <div class="card"><h3>Cash movement by month</h3><p class="hint">Green bars are all credits and rust bars are all debits. This is cash movement, not genuine income/spending.</p><div class="chartbox"><canvas id="chMonthly"></canvas></div></div>
       <div class="card"><h3>Where the money went</h3><p class="hint">Category split of all debits, self-transfers excluded.</p><div class="chartbox"><canvas id="chCategory"></canvas></div></div>
     </div>
     <div class="card"><h3>Daily balance trend</h3><p class="hint">The lowest point of the period is marked — that is the number a lender looks at.</p><div class="chartbox tall"><canvas id="chBalance"></canvas></div></div>
@@ -575,7 +576,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 <!-- ================= HELP PANEL ================= -->
 <section class="panel" id="pHelp">
   <div class="card">
-    <h2>How to use StatementIQ <span class="pill-big">v2.0.5</span></h2>
+    <h2>How to use StatementIQ <span class="pill-big">v2.0.6</span></h2>
     <ol style="line-height:1.9;padding-left:20px">
       <li><b>Upload.</b> Drop in bank and credit card statements together — PDF, XLSX or CSV. Password-protected PDFs prompt for the password; nothing is stored.</li>
       <li><b>Verify columns.</b> Check the detected column roles and fix any that are wrong with the dropdowns.</li>
@@ -608,7 +609,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 
 <footer>
   <p class="disc">This tool extracts and analyses data from statements you provide. Always verify the extracted figures against your original statement before using them for tax filing, loan applications, or any financial decision. This is not financial or tax advice.</p>
-  <p>StatementIQ v2.0.5 · runs entirely offline in your browser · no account, no upload, no tracking</p>
+  <p>StatementIQ v2.0.6 · runs entirely offline in your browser · no account, no upload, no tracking</p>
 </footer>
 
 <!-- password modal -->
@@ -1694,18 +1695,17 @@ function renderDashboard(){
   dashBody.style.display='block';
 
   const tx = S.txns;
-  const income = tx.filter(t=>t.credit>0 && ['Transfer','Card settlement','Refund / reversal'].indexOf(t.economicType)<0)
-    .reduce((a,t)=>a+t.credit,0);
-  const transfersIn = tx.filter(t=>t.credit>0 && t.economicType==='Transfer').reduce((a,t)=>a+t.credit,0);
-  const refunds = tx.filter(t=>t.credit>0 && t.economicType==='Refund / reversal').reduce((a,t)=>a+t.credit,0);
+  const fs = financialSummary(tx);
+  const income = fs.income;
+  const actualExpense = fs.actualExpense;
+  const transfersIn = fs.transfersIn;
+  const refunds = fs.refunds;
   const interest = tx.filter(t=>t.economicType==='Interest income').reduce((a,t)=>a+t.credit,0);
-  const actualExpense = tx.filter(t=>t.debit>0 && !['Transfer','Card settlement','Investment','Loan repayment'].includes(t.economicType))
-    .reduce((a,t)=>a+t.debit,0);
-  const transfersOut = tx.filter(t=>t.debit>0 && t.economicType==='Transfer').reduce((a,t)=>a+t.debit,0);
-  const cardSettlements = tx.filter(t=>t.debit>0 && t.economicType==='Card settlement').reduce((a,t)=>a+t.debit,0);
-  const investments = tx.filter(t=>t.debit>0 && t.economicType==='Investment').reduce((a,t)=>a+t.debit,0);
-  const loanRepayments = tx.filter(t=>t.debit>0 && t.economicType==='Loan repayment').reduce((a,t)=>a+t.debit,0);
-  const net = income - actualExpense - investments - loanRepayments;
+  const transfersOut = fs.transfersOut;
+  const cardSettlements = fs.cardSettlements;
+  const investments = fs.investments;
+  const loanRepayments = fs.loanRepayments;
+  const net = fs.netFinancial;
   const months = new Set(tx.filter(t=>t.date).map(t=>monthKey(t.date))).size || 1;
   const avgMonthlyExpense = actualExpense/months;
   const savingsPct = income ? (net/income*100) : 0;
@@ -1734,19 +1734,20 @@ function renderDashboard(){
   const stat=(l,v,s,cls)=>'<div class="stat"><div class="lbl">'+l+'</div><div class="stat-val '+(cls||'')+'">'+v+'</div><div class="sub">'+(s||'')+'</div></div>';
   document.getElementById('dashStats').innerHTML =
     stat('Actual income',inr(income),'excluding self-transfers and card settlements','pos')+
-    stat('Actual spending',inr(actualExpense),'excluding transfers, investments & loan repayment','neg')+
+    stat('Actual spending',inr(actualExpense),'genuine spending; transfers & settlements excluded','neg')+
     stat('Net surplus',inr(net),savingsPct.toFixed(1)+'% of actual income',net>=0?'pos':'neg')+
     stat('Average monthly spending',inr(avgMonthlyExpense),months+' month'+(months===1?'':'s'));
 
   document.getElementById('cashFlowBox').innerHTML =
+    '<div class="metric-line"><span>Statement cash inflow</span><b>'+inr(fs.cashIn)+'</b></div>'+
+    '<div class="metric-line"><span>Statement cash outflow</span><b>'+inr(fs.cashOut)+'</b></div>'+
+    '<div class="metric-line"><span>Statement cash movement net</span><b>'+inr(fs.cashNet)+'</b></div>'+
     '<div class="metric-line"><span>Genuine income</span><b>'+inr(income)+'</b></div>'+
-    '<div class="metric-line"><span>Transfers in</span><b>'+inr(transfersIn)+'</b></div>'+
-    '<div class="metric-line"><span>Refunds / reversals</span><b>'+inr(refunds)+'</b></div>'+
-    '<div class="metric-line"><span>Interest income</span><b>'+inr(interest)+'</b></div>'+
-    '<div class="metric-line"><span>Transfers out</span><b>'+inr(transfersOut)+'</b></div>'+
+    '<div class="metric-line"><span>Genuine spending</span><b>'+inr(actualExpense)+'</b></div>'+
+    '<div class="metric-line"><span>Financial activity net</span><b>'+inr(fs.netFinancial)+'</b></div>'+
+    '<div class="metric-line"><span>Transfers in / out</span><b>'+inr(transfersIn)+' / '+inr(transfersOut)+'</b></div>'+
     '<div class="metric-line"><span>Card settlements</span><b>'+inr(cardSettlements)+'</b></div>'+
-    '<div class="metric-line"><span>Investments</span><b>'+inr(investments)+'</b></div>'+
-    '<div class="metric-line"><span>Loan repayments</span><b>'+inr(loanRepayments)+'</b></div>';
+    '<div class="metric-line"><span>Investments / loan repayments</span><b>'+inr(investments)+' / '+inr(loanRepayments)+'</b></div>';
 
   const flags=[];
   if(highestDebit>0 && actualExpense>0 && highestDebit>actualExpense*0.5) flags.push('<div class="flag bad"><b>Large debit detected</b>'+inr(highestDebit)+' is unusually large compared with total actual spending.</div>');
@@ -1768,6 +1769,24 @@ function renderDashboard(){
   document.getElementById('dashCatTbl').innerHTML='<thead><tr><th>Category</th><th class="r">Amount</th><th class="r">Share</th></tr></thead><tbody>'+
     ce.slice(0,15).map(([k,v])=>'<tr><td>'+esc(k)+'</td><td class="r num">'+inr(v)+'</td><td class="r num">'+(actualExpense?pct(v,actualExpense):'0%')+'</td></tr>').join('')+
     '</tbody>';
+}
+
+function financialSummary(tx){
+  const cashIn = tx.reduce((a,t)=>a+t.credit,0);
+  const cashOut = tx.reduce((a,t)=>a+t.debit,0);
+  const income = tx.filter(t=>t.credit>0 && !['Transfer','Card settlement'].includes(t.economicType))
+    .reduce((a,t)=>a+t.credit,0);
+  const refunds = tx.filter(t=>t.credit>0 && t.economicType==='Refund / reversal').reduce((a,t)=>a+t.credit,0);
+  const transfersIn = tx.filter(t=>t.credit>0 && t.economicType==='Transfer').reduce((a,t)=>a+t.credit,0);
+  const transfersOut = tx.filter(t=>t.debit>0 && t.economicType==='Transfer').reduce((a,t)=>a+t.debit,0);
+  const cardSettlements = tx.filter(t=>t.debit>0 && t.economicType==='Card settlement').reduce((a,t)=>a+t.debit,0);
+  const investments = tx.filter(t=>t.debit>0 && t.economicType==='Investment').reduce((a,t)=>a+t.debit,0);
+  const loanRepayments = tx.filter(t=>t.debit>0 && t.economicType==='Loan repayment').reduce((a,t)=>a+t.debit,0);
+  const actualExpense = tx.filter(t=>t.debit>0 && !['Transfer','Card settlement','Investment','Loan repayment'].includes(t.economicType))
+    .reduce((a,t)=>a+t.debit,0);
+  // Net financial activity excludes movements that merely move/settle money or are investments/loan principal.
+  const netFinancial = income - actualExpense;
+  return {cashIn,cashOut,cashNet:cashIn-cashOut,income,actualExpense,netFinancial,refunds,transfersIn,transfersOut,cardSettlements,investments,loanRepayments};
 }
 
 function bankTxns(){ return S.txns.filter(t=>t.kind==='bank'); }
@@ -1885,6 +1904,25 @@ function renderBank(){
   });
   document.getElementById('bankIntegrity').innerHTML = ih;
 
+  // -------- cash movement vs financial activity --------
+  const fs = financialSummary(t);
+  document.getElementById('bankActivity').innerHTML =
+    '<h3>Cash movement vs financial activity</h3>'+
+    '<p class="hint">Cash movement shows every credit/debit on the account. Financial activity removes own-account transfers and credit-card settlements so they are not mistaken for income or spending.</p>'+
+    '<div class="grid g2" style="margin-top:12px">'+
+      '<div class="card" style="box-shadow:none;border:1px solid var(--line)"><div class="lbl">Statement cash movement</div>'+
+        '<div class="metric-line"><span>Cash inflow</span><b>'+inr(fs.cashIn)+'</b></div>'+
+        '<div class="metric-line"><span>Cash outflow</span><b>'+inr(fs.cashOut)+'</b></div>'+
+        '<div class="metric-line"><span>Net cash movement</span><b>'+inr(fs.cashNet)+'</b></div>'+
+      '</div>'+
+      '<div class="card" style="box-shadow:none;border:1px solid var(--line)"><div class="lbl">Financial activity</div>'+
+        '<div class="metric-line"><span>Actual income</span><b>'+inr(fs.income)+'</b></div>'+
+        '<div class="metric-line"><span>Actual spending</span><b>'+inr(fs.actualExpense)+'</b></div>'+
+        '<div class="metric-line"><span>Net financial activity</span><b>'+inr(fs.netFinancial)+'</b></div>'+
+      '</div>'+
+    '</div>'+
+    '<p class="hint" style="margin-top:12px">Excluded from genuine spending/income: transfers in/out '+inr(fs.transfersIn)+' / '+inr(fs.transfersOut)+' and card settlements '+inr(fs.cardSettlements)+'. Investments '+inr(fs.investments)+' and loan repayments '+inr(fs.loanRepayments)+' are shown separately.</p>';
+
   // -------- headline stats --------
   const inflow = t.reduce((a,b)=>a+b.credit,0);
   const outflow = t.reduce((a,b)=>a+b.debit,0);
@@ -1902,13 +1940,13 @@ function renderBank(){
 
   const stat = (l,v,s,cls,accent)=>'<div class="stat'+(accent?' accent':'')+'"><div class="lbl">'+l+'</div><div class="stat-val '+(cls||'')+'">'+v+'</div><div class="sub">'+(s||'')+'</div></div>';
   document.getElementById('bankStats').innerHTML =
-    stat('Total inflow', inr(inflow), inr(inflow/months)+' a month', 'pos', true) +
-    stat('Total outflow', inr(outflow), inr(outflow/months)+' a month', 'neg') +
-    stat(net>=0?'Net surplus':'Net deficit', inr(net), 'over '+months+' month'+(months>1?'s':''), net>=0?'pos':'neg') +
-    stat('Bank charges &amp; fees', inr(charges), chargeN+' charge'+(chargeN===1?'':'s')+' — most people never add this up', charges>0?'neg':'') +
+    stat('Cash inflow', inr(fs.cashIn), 'all credits on the statement', 'pos', true) +
+    stat('Cash outflow', inr(fs.cashOut), 'all debits on the statement', 'neg') +
+    stat('Actual income', inr(fs.income), 'transfers & card settlements excluded', 'pos') +
+    stat('Actual spending', inr(fs.actualExpense), 'transfers, investments & loan repayments excluded', 'neg') +
+    stat('Bank charges &amp; fees', inr(charges), chargeN+' charge'+(chargeN===1?'':'s'), charges>0?'neg':'') +
     stat('Cash withdrawn', inr(cashTot), cash.length+' withdrawal'+(cash.length===1?'':'s')) +
-    stat('Monthly EMI commitment', inr(emiMonthly), emi.length+' instalment row'+(emi.length===1?'':'s')) +
-    stat('Self transfers excluded', inr(self), 'not counted as spending') +
+    stat('Transfers out', inr(fs.transfersOut), 'not counted as spending') +
     stat('Lowest balance', low?inr(low.balance):'—', low?('on '+fmtDate(low.date)):'no balance column');
 
   // -------- monthly income vs expense --------
@@ -2702,10 +2740,19 @@ async function exportExcel(){
   line('Period from', dates[0]); s1.getCell('B'+(r-1)).numFmt='dd-mmm-yyyy';
   line('Period to', dates[dates.length-1]); s1.getCell('B'+(r-1)).numFmt='dd-mmm-yyyy';
   line('Months covered', months.size);
-  line('Total inflow', inflow, INR_FMT);
-  line('Total outflow', outflow, INR_FMT);
-  line('Net', inflow-outflow, INR_FMT);
-  line('Average monthly outflow', outflow/(months.size||1), INR_FMT);
+  line('Total cash inflow', inflow, INR_FMT);
+  line('Total cash outflow', outflow, INR_FMT);
+  line('Net cash movement', inflow-outflow, INR_FMT);
+  const exportFS = financialSummary(S.txns);
+  line('Actual income', exportFS.income, INR_FMT);
+  line('Actual spending', exportFS.actualExpense, INR_FMT);
+  line('Net financial activity', exportFS.netFinancial, INR_FMT);
+  line('Transfers in', exportFS.transfersIn, INR_FMT);
+  line('Transfers out', exportFS.transfersOut, INR_FMT);
+  line('Card settlements', exportFS.cardSettlements, INR_FMT);
+  line('Investments', exportFS.investments, INR_FMT);
+  line('Loan repayments', exportFS.loanRepayments, INR_FMT);
+  line('Average monthly cash outflow', outflow/(months.size||1), INR_FMT);
   r++;
   sect('Integrity check');
   S.sets.filter(d=>d.kind==='bank').forEach(d=>{
@@ -2732,9 +2779,9 @@ async function exportExcel(){
 
   /* ---------- 2. TRANSACTIONS ---------- */
   const s2 = wb.addWorksheet('Transactions', {properties:{tabColor:{argb:CHARCOAL}}});
-  s2.addRow(['Date','Narration','Reference','Category','Channel','Counterparty','Debit','Credit','Balance','Source']);
+  s2.addRow(['Date','Narration','Reference','Category','Economic type','Channel','Counterparty','Debit','Credit','Balance','Source']);
   S.txns.forEach(t=>{
-    const row = s2.addRow([t.date, t.narration, t.ref, t.category, t.channel, t.counterparty,
+    const row = s2.addRow([t.date, t.narration, t.ref, t.category, t.economicType, t.channel, t.counterparty,
       t.debit||null, t.credit||null, t.balance===null?null:t.balance, t.source]);
     row.getCell(1).numFmt = 'dd-mmm-yyyy';
     [7,8,9].forEach(i=>{ row.getCell(i).numFmt = INR_FMT; });
@@ -2748,8 +2795,8 @@ async function exportExcel(){
   tot.font = {bold:true};
   tot.eachCell(c=>{ c.border = {top:{style:'double', color:{argb:CHARCOAL}}}; });
   tot.getCell(7).numFmt = INR_FMT; tot.getCell(8).numFmt = INR_FMT;
-  styleHeader(s2, 10);
-  widths(s2, [12,52,18,20,15,26,15,15,16,26]);
+  styleHeader(s2, 11);
+  widths(s2, [12,52,18,20,22,15,26,15,15,16,26]);
 
   /* ---------- 3. CATEGORY SUMMARY ---------- */
   const s3 = wb.addWorksheet('Category Summary', {properties:{tabColor:{argb:RUST}}});
@@ -3077,7 +3124,7 @@ document.getElementById('btnTheme').onclick = ()=>{
 document.getElementById('helpTbl').innerHTML =
   '<thead><tr><th>Sheet</th><th>What is on it</th></tr></thead><tbody>'+
   [['Summary','Account details, period, opening and closing balance, totals, integrity result, key metrics'],
-   ['Transactions','Every parsed row with category, channel, counterparty and a live SUM() totals row'],
+   ['Transactions','Every parsed row with category, economic type, channel, counterparty and a live SUM() totals row'],
    ['Category Summary','Category totals, counts and share of spend — ready to pivot'],
    ['Monthly Trend','Month-wise income, expense and net, laid out to chart in two clicks'],
    ['Recurring & Subscriptions','Detected recurring payments with cadence and annualised cost'],
