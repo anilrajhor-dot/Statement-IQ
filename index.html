@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>StatementIQ v2.5.2 — Bank &amp; Credit Card Statement Analyser</title>
+<title>StatementIQ v2.6.0 — Bank &amp; Credit Card Statement Analyser</title>
 
 <!-- ==========================================================================
      StatementIQ — single-file, offline, browser-only statement analyser.
@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js">/* v2.5.2 zero-as-placeholder */
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js">/* v2.6.0 zero-as-placeholder */
 document.addEventListener('focusin',function(e){const x=e.target;if(x&&x.tagName==='INPUT'&&x.type==='number'&&x.value==='0')x.value='';});
 document.addEventListener('click',function(e){const x=e.target;if(x&&x.tagName==='INPUT'&&x.type==='number'&&x.value==='0')x.value='';});
 </script>
@@ -317,7 +317,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 /* v2.0 dashboard */
 .health-score{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.score-ring{width:92px;height:92px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--amber) calc(var(--score)*1%),var(--line) 0);position:relative}.score-ring:after{content:"";position:absolute;inset:9px;border-radius:50%;background:var(--paper)}.score-ring b{position:relative;z-index:1;font-size:24px}.score-copy{min-width:220px}.metric-line{display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-bottom:1px solid var(--line)}.metric-line:last-child{border-bottom:0}.flag{padding:10px 12px;border-radius:10px;background:var(--surface-2);margin:7px 0;border-left:4px solid var(--amber)}.flag.bad{border-left-color:var(--rust)}.flag.ok{border-left-color:var(--green)}.flag b{display:block}.muted{color:var(--ink-soft);font-size:12px}.pill-big{display:inline-flex;padding:4px 9px;border-radius:999px;background:var(--surface-2);font-size:11px;font-weight:700}.dash-empty{padding:16px}.confidence{font-weight:700}.confidence.high{color:var(--green)}.confidence.low{color:var(--rust)}
 
-/* v2.5.2: keep financial metric values together on narrow screens */
+/* v2.6.0: keep financial metric values together on narrow screens */
 .financial-activity .metric-line { display:flex; align-items:center; gap:14px; }
 .financial-activity .metric-line span { flex:1 1 auto; min-width:0; }
 .financial-activity .metric-line b { flex:0 0 auto; white-space:nowrap; text-align:right; }
@@ -330,7 +330,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 }
 
 
-/* v2.5.2 — daily-product interest calculator */
+/* v2.6.0 — daily-product interest calculator */
 .interest-calc .slab-grid{display:grid;grid-template-columns:1.1fr 1.4fr 1.4fr 1fr auto;gap:8px;align-items:center}
 .interest-calc .slab-grid input{min-width:0}
 .interest-calc .interest-table th,.interest-calc .interest-table td{white-space:nowrap}
@@ -348,7 +348,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 }
 
 
-/* v2.5.2 — dedicated calculators */
+/* v2.6.0 — dedicated calculators */
 .calc-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .calc-card{border:1px solid var(--line);border-radius:14px;padding:14px;background:var(--surface)}
 .calc-result{margin-top:14px;padding:14px;border-radius:12px;background:var(--surface-soft);border:1px solid var(--line)}
@@ -360,7 +360,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 @media(max-width:560px){.calc-grid{grid-template-columns:1fr}.calc-result .big{font-size:21px}}
 
 
-/* v2.5.2 — responsive interest tables and totals */
+/* v2.6.0 — responsive interest tables and totals */
 .interest-calc .tblwrap,
 #interestStandalone .tblwrap{
   width:100%;
@@ -399,7 +399,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 }
 
 
-/* v2.5.2 — calculators prominently available on first page */
+/* v2.6.0 — calculators prominently available on first page */
 .first-page-tools{
   padding:14px 18px 4px;
 }
@@ -435,7 +435,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 }
 
 
-/* v2.5.2 — clean calculator hub */
+/* v2.6.0 — clean calculator hub */
 .first-page-menu-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
 .first-page-menu-grid button{min-height:74px;justify-content:flex-start;text-align:left;font-size:14px}
 .first-page-menu-grid button>span:first-child{font-size:22px;flex:none}
@@ -447,13 +447,57 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 #pInterestCalc>.card,#pFinancialCalc>.card,#pInterestCompare>.card{width:100%;box-sizing:border-box}
 #pInterestCalc .tblwrap,#pInterestCompare .tblwrap{width:100%;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
 
-/* v2.5.2 */
+/* v2.6.0 */
 #btnFinancialCalc{background:var(--accent)!important;color:#0E0E10!important;border-color:var(--accent)!important;font-weight:800!important}
 @media(max-width:760px){.interest-settings-head{display:none!important}#interestSlabs .interest-slab-row{grid-template-columns:1fr 1fr}#interestSlabs .interest-slab-row .wide{grid-column:1/-1}}
 
 #tabs .tab[data-panel="pFinancialCalc"]{background:var(--accent)!important;color:#0E0E10!important;border-color:var(--accent)!important;font-weight:800}
 #tabs .tab[data-panel="pFinancialCalc"].on{box-shadow:inset 0 -3px 0 #0E0E10}
 #interestStatement:disabled{opacity:.7}
+
+/* v2.6.0 visual refresh + help centre */
+:root{--accent:var(--amber);--surface-soft:var(--surface-2)}
+header.app{padding:18px 22px;gap:18px;background:linear-gradient(135deg,var(--surface) 0%,var(--surface-2) 100%);box-shadow:0 1px 0 var(--line)}
+.brandmark{width:48px;height:48px;border-radius:14px;box-shadow:0 6px 18px rgba(14,14,16,.12)}
+.brand-txt h1{font-size:24px;letter-spacing:-.04em}
+.brand-txt small{font-size:12px;margin-top:2px}
+.developer-credit{font-size:11px}
+.header-actions{gap:7px}
+.header-actions .btn{min-height:38px;border-radius:10px}
+#tabs{padding:7px 18px;gap:7px;background:var(--surface-2);border-bottom:1px solid var(--line)}
+#tabs .tab{border:1px solid transparent;border-radius:10px;padding:10px 14px;font-size:12.5px}
+#tabs .tab.on{background:var(--surface);border-color:var(--line);box-shadow:0 3px 10px rgba(14,14,16,.06);border-bottom-color:var(--amber)}
+#tabs .tab[data-panel="pFinancialCalc"]{background:var(--amber)!important;border-color:var(--amber)!important;color:var(--charcoal)!important}
+#tabs .tab[data-panel="pFinancialCalc"].on{box-shadow:0 4px 12px rgba(245,179,1,.25);border-bottom-color:var(--charcoal)}
+#steps{padding:13px 22px;background:var(--surface);gap:9px}
+.step{padding:7px 14px 7px 8px;border:1px solid var(--line);background:var(--surface-2)}
+.step.active{box-shadow:0 4px 12px rgba(245,179,1,.18)}
+main{padding-top:24px}
+.card{border-radius:16px;box-shadow:0 7px 25px rgba(14,14,16,.07);padding:20px}
+#pUpload .card:first-child{border:2px dashed #E8D9B8;background:linear-gradient(180deg,#fff 0%,#FFFDF8 100%)}
+#drop{padding:52px 24px;border:2px dashed #D9C7A3;background:linear-gradient(135deg,#FFFDF7,#FFFFFF)}
+#drop h3{font-size:22px}
+#drop p{font-size:13px}
+.help-hero{display:flex;align-items:center;gap:18px;padding:24px;border-radius:20px;background:linear-gradient(135deg,#0E0E10 0%,#25252B 100%);color:#fff;margin-bottom:16px;box-shadow:0 12px 32px rgba(14,14,16,.16)}
+.help-hero-icon{width:54px;height:54px;border-radius:16px;background:var(--amber);color:var(--charcoal);display:grid;place-items:center;font-size:28px;font-weight:800;flex:none}
+.help-hero h2{font-size:25px;margin:2px 0 3px}.help-hero p{margin:0;color:#C7C7CF;font-size:13px}.help-hero .btn{margin-left:auto;flex:none}
+.eyebrow{display:block;color:var(--amber);font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px}
+.help-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:16px}
+.help-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:17px;box-shadow:var(--shadow);min-height:180px;display:flex;flex-direction:column}
+.help-card-accent{border-top:4px solid var(--amber)}
+.help-icon{width:34px;height:34px;border-radius:10px;background:var(--surface-2);display:grid;place-items:center;font-family:var(--mono);font-weight:800;color:var(--amber);margin-bottom:10px}
+.help-card h3{font-size:15px;margin-bottom:5px}.help-card p{font-size:12px;color:var(--ink-soft);margin:0 0 14px;line-height:1.55}.link-btn{margin-top:auto;border:0;background:none;color:var(--rust);font-weight:700;padding:0;text-align:left}
+.help-section h3{font-size:18px;margin-bottom:7px}.section-title-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.feature-badge{background:var(--charcoal);color:var(--amber);border-radius:999px;padding:5px 9px;font:700 11px var(--mono)}
+.feature-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.feature-grid>div{padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--surface-2)}.feature-grid b{display:block;margin-bottom:4px}.feature-grid span{display:block;color:var(--ink-soft);font-size:11.5px;line-height:1.5}
+.help-two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}.help-list{padding-left:19px;line-height:1.75;color:var(--ink-soft);font-size:12.5px}.help-list b{color:var(--ink)}
+.check-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.check-grid>div{padding:13px;border-radius:12px;background:var(--green-soft);color:var(--green)}.check-grid span{display:block;color:var(--ink-soft);font-size:11.5px;margin-top:3px}
+.tip{margin-top:12px;padding:12px;border-radius:10px;background:#FFF6DE;border:1px solid #F0D58A;color:#7A5600;font-size:12px}
+.shortcut-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:12px}.shortcut-row:last-child{border-bottom:0}kbd{font-family:var(--mono);font-size:10.5px;background:var(--surface-2);border:1px solid var(--line);padding:3px 7px;border-radius:6px}
+.trouble-list details{border:1px solid var(--line);border-radius:10px;padding:11px 13px;margin:7px 0;background:var(--surface-2)}.trouble-list summary{font-weight:700;cursor:pointer}.trouble-list p{margin:8px 0 0;color:var(--ink-soft);font-size:12px}
+.password-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.password-grid span{padding:10px;border:1px solid var(--line);border-radius:9px;background:var(--surface-2);font-size:11.5px}
+@media(max-width:900px){.help-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.feature-grid{grid-template-columns:1fr 1fr}.check-grid{grid-template-columns:1fr 1fr}.help-two-col{grid-template-columns:1fr}.password-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){header.app{padding:14px}.brand-txt h1{font-size:21px}.header-actions{width:100%;margin-left:0}.header-actions .btn{flex:1;justify-content:center}.help-hero{padding:18px;align-items:flex-start}.help-hero h2{font-size:20px}.help-hero .btn{width:100%;margin:10px 0 0}.help-grid,.feature-grid,.check-grid,.password-grid{grid-template-columns:1fr}.help-card{min-height:150px}#tabs{padding:6px 10px}.tab{font-size:12px!important}}
+
 </style>
 </head>
 <body>
@@ -471,7 +515,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
   </div>
   <div class="brand-txt">
     <h1>StatementIQ</h1>
-    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.5.2</b></small>
+    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.6.0</b></small>
     <div class="developer-credit">Developed by Anil Sharma, Former General Manager, Central Bank of India</div>
   </div>
   <div class="header-actions">
@@ -573,7 +617,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
       <div class="card"><h3>Financial health</h3><p class="hint">A simple analytical score based only on the loaded statements — not financial advice.</p><div id="healthBox"></div></div>
     </div>
     <div class="card"><h3>Top spending categories</h3><p class="hint">Consumption spending excludes transfers to self, credit-card settlements, investments, loan principal and matched reversals.</p><div class="tblwrap"><table id="dashCatTbl"></table></div></div>
-    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.5.2 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
+    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.6.0 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
   </div>
 </section>
 
@@ -722,33 +766,123 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 
 <!-- ================= HELP PANEL ================= -->
 <section class="panel" id="pHelp">
-  <div class="card">
-    <h2>How to use StatementIQ <span class="pill-big">v2.5.2</span></h2>
-    <ol style="line-height:1.9;padding-left:20px">
-      <li><b>Upload.</b> Drop in bank and credit card statements together — PDF, XLSX or CSV. Password-protected PDFs prompt for the password; nothing is stored.</li>
-      <li><b>Verify columns.</b> Check the detected column roles and fix any that are wrong with the dropdowns.</li>
-      <li><b>Review.</b> Edit any cell that came through wrong. Problem rows are flagged, never dropped.</li>
-      <li><b>Analyse.</b> Switch to the Bank or Credit card tab. Recategorise anything — the merchant rule is remembered on this browser.</li>
-      <li><b>Reconcile.</b> Card-to-bank runs on what is already loaded. Book-to-bank needs your own sheet.</li>
-      <li><b>Export.</b> Press <span class="kbd">Ctrl+E</span> for the multi-sheet workbook.</li>
-    </ol>
-    <div class="banner warn" style="margin-top:14px">The Excel writer cannot create native Excel charts from the browser. Monthly Trend and Category Summary are laid out as clean contiguous blocks, so you can select the range and press <span class="kbd">Alt+F1</span> to get a chart in two clicks.</div>
+  <div class="help-hero">
+    <div class="help-hero-icon">?</div>
+    <div>
+      <div class="eyebrow">STATEMENTIQ USER GUIDE · v2.6.0</div>
+      <h2>How to use StatementIQ</h2>
+      <p>Upload → verify → review → analyse → export. Everything is processed locally in your browser.</p>
+    </div>
+    <button class="btn primary" type="button" onclick="switchPanel('pUpload')">Start with Upload →</button>
   </div>
-  <div class="card">
-    <h3>What each Excel sheet contains</h3>
+
+  <div class="help-grid">
+    <div class="help-card help-card-accent">
+      <div class="help-icon">01</div><h3>Upload statements</h3>
+      <p>Use PDF, XLSX, XLS or CSV. Bank and credit-card statements can be loaded together.</p>
+      <button class="link-btn" onclick="switchPanel('pUpload')">Open Upload →</button>
+    </div>
+    <div class="help-card">
+      <div class="help-icon">02</div><h3>Verify columns</h3>
+      <p>Confirm Date, Narration, Debit, Credit and Balance mappings before analysis.</p>
+      <button class="link-btn" onclick="switchPanel('pUpload')">Review mapping →</button>
+    </div>
+    <div class="help-card">
+      <div class="help-icon">03</div><h3>Review & correct</h3>
+      <p>Problem rows are highlighted. Edit cells directly; summary rows such as Total and Closing Balance are not treated as transactions.</p>
+      <button class="link-btn" onclick="switchPanel('pUpload')">Open Review →</button>
+    </div>
+    <div class="help-card">
+      <div class="help-icon">04</div><h3>Analyse</h3>
+      <p>See cash movement, financial activity, categories, recurring payments, trends and transaction intelligence.</p>
+      <button class="link-btn" onclick="switchPanel('pDash')">Open Dashboard →</button>
+    </div>
+  </div>
+
+  <div class="card help-section">
+    <div class="section-title-row"><div><span class="eyebrow">NEW FEATURES</span><h3>What you can do now</h3></div><span class="feature-badge">v2.6</span></div>
+    <div class="feature-grid">
+      <div><b>🧮 Financial Calculators</b><span>EMI, deposits, reinvestment deposits, age, SIP and multi-currency conversion from one yellow button at the top.</span></div>
+      <div><b>📊 Interest Comparison</b><span>Compare bank-credited interest with daily-product interest using editable progressive slabs and actual calendar-month days.</span></div>
+      <div><b>🔍 Transaction intelligence</b><span>Transactions are classified by economic meaning; review medium-confidence classifications before relying on them.</span></div>
+      <div><b>🔄 Reconciliation</b><span>Compare bank/card activity and identify unmatched items, balance differences and statement integrity issues.</span></div>
+      <div><b>📈 Period comparison</b><span>Compare periods and identify major category movements rather than looking only at totals.</span></div>
+      <div><b>💾 Excel export</b><span>Export a structured workbook with summary, transactions, categories, trends, recurring items and reconciliation information.</span></div>
+    </div>
+  </div>
+
+  <div class="help-two-col">
+    <div class="card help-section">
+      <span class="eyebrow">FINANCIAL CALCULATORS</span><h3>One menu, multiple calculators</h3>
+      <ul class="help-list">
+        <li><b>EMI:</b> calculate instalment, principal, interest and repayment schedule.</li>
+        <li><b>Deposit:</b> monthly, quarterly, half-yearly and yearly interest options.</li>
+        <li><b>Reinvestment deposit:</b> periodic interest is added back to the deposit.</li>
+        <li><b>Age:</b> calculate completed age and next birthday.</li>
+        <li><b>SIP:</b> estimate maturity value, invested amount and gain.</li>
+        <li><b>Currency:</b> choose currencies from dropdowns instead of typing currency codes.</li>
+      </ul>
+      <button class="btn primary" onclick="switchPanel('pFinancialCalc')">Open Financial Calculators</button>
+    </div>
+    <div class="card help-section">
+      <span class="eyebrow">INTEREST COMPARISON</span><h3>Daily-product method</h3>
+      <ul class="help-list">
+        <li>Calculation runs from the first to the last day of each calendar month.</li>
+        <li>Daily product = applicable balance × applicable slab rate.</li>
+        <li>Monthly interest uses the actual number of days in that month.</li>
+        <li>Progressive slabs apply separately to each day's balance.</li>
+        <li>Three slabs are built in and all limits/rates can be edited.</li>
+        <li>Use <b>+ Add slab</b> when the bank has additional rate bands.</li>
+      </ul>
+      <button class="btn primary" onclick="switchPanel('pInterestCompare')">Open Interest Comparison</button>
+    </div>
+  </div>
+
+  <div class="card help-section">
+    <div class="section-title-row"><div><span class="eyebrow">ACCURACY & SAFETY</span><h3>Before relying on a result</h3></div></div>
+    <div class="check-grid">
+      <div><b>✓ Check opening balance</b><span>Confirm it agrees with the original statement.</span></div>
+      <div><b>✓ Check closing balance</b><span>Reconciliation should explain any difference.</span></div>
+      <div><b>✓ Review problem rows</b><span>Do not ignore rows flagged during parsing.</span></div>
+      <div><b>✓ Verify interest credits</b><span>A difference is a review point, not automatic proof of a bank error.</span></div>
+    </div>
+  </div>
+
+  <div class="help-two-col">
+    <div class="card help-section">
+      <span class="eyebrow">LAPTOP & iPHONE</span><h3>Designed for both</h3>
+      <p>On a laptop, use the wider tables and keyboard shortcuts. On iPhone, swipe horizontally inside wide tables and use the large action buttons. The same single HTML file can be opened locally in a modern browser.</p>
+      <div class="tip"><b>Tip:</b> Keep the original statement open alongside StatementIQ when checking important figures.</div>
+    </div>
+    <div class="card help-section">
+      <span class="eyebrow">SHORTCUTS & ACTIONS</span><h3>Quick controls</h3>
+      <div class="shortcut-row"><span>Export workbook</span><kbd>Ctrl + E</kbd></div>
+      <div class="shortcut-row"><span>Load sample data</span><b>Top button</b></div>
+      <div class="shortcut-row"><span>Financial calculators</span><b>Yellow button</b></div>
+      <div class="shortcut-row"><span>Reset session</span><b>Clear all data</b></div>
+    </div>
+  </div>
+
+  <div class="card help-section">
+    <span class="eyebrow">TROUBLESHOOTING</span><h3>If something does not look right</h3>
+    <div class="trouble-list">
+      <details><summary>Statement is not parsing correctly</summary><p>Go back to Verify columns and check the detected roles. Then review flagged rows before analysing.</p></details>
+      <details><summary>Interest Comparison shows no statement</summary><p>Make sure at least one bank statement has been uploaded and parsed. Then reopen Interest Comparison.</p></details>
+      <details><summary>A table is wider than the iPhone screen</summary><p>Swipe left/right within the table. The data is not lost; the table is horizontally scrollable.</p></details>
+      <details><summary>Excel figures need checking</summary><p>Use the Summary, Transactions and Reconciliation sheets together and compare key totals with the original statement.</p></details>
+    </div>
+  </div>
+
+  <div class="card help-section">
+    <span class="eyebrow">EXCEL OUTPUT</span><h3>What the exported workbook contains</h3>
     <div class="tblwrap"><table id="helpTbl"></table></div>
   </div>
-  <div class="card">
-    <h3>Passwords on Indian statements</h3>
-    <p class="hint">Common formats, in the order worth trying:</p>
-    <ul style="line-height:1.8">
-      <li>PAN in lowercase + date of birth as DDMM — <span class="kbd">abcde1234f0107</span></li>
-      <li>First four letters of your name + date of birth as DDMM</li>
-      <li>Date of birth as DDMMYYYY</li>
-      <li>Customer ID or account number</li>
-      <li>Last four digits of the card + date of birth as DDMM (credit cards)</li>
-      <li>Mobile number, or the first four letters of the card name in caps + last four card digits (Amex)</li>
-    </ul>
+
+  <div class="card help-section">
+    <span class="eyebrow">PASSWORD-PROTECTED PDFs</span><h3>Common formats worth trying</h3>
+    <div class="password-grid">
+      <span>PAN + DOB (DDMM)</span><span>Name + DOB (DDMM)</span><span>DOB (DDMMYYYY)</span><span>Customer ID / account number</span><span>Card last four + DOB</span><span>Mobile number</span>
+    </div>
   </div>
 </section>
 
@@ -796,7 +930,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 
 <footer>
   <p class="disc">This tool extracts and analyses data from statements you provide. Always verify the extracted figures against your original statement before using them for tax filing, loan applications, or any financial decision. This is not financial or tax advice.</p>
-  <p>StatementIQ v2.5.2 · runs entirely offline in your browser · no account, no upload, no tracking</p>
+  <p>StatementIQ v2.6.0 · runs entirely offline in your browser · no account, no upload, no tracking</p>
 </footer>
 
 <!-- password modal -->
@@ -3679,6 +3813,7 @@ function loadSample(){
   renderFiles(); renderMapping(); buildReview(); runAnalysis();
   toast('Sample data loaded. Every figure here is invented.','ok');
 }
+document.getElementById('btnFinancialCalc').onclick = ()=>switchPanel('pFinancialCalc');
 document.getElementById('btnSample').onclick = loadSample;
 
 /* ============================================================================
