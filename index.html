@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>StatementIQ v2.8.3 — Bank &amp; Credit Card Statement Analyser</title>
+<title>StatementIQ v2.8.5 — Bank &amp; Credit Card Statement Analyser</title>
 
 <!-- ==========================================================================
      StatementIQ — single-file, offline, browser-only statement analyser.
@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js">/* v2.8.3 zero-as-placeholder */
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js">/* v2.8.5 zero-as-placeholder */
 document.addEventListener('focusin',function(e){const x=e.target;if(x&&x.tagName==='INPUT'&&x.type==='number'&&x.value==='0')x.value='';});
 document.addEventListener('click',function(e){const x=e.target;if(x&&x.tagName==='INPUT'&&x.type==='number'&&x.value==='0')x.value='';});
 document.addEventListener('DOMContentLoaded',()=>{ const b=document.getElementById('globalUploadBar'); if(b) b.style.display='none'; });
@@ -318,7 +318,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 /* v2.0 dashboard */
 .health-score{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.score-ring{width:92px;height:92px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--amber) calc(var(--score)*1%),var(--line) 0);position:relative}.score-ring:after{content:"";position:absolute;inset:9px;border-radius:50%;background:var(--paper)}.score-ring b{position:relative;z-index:1;font-size:24px}.score-copy{min-width:220px}.metric-line{display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-bottom:1px solid var(--line)}.metric-line:last-child{border-bottom:0}.flag{padding:10px 12px;border-radius:10px;background:var(--surface-2);margin:7px 0;border-left:4px solid var(--amber)}.flag.bad{border-left-color:var(--rust)}.flag.ok{border-left-color:var(--green)}.flag b{display:block}.muted{color:var(--ink-soft);font-size:12px}.pill-big{display:inline-flex;padding:4px 9px;border-radius:999px;background:var(--surface-2);font-size:11px;font-weight:700}.dash-empty{padding:16px}.confidence{font-weight:700}.confidence.high{color:var(--green)}.confidence.low{color:var(--rust)}
 
-/* v2.8.3: keep financial metric values together on narrow screens */
+/* v2.8.5: keep financial metric values together on narrow screens */
 .financial-activity .metric-line { display:flex; align-items:center; gap:14px; }
 .financial-activity .metric-line span { flex:1 1 auto; min-width:0; }
 .financial-activity .metric-line b { flex:0 0 auto; white-space:nowrap; text-align:right; }
@@ -331,7 +331,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 }
 
 
-/* v2.8.3 — daily-product interest calculator */
+/* v2.8.5 — daily-product interest calculator */
 .interest-calc .slab-grid{display:grid;grid-template-columns:1.1fr 1.4fr 1.4fr 1fr auto;gap:8px;align-items:center}
 .interest-calc .slab-grid input{min-width:0}
 .interest-calc .interest-table th,.interest-calc .interest-table td{white-space:nowrap}
@@ -349,7 +349,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 }
 
 
-/* v2.8.3 — dedicated calculators */
+/* v2.8.5 — dedicated calculators */
 .calc-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .calc-card{border:1px solid var(--line);border-radius:14px;padding:14px;background:var(--surface)}
 .calc-result{margin-top:14px;padding:14px;border-radius:12px;background:var(--surface-soft);border:1px solid var(--line)}
@@ -361,7 +361,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 @media(max-width:560px){.calc-grid{grid-template-columns:1fr}.calc-result .big{font-size:21px}}
 
 
-/* v2.8.3 — responsive interest tables and totals */
+/* v2.8.5 — responsive interest tables and totals */
 .interest-calc .tblwrap,
 #interestStandalone .tblwrap{
   width:100%;
@@ -400,7 +400,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 }
 
 
-/* v2.8.3 — calculators prominently available on first page */
+/* v2.8.5 — calculators prominently available on first page */
 .first-page-tools{
   padding:14px 18px 4px;
 }
@@ -436,7 +436,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 }
 
 
-/* v2.8.3 — clean calculator hub */
+/* v2.8.5 — clean calculator hub */
 .first-page-menu-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
 .first-page-menu-grid button{min-height:74px;justify-content:flex-start;text-align:left;font-size:14px}
 .first-page-menu-grid button>span:first-child{font-size:22px;flex:none}
@@ -448,7 +448,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 #pInterestCalc>.card,#pFinancialCalc>.card,#pInterestCompare>.card{width:100%;box-sizing:border-box}
 #pInterestCalc .tblwrap,#pInterestCompare .tblwrap{width:100%;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
 
-/* v2.8.3 */
+/* v2.8.5 */
 #btnFinancialCalc{background:var(--accent)!important;color:#0E0E10!important;border-color:var(--accent)!important;font-weight:800!important}
 @media(max-width:760px){.interest-settings-head{display:none!important}#interestSlabs .interest-slab-row{grid-template-columns:1fr 1fr}#interestSlabs .interest-slab-row .wide{grid-column:1/-1}}
 
@@ -456,7 +456,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 #tabs .tab[data-panel="pFinancialCalc"].on{box-shadow:inset 0 -3px 0 #0E0E10}
 #interestStatement:disabled{opacity:.7}
 
-/* v2.8.3 visual refresh + help centre */
+/* v2.8.5 visual refresh + help centre */
 :root{--accent:var(--amber);--surface-soft:var(--surface-2)}
 header.app{padding:18px 22px;gap:18px;background:linear-gradient(135deg,var(--surface) 0%,var(--surface-2) 100%);box-shadow:0 1px 0 var(--line)}
 .brandmark{width:48px;height:48px;border-radius:14px;box-shadow:0 6px 18px rgba(14,14,16,.12)}
@@ -504,7 +504,7 @@ main{padding-top:24px}
 .panel-title-row .btn{white-space:nowrap}
 @media(max-width:560px){.panel-title-row{align-items:flex-start!important}.panel-title-row .btn{width:100%}}
 
-/* v2.8.3 UI correction */
+/* v2.8.5 UI correction */
 #globalUploadBar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 14px;margin:0 auto 14px;max-width:1400px;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--amber);border-radius:12px;box-shadow:var(--shadow)}
 #globalUploadBar div{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
 #globalUploadBar span{font-size:12px;color:var(--ink-faint)}
@@ -513,10 +513,10 @@ main{padding-top:24px}
 /* Make navigation show all primary destinations on phones without horizontal scrolling. */
 @media(max-width:760px){#tabs{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;overflow:visible!important}.tab{white-space:normal!important;min-height:43px;line-height:1.2}.tab[data-panel="pUpload"]{order:-10;font-weight:800;background:var(--surface-2)}.tab[data-panel="pUpload"].on{background:var(--amber);color:var(--charcoal);border-color:var(--amber)}}
 
-/* v2.8.3: the navigation tab is the single Financial Calculators entry point */
+/* v2.8.5: the navigation tab is the single Financial Calculators entry point */
 #btnFinancialCalc{display:none!important}
 
-/* v2.8.3 — prominently highlight the two utility menus */
+/* v2.8.5 — prominently highlight the two utility menus */
 #tabs .tab[data-panel="pFinancialCalc"],
 #tabs .tab[data-panel="pInterestCompare"]{
   font-weight:900!important;
@@ -543,7 +543,7 @@ main{padding-top:24px}
 }
 
 
-/* v2.8.3 — App Health Check */
+/* v2.8.5 — App Health Check */
 .health-tab{font-weight:900!important}
 .health-tab.on{background:#E8F5EC!important;color:#176B43!important;border-color:#78B995!important}
 .health-hero{display:flex;align-items:center;gap:16px;padding:22px;border-radius:18px;background:linear-gradient(135deg,#111113 0%,#242426 100%);color:#fff;margin-bottom:16px}
@@ -566,14 +566,115 @@ main{padding-top:24px}
 @media(max-width:900px){.health-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.health-results{grid-template-columns:1fr}}
 @media(max-width:600px){.health-hero{align-items:flex-start}.health-hero h2{font-size:21px}.health-grid{grid-template-columns:1fr 1fr}.health-stat{padding:12px}.health-stat .value{font-size:23px}}
 
-/* v2.8.3 — corrected user-specified interest formula */
-/* v2.8.3 — Daily Product ÷ 365 × rate (%) ; Slab Loan EMI with editable slabs */
+/* v2.8.5 — corrected user-specified interest formula */
+/* v2.8.5 — Daily Product ÷ 365 × rate (%) ; Slab Loan EMI with editable slabs */
 #interestComparisonSummary .calc-grid{grid-template-columns:repeat(3,minmax(0,1fr))}#interestComparisonSummary .calc-result .big{font-size:22px}@media(max-width:760px){#interestComparisonSummary .calc-grid{grid-template-columns:1fr}}
 
 .slab-emi-launch{font-weight:900;border:2px solid var(--gold)!important}
 #calcSlabEmi{border-top:3px solid var(--gold);padding-top:14px}
 
 </style>
+
+<style id="statementiq-safe-ui-v285">
+/* Safe UI polish: CSS only. No DOM observers or runtime UI manipulation. */
+#pFinancialCalc .card,#pInterestCompare .card{
+  background:linear-gradient(145deg,#fff 0%,#fffaf0 100%);
+  border:1px solid #e7dfd1;
+  border-radius:24px;
+  box-shadow:0 12px 32px rgba(17,17,20,.08);
+}
+#pFinancialCalc .panel-title-row{
+  padding:4px 2px 12px;
+}
+#pFinancialCalc h2,#pInterestCompare h2{
+  font-size:clamp(1.55rem,5vw,2rem);
+  font-weight:850;
+  letter-spacing:-.03em;
+}
+#pFinancialCalc .calc-tabs{
+  padding:6px;
+  border:1px solid #e6dfd4;
+  border-radius:18px;
+  background:#f7f3eb;
+}
+#pFinancialCalc .calc-tabs .calc-tab{
+  border-radius:13px!important;
+  font-weight:800!important;
+  min-height:46px;
+  flex:1 1 145px;
+}
+#pFinancialCalc .calc-tabs .calc-tab.primary{
+  background:#f4b400!important;
+  color:#111!important;
+  border-color:#f4b400!important;
+  box-shadow:0 6px 16px rgba(244,180,0,.24);
+}
+#pFinancialCalc .formula-box,#pInterestCompare .formula-box{
+  border-radius:17px!important;
+  border:1px solid #e5ddcf!important;
+  background:#fff!important;
+  box-shadow:0 5px 18px rgba(17,17,20,.045);
+}
+#pFinancialCalc .calc-grid{
+  gap:13px!important;
+}
+#pFinancialCalc input,#pFinancialCalc select,#pInterestCompare input,#pInterestCompare select{
+  border-radius:13px!important;
+  min-height:45px;
+}
+#pFinancialCalc input:focus,#pFinancialCalc select:focus,#pInterestCompare input:focus,#pInterestCompare select:focus{
+  outline:none;
+  border-color:#f4b400!important;
+  box-shadow:0 0 0 4px rgba(244,180,0,.14)!important;
+}
+#pFinancialCalc .slabEmiTo,#pFinancialCalc .slabEmiRate{
+  font-weight:700;
+}
+#pFinancialCalc #slabEmiRows>div{
+  background:#fff!important;
+  border:1px solid #e6dfd4!important;
+  border-left:4px solid #f4b400!important;
+  box-shadow:0 4px 14px rgba(17,17,20,.045);
+}
+#pInterestCompare .slab-grid{
+  overflow-x:auto;
+}
+#pInterestCompare #interestSlabs>div{
+  background:#fff;
+  border:1px solid #e6dfd4;
+  border-radius:15px;
+  margin:8px 0;
+  padding:10px;
+}
+#pInterestCompare .btn.primary,#pFinancialCalc .btn.primary{
+  background:#f4b400!important;
+  color:#111!important;
+  border-color:#f4b400!important;
+  font-weight:850!important;
+}
+#pFinancialCalc .btn,#pInterestCompare .btn{
+  border-radius:13px!important;
+}
+@media(max-width:700px){
+  #pFinancialCalc .card,#pInterestCompare .card{
+    border-radius:19px;
+    padding:15px!important;
+  }
+  #pFinancialCalc .calc-tabs .calc-tab{
+    flex:1 1 100%;
+  }
+  #pFinancialCalc .panel-title-row .btn{
+    width:100%;
+  }
+  #pFinancialCalc .calc-grid{
+    grid-template-columns:1fr!important;
+  }
+  #pFinancialCalc .slabEmiTo,#pFinancialCalc .slabEmiRate{
+    width:100%;
+  }
+}
+</style>
+
 </head>
 <body>
 
@@ -590,7 +691,7 @@ main{padding-top:24px}
   </div>
   <div class="brand-txt">
     <h1>StatementIQ</h1>
-    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.8.3</b></small>
+    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.8.5</b></small>
     <div class="developer-credit">Developed by Anil Sharma, Former General Manager, Central Bank of India</div>
   </div>
   <div class="header-actions">
@@ -692,7 +793,7 @@ main{padding-top:24px}
       <div class="card"><h3>Financial health</h3><p class="hint">A simple analytical score based only on the loaded statements — not financial advice.</p><div id="healthBox"></div></div>
     </div>
     <div class="card"><h3>Top spending categories</h3><p class="hint">Consumption spending excludes transfers to self, credit-card settlements, investments, loan principal and matched reversals.</p><div class="tblwrap"><table id="dashCatTbl"></table></div></div>
-    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.8.3 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
+    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.8.5 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
   </div>
 </section>
 
@@ -844,7 +945,7 @@ main{padding-top:24px}
   <div class="help-hero">
     <div class="help-hero-icon">?</div>
     <div>
-      <div class="eyebrow">STATEMENTIQ USER GUIDE · v2.8.3</div>
+      <div class="eyebrow">STATEMENTIQ USER GUIDE · v2.8.5</div>
       <h2>How to use StatementIQ</h2>
       <p>Upload → verify → review → analyse → export. Everything is processed locally in your browser.</p>
     </div>
@@ -1063,7 +1164,7 @@ main{padding-top:24px}
 
 <footer>
   <p class="disc">This tool extracts and analyses data from statements you provide. Always verify the extracted figures against your original statement before using them for tax filing, loan applications, or any financial decision. This is not financial or tax advice.</p>
-  <p>StatementIQ v2.8.3 · runs entirely offline in your browser · no account, no upload, no tracking</p>
+  <p>StatementIQ v2.8.5 · runs entirely offline in your browser · no account, no upload, no tracking</p>
 </footer>
 
 <!-- password modal -->
