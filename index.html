@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>StatementIQ v2.6.7 — Bank &amp; Credit Card Statement Analyser</title>
+<title>StatementIQ v2.7.0 — Bank &amp; Credit Card Statement Analyser</title>
 
 <!-- ==========================================================================
      StatementIQ — single-file, offline, browser-only statement analyser.
@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js">/* v2.6.7 zero-as-placeholder */
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js">/* v2.7.0 zero-as-placeholder */
 document.addEventListener('focusin',function(e){const x=e.target;if(x&&x.tagName==='INPUT'&&x.type==='number'&&x.value==='0')x.value='';});
 document.addEventListener('click',function(e){const x=e.target;if(x&&x.tagName==='INPUT'&&x.type==='number'&&x.value==='0')x.value='';});
 document.addEventListener('DOMContentLoaded',()=>{ const b=document.getElementById('globalUploadBar'); if(b) b.style.display='none'; });
@@ -318,7 +318,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 /* v2.0 dashboard */
 .health-score{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.score-ring{width:92px;height:92px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--amber) calc(var(--score)*1%),var(--line) 0);position:relative}.score-ring:after{content:"";position:absolute;inset:9px;border-radius:50%;background:var(--paper)}.score-ring b{position:relative;z-index:1;font-size:24px}.score-copy{min-width:220px}.metric-line{display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-bottom:1px solid var(--line)}.metric-line:last-child{border-bottom:0}.flag{padding:10px 12px;border-radius:10px;background:var(--surface-2);margin:7px 0;border-left:4px solid var(--amber)}.flag.bad{border-left-color:var(--rust)}.flag.ok{border-left-color:var(--green)}.flag b{display:block}.muted{color:var(--ink-soft);font-size:12px}.pill-big{display:inline-flex;padding:4px 9px;border-radius:999px;background:var(--surface-2);font-size:11px;font-weight:700}.dash-empty{padding:16px}.confidence{font-weight:700}.confidence.high{color:var(--green)}.confidence.low{color:var(--rust)}
 
-/* v2.6.7: keep financial metric values together on narrow screens */
+/* v2.7.0: keep financial metric values together on narrow screens */
 .financial-activity .metric-line { display:flex; align-items:center; gap:14px; }
 .financial-activity .metric-line span { flex:1 1 auto; min-width:0; }
 .financial-activity .metric-line b { flex:0 0 auto; white-space:nowrap; text-align:right; }
@@ -331,7 +331,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 }
 
 
-/* v2.6.7 — daily-product interest calculator */
+/* v2.7.0 — daily-product interest calculator */
 .interest-calc .slab-grid{display:grid;grid-template-columns:1.1fr 1.4fr 1.4fr 1fr auto;gap:8px;align-items:center}
 .interest-calc .slab-grid input{min-width:0}
 .interest-calc .interest-table th,.interest-calc .interest-table td{white-space:nowrap}
@@ -349,7 +349,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 }
 
 
-/* v2.6.7 — dedicated calculators */
+/* v2.7.0 — dedicated calculators */
 .calc-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .calc-card{border:1px solid var(--line);border-radius:14px;padding:14px;background:var(--surface)}
 .calc-result{margin-top:14px;padding:14px;border-radius:12px;background:var(--surface-soft);border:1px solid var(--line)}
@@ -361,7 +361,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 @media(max-width:560px){.calc-grid{grid-template-columns:1fr}.calc-result .big{font-size:21px}}
 
 
-/* v2.6.7 — responsive interest tables and totals */
+/* v2.7.0 — responsive interest tables and totals */
 .interest-calc .tblwrap,
 #interestStandalone .tblwrap{
   width:100%;
@@ -400,7 +400,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 }
 
 
-/* v2.6.7 — calculators prominently available on first page */
+/* v2.7.0 — calculators prominently available on first page */
 .first-page-tools{
   padding:14px 18px 4px;
 }
@@ -436,7 +436,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 }
 
 
-/* v2.6.7 — clean calculator hub */
+/* v2.7.0 — clean calculator hub */
 .first-page-menu-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
 .first-page-menu-grid button{min-height:74px;justify-content:flex-start;text-align:left;font-size:14px}
 .first-page-menu-grid button>span:first-child{font-size:22px;flex:none}
@@ -448,7 +448,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 #pInterestCalc>.card,#pFinancialCalc>.card,#pInterestCompare>.card{width:100%;box-sizing:border-box}
 #pInterestCalc .tblwrap,#pInterestCompare .tblwrap{width:100%;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
 
-/* v2.6.7 */
+/* v2.7.0 */
 #btnFinancialCalc{background:var(--accent)!important;color:#0E0E10!important;border-color:var(--accent)!important;font-weight:800!important}
 @media(max-width:760px){.interest-settings-head{display:none!important}#interestSlabs .interest-slab-row{grid-template-columns:1fr 1fr}#interestSlabs .interest-slab-row .wide{grid-column:1/-1}}
 
@@ -456,7 +456,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 #tabs .tab[data-panel="pFinancialCalc"].on{box-shadow:inset 0 -3px 0 #0E0E10}
 #interestStatement:disabled{opacity:.7}
 
-/* v2.6.7 visual refresh + help centre */
+/* v2.7.0 visual refresh + help centre */
 :root{--accent:var(--amber);--surface-soft:var(--surface-2)}
 header.app{padding:18px 22px;gap:18px;background:linear-gradient(135deg,var(--surface) 0%,var(--surface-2) 100%);box-shadow:0 1px 0 var(--line)}
 .brandmark{width:48px;height:48px;border-radius:14px;box-shadow:0 6px 18px rgba(14,14,16,.12)}
@@ -504,7 +504,7 @@ main{padding-top:24px}
 .panel-title-row .btn{white-space:nowrap}
 @media(max-width:560px){.panel-title-row{align-items:flex-start!important}.panel-title-row .btn{width:100%}}
 
-/* v2.6.7 UI correction */
+/* v2.7.0 UI correction */
 #globalUploadBar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 14px;margin:0 auto 14px;max-width:1400px;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--amber);border-radius:12px;box-shadow:var(--shadow)}
 #globalUploadBar div{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
 #globalUploadBar span{font-size:12px;color:var(--ink-faint)}
@@ -513,10 +513,10 @@ main{padding-top:24px}
 /* Make navigation show all primary destinations on phones without horizontal scrolling. */
 @media(max-width:760px){#tabs{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;overflow:visible!important}.tab{white-space:normal!important;min-height:43px;line-height:1.2}.tab[data-panel="pUpload"]{order:-10;font-weight:800;background:var(--surface-2)}.tab[data-panel="pUpload"].on{background:var(--amber);color:var(--charcoal);border-color:var(--amber)}}
 
-/* v2.6.7: the navigation tab is the single Financial Calculators entry point */
+/* v2.7.0: the navigation tab is the single Financial Calculators entry point */
 #btnFinancialCalc{display:none!important}
 
-/* v2.6.7 — prominently highlight the two utility menus */
+/* v2.7.0 — prominently highlight the two utility menus */
 #tabs .tab[data-panel="pFinancialCalc"],
 #tabs .tab[data-panel="pInterestCompare"]{
   font-weight:900!important;
@@ -543,7 +543,7 @@ main{padding-top:24px}
 }
 
 
-/* v2.6.7 — App Health Check */
+/* v2.7.0 — App Health Check */
 .health-tab{font-weight:900!important}
 .health-tab.on{background:#E8F5EC!important;color:#176B43!important;border-color:#78B995!important}
 .health-hero{display:flex;align-items:center;gap:16px;padding:22px;border-radius:18px;background:linear-gradient(135deg,#111113 0%,#242426 100%);color:#fff;margin-bottom:16px}
@@ -566,6 +566,8 @@ main{padding-top:24px}
 @media(max-width:900px){.health-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.health-results{grid-template-columns:1fr}}
 @media(max-width:600px){.health-hero{align-items:flex-start}.health-hero h2{font-size:21px}.health-grid{grid-template-columns:1fr 1fr}.health-stat{padding:12px}.health-stat .value{font-size:23px}}
 
+/* v2.7.0 — corrected user-specified interest formula */
+/* v2.7.0 — Daily Product ÷ 365 × rate; Slab Loan EMI added */
 </style>
 </head>
 <body>
@@ -583,7 +585,7 @@ main{padding-top:24px}
   </div>
   <div class="brand-txt">
     <h1>StatementIQ</h1>
-    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.6.7</b></small>
+    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.7.0</b></small>
     <div class="developer-credit">Developed by Anil Sharma, Former General Manager, Central Bank of India</div>
   </div>
   <div class="header-actions">
@@ -685,7 +687,7 @@ main{padding-top:24px}
       <div class="card"><h3>Financial health</h3><p class="hint">A simple analytical score based only on the loaded statements — not financial advice.</p><div id="healthBox"></div></div>
     </div>
     <div class="card"><h3>Top spending categories</h3><p class="hint">Consumption spending excludes transfers to self, credit-card settlements, investments, loan principal and matched reversals.</p><div class="tblwrap"><table id="dashCatTbl"></table></div></div>
-    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.6.7 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
+    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.7.0 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
   </div>
 </section>
 
@@ -837,7 +839,7 @@ main{padding-top:24px}
   <div class="help-hero">
     <div class="help-hero-icon">?</div>
     <div>
-      <div class="eyebrow">STATEMENTIQ USER GUIDE · v2.6.7</div>
+      <div class="eyebrow">STATEMENTIQ USER GUIDE · v2.7.0</div>
       <h2>How to use StatementIQ</h2>
       <p>Upload → verify → review → analyse → export. Everything is processed locally in your browser.</p>
     </div>
@@ -870,8 +872,8 @@ main{padding-top:24px}
   <div class="card help-section">
     <div class="section-title-row"><div><span class="eyebrow">NEW FEATURES</span><h3>What you can do now</h3></div><span class="feature-badge">v2.6</span></div>
     <div class="feature-grid">
-      <div><b>🧮 Financial Calculators</b><span>EMI, deposits, reinvestment deposits, age, SIP and multi-currency conversion from one yellow button at the top.</span></div>
-      <div><b>📊 Interest Comparison</b><span>Compare bank-credited interest with daily-product interest using editable progressive slabs and actual calendar-month days.</span></div>
+      <div><b>🧮 Financial Calculators</b><span>EMI, slab-rate term-loan EMI, deposits, reinvestment deposits, age, SIP and multi-currency conversion from one yellow button.</span></div>
+      <div><b>📊 Interest Comparison</b><span>Compare bank-credited interest with daily-product interest using editable progressive slabs and Daily Product ÷ 365 × rate.</span></div>
       <div><b>🔍 Transaction intelligence</b><span>Transactions are classified by economic meaning; review medium-confidence classifications before relying on them.</span></div>
       <div><b>🔄 Reconciliation</b><span>Compare bank/card activity and identify unmatched items, balance differences and statement integrity issues.</span></div>
       <div><b>📈 Period comparison</b><span>Compare periods and identify major category movements rather than looking only at totals.</span></div>
@@ -896,8 +898,8 @@ main{padding-top:24px}
       <span class="eyebrow">INTEREST COMPARISON</span><h3>Daily-product method</h3>
       <ul class="help-list">
         <li>Calculation runs from the first to the last day of each calendar month.</li>
-        <li>Daily product = applicable balance × applicable slab rate.</li>
-        <li>Monthly interest uses the actual number of days in that month.</li>
+        <li>Daily product = applicable closing balance allocated across the applicable slabs.</li>
+        <li>Interest is calculated as Daily Product ÷ 365 × applicable rate (%). The statement period is still split month-wise.</li>
         <li>Progressive slabs apply separately to each day's balance.</li>
         <li>Three slabs are built in and all limits/rates can be edited.</li>
         <li>Use <b>+ Add slab</b> when the bank has additional rate bands.</li>
@@ -1009,14 +1011,16 @@ main{padding-top:24px}
       <button class="btn sm" type="button" onclick="switchPanel('pUpload')">✕ Close calculators</button>
     </div>
     <div class="calc-tabs" role="tablist" style="display:flex;gap:8px;flex-wrap:wrap;margin:12px 0">
-      <button class="btn primary calc-tab" type="button" onclick="showCalc('emi')">EMI</button>
+      <button class="btn primary calc-tab" type="button" onclick="showCalc('emi')">EMI</button> <button class="btn calc-tab" type="button" onclick="showCalc('slabemi')">Slab Loan EMI</button>
       <button class="btn calc-tab" type="button" onclick="showCalc('deposit')">Deposit</button>
       <button class="btn calc-tab" type="button" onclick="showCalc('age')">Age</button>
       <button class="btn calc-tab" type="button" onclick="showCalc('sip')">SIP</button>
       <button class="btn calc-tab" type="button" onclick="showCalc('currency')">Currency</button>
     </div>
     <div id="calcEmi" class="calc-pane"></div>
-    <div id="calcDeposit" class="calc-pane" style="display:none"></div>
+    
+<div id="calcSlabEmi" class="calc-pane" style="display:none"></div>
+<div id="calcDeposit" class="calc-pane" style="display:none"></div>
     <div id="calcAge" class="calc-pane" style="display:none"></div>
     <div id="calcSip" class="calc-pane" style="display:none"></div>
     <div id="calcCurrency" class="calc-pane" style="display:none"></div>
@@ -1026,8 +1030,8 @@ main{padding-top:24px}
 <section class="panel" id="pInterestCompare">
 <div class="card">
 <h2>Interest Comparison</h2>
-<p class="hint">Compare bank interest credited with independently calculated interest using daily closing balances, progressive slabs and the actual number of days in each calendar month.</p>
-<div class="formula-box"><b>Slab settings:</b> Three slabs are built in. The first slab covers the first ₹3,00,000. You can add more. All upper amounts and rates are editable.</div>
+<p class="hint">Compare bank interest credited with independently calculated interest using daily closing balances, progressive slabs and the Daily Product ÷ 365 × rate method.</p>
+<div class="formula-box"><b>Interest formula:</b> Daily Product ÷ 365 × applicable rate (%).</div><div class="formula-box"><b>Slab settings:</b> Three slabs are built in. The first slab covers the first ₹3,00,000. You can add more. All upper amounts and rates are editable.</div>
 <div class="row" style="margin-top:12px;align-items:center;gap:8px;flex-wrap:wrap">
 <label class="f" style="min-width:110px">Statement</label><select id="interestStatement" style="min-width:240px"></select>
 <button class="btn primary" type="button" onclick="interestRun()">Calculate interest</button>
@@ -1048,7 +1052,7 @@ main{padding-top:24px}
 
 <footer>
   <p class="disc">This tool extracts and analyses data from statements you provide. Always verify the extracted figures against your original statement before using them for tax filing, loan applications, or any financial decision. This is not financial or tax advice.</p>
-  <p>StatementIQ v2.6.7 · runs entirely offline in your browser · no account, no upload, no tracking</p>
+  <p>StatementIQ v2.7.0 · runs entirely offline in your browser · no account, no upload, no tracking</p>
 </footer>
 
 <!-- password modal -->
@@ -1850,7 +1854,7 @@ function setStep(n){
 }
 function switchPanel(id){
   const uploadBar=document.getElementById("globalUploadBar"); if(uploadBar) uploadBar.style.display=(id==="pUpload"?"none":"flex");
-  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('on', p.id===id)); if(id==='pInterestCompare') renderInterestComparisonPanel(); if(id==='pFinancialCalc'){ try{initCalculators();}catch(e){} }
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('on', p.id===id)); if(id==='pInterestCompare') renderInterestComparisonPanel(); if(id==='pFinancialCalc'){ try{initCalculators(); renderSlabEMI();}catch(e){} }
   
 const btnFinancialCalc = document.getElementById('btnFinancialCalc');
 if(btnFinancialCalc) btnFinancialCalc.onclick = ()=>switchPanel('pFinancialCalc');
@@ -2534,7 +2538,7 @@ function interestCalculateDaily(ds, slabs){
   daily.days.forEach(x=>{
     const parts=interestAllocate(x.balance,slabs);
     let interest=0;
-    parts.forEach(p=> interest += p.portion*p.rate/100/x.daysInMonth);
+    parts.forEach(p=> interest += p.portion/365*p.rate);
     total += interest;
     out.push({...x, parts, interest});
   });
@@ -2544,7 +2548,7 @@ function interestCalculateDaily(ds, slabs){
     m.dailyProduct += x.balance;
     m.calculatedDays += 1;
     m.interest += x.interest;
-    x.parts.forEach((p,i)=>{m.slabProducts[i]+=p.portion;m.slabInterest[i]+=p.portion*p.rate/100/x.daysInMonth;});
+    x.parts.forEach((p,i)=>{m.slabProducts[i]+=p.portion;m.slabInterest[i]+=p.portion/365*p.rate;});
   });
   // Interest actually credited in the statement for comparison.
   (ds.rows||[]).forEach(r=>{
@@ -2628,7 +2632,7 @@ function interestShowDaily(){
     product:days.reduce((a,d)=>a+((d.parts[i]||{}).portion||0),0),
     interest:days.reduce((a,d)=>{
       const part=d.parts[i];
-      return a+(part ? part.portion*part.rate/100/d.daysInMonth : 0);
+      return a+(part ? part.portion/365*part.rate : 0);
     },0)
   }));
 
@@ -4093,13 +4097,181 @@ function calcPct(n){ return Number(n||0).toFixed(2)+'%'; }
 function calcDate(id){ const v=document.getElementById(id)?.value; return v?new Date(v+'T00:00:00'):null; }
 
 function showCalc(which){
-  ['emi','deposit','age','sip','currency'].forEach(x=>{
+  ['emi','slabemi','deposit','age','sip','currency'].forEach(x=>{
     const p=document.getElementById('calc'+x.charAt(0).toUpperCase()+x.slice(1));
     if(p) p.style.display=(x===which?'block':'none');
   });
   document.querySelectorAll('.calc-tab').forEach(b=>b.classList.remove('primary'));
-  const map={emi:'EMI',deposit:'Deposit',age:'Age',sip:'SIP',currency:'Currency'};
+  const map={emi:'EMI',slabemi:'Slab Loan EMI',deposit:'Deposit',age:'Age',sip:'SIP',currency:'Currency'};
   document.querySelectorAll('.calc-tab').forEach(b=>{if(b.textContent.trim()===map[which])b.classList.add('primary');});
+}
+
+
+let SIQSlabEMIRows=[
+  {to:300000,rate:7},
+  {to:500000,rate:8},
+  {to:null,rate:9}
+];
+
+function renderSlabEMI(){
+  const box=document.getElementById('calcSlabEmi'); if(!box)return;
+  box.innerHTML=`<h3>Term Loan EMI — Slab Interest</h3>
+  <p class="hint"><b>Slab Loan EMI</b> — the EMI is solved using the actual slab rate applicable to the outstanding balance each month. Use this when the loan rate depends on the outstanding loan amount. Example: ₹5,00,000 — first ₹3,00,000 @ 7%, next ₹2,00,000 @ 8%.</p>
+  <div class="calc-grid">
+    <div><label class="f">Loan amount</label><input id="slabEmiP" type="number" value="500000" min="0" placeholder="0"></div>
+    <div><label class="f">Tenure (months)</label><input id="slabEmiN" type="number" value="60" min="1" placeholder="0"></div>
+  </div>
+  <div class="formula-box" style="margin-top:12px">
+    <b>Editable interest slabs</b>
+    <div id="slabEmiRows" style="margin-top:8px"></div>
+  </div>
+  <div class="row" style="margin-top:12px;gap:8px;flex-wrap:wrap">
+    <button class="btn primary" type="button" onclick="calcSlabEMI()">Calculate EMI</button>
+    <button class="btn sm" type="button" onclick="addSlabEMI()">+ Add slab</button>
+    <button class="btn sm" type="button" onclick="resetSlabEMI()">Reset slabs</button>
+  </div>
+  <div id="slabEmiResult" style="margin-top:14px"></div>`;
+  renderSlabEMIRows();
+}
+
+function renderSlabEMIRows(){
+  const box=document.getElementById('slabEmiRows'); if(!box)return;
+  box.innerHTML=SIQSlabEMIRows.map((x,i)=>{
+    const from=i===0?1:(Number(SIQSlabEMIRows[i-1].to||0)+1);
+    return `<div class="grid g4" style="margin:7px 0;align-items:end">
+      <div><label class="f">Slab ${i+1}</label><div class="hint">From ${inr(from)} to ${x.to===null?'No limit':inr(x.to)}</div></div>
+      <div><label class="f">Upto amount</label><input class="slabEmiTo" data-i="${i}" type="number" value="${x.to===null?'':x.to}" min="${i?Number(SIQSlabEMIRows[i-1].to||0):0}" placeholder="No limit"></div>
+      <div><label class="f">Rate %</label><input class="slabEmiRate" data-i="${i}" type="number" value="${x.rate}" step="0.01" min="0" placeholder="0"></div>
+      <div>${i>2?`<button class="btn sm" type="button" onclick="removeSlabEMI(${i})">Remove</button>`:''}</div>
+    </div>`;
+  }).join('');
+  box.querySelectorAll('.slabEmiTo').forEach(el=>el.oninput=()=>{
+    const i=Number(el.dataset.i); SIQSlabEMIRows[i].to=el.value===''?null:Number(el.value);
+  });
+  box.querySelectorAll('.slabEmiRate').forEach(el=>el.oninput=()=>{
+    SIQSlabEMIRows[Number(el.dataset.i)].rate=Number(el.value||0);
+  });
+}
+
+function resetSlabEMI(){
+  SIQSlabEMIRows=[
+    {to:300000,rate:7},
+    {to:500000,rate:8},
+    {to:null,rate:9}
+  ];
+  renderSlabEMI();
+}
+
+function addSlabEMI(){
+  const last=SIQSlabEMIRows[SIQSlabEMIRows.length-1];
+  if(last.to===null){
+    last.to=Number(SIQSlabEMIRows.length===1?300000:(SIQSlabEMIRows[SIQSlabEMIRows.length-2].to||300000))+500000;
+  }
+  SIQSlabEMIRows.push({to:null,rate:Number(last.rate||8)+1});
+  renderSlabEMIRows();
+}
+
+function removeSlabEMI(i){
+  if(SIQSlabEMIRows.length<=1)return;
+  SIQSlabEMIRows.splice(i,1);
+  SIQSlabEMIRows[SIQSlabEMIRows.length-1].to=null;
+  renderSlabEMIRows();
+}
+
+function slabEMIParts(P){
+  let prev=0,parts=[];
+  for(const x of SIQSlabEMIRows){
+    const upper=x.to===null?Infinity:Number(x.to);
+    const portion=Math.max(0,Math.min(P,upper)-prev);
+    if(portion>0)parts.push({portion,rate:Number(x.rate)||0,from:prev+1,to:isFinite(upper)?upper:null});
+    prev=upper;
+    if(prev>=P)break;
+  }
+  if(prev<P && SIQSlabEMIRows.length){
+    const x=SIQSlabEMIRows[SIQSlabEMIRows.length-1];
+    parts.push({portion:P-prev,rate:Number(x.rate)||0,from:prev+1,to:null});
+  }
+  return parts;
+}
+
+function calcSlabEMI(){
+  const P=Number(document.getElementById('slabEmiP')?.value||0);
+  const n=Math.max(1,Math.floor(Number(document.getElementById('slabEmiN')?.value||0)));
+  const box=document.getElementById('slabEmiResult');
+  if(!box)return;
+  if(P<=0||n<=0){
+    box.innerHTML='<div class="banner bad"><span>!</span><div>Enter a valid loan amount and tenure.</div></div>';
+    return;
+  }
+  const parts=slabEMIParts(P);
+  if(!parts.length){
+    box.innerHTML='<div class="banner bad"><span>!</span><div>Loan amount is outside the configured slabs.</div></div>';
+    return;
+  }
+
+  // Monthly interest is recalculated on the outstanding balance after each EMI.
+  // The applicable slab rates can therefore change as the outstanding balance falls.
+  function monthlyInterest(balance){
+    const p=slabEMIParts(balance);
+    return p.reduce((sum,x)=>sum+balancePortionInterest(x),0);
+  }
+  function balancePortionInterest(x){
+    return x.portion*x.rate/1200;
+  }
+  function endingBalance(emi, capture){
+    let bal=P, rows=[];
+    for(let m=1;m<=n;m++){
+      const opening=bal;
+      const interest=monthlyInterest(bal);
+      const principal=Math.max(0,emi-interest);
+      bal=Math.max(0,bal-principal);
+      if(capture)rows.push({month:m,opening,interest,principal,closing:bal});
+      if(bal<0.005)bal=0;
+    }
+    return capture?{bal,rows}:bal;
+  }
+
+  // Solve for the constant EMI that amortises the loan to zero.
+  let lo=0, hi=P*2/n+P*0.1;
+  while(endingBalance(hi,false)>0.005 && hi<P*10) hi*=2;
+  for(let i=0;i<100;i++){
+    const mid=(lo+hi)/2;
+    if(endingBalance(mid,false)>0.005) lo=mid; else hi=mid;
+  }
+  const emi=hi;
+  const solved=endingBalance(emi,true);
+  const rows=solved.rows;
+  const totalPayment=emi*n;
+  const totalInterest=rows.reduce((sum,x)=>sum+x.interest,0);
+
+  // Initial slab allocation and weighted rate are shown only as an explanatory snapshot.
+  const initialWeighted=parts.reduce((a,x)=>a+x.portion*x.rate,0)/P;
+
+  let h=`<div class="calc-grid">
+    <div class="calc-result" style="margin-top:0"><div class="hint">MONTHLY EMI</div><div class="big">${inr(emi)}</div></div>
+    <div class="calc-result" style="margin-top:0"><div class="hint">INITIAL WEIGHTED RATE</div><div class="big">${initialWeighted.toFixed(2)}%</div></div>
+    <div class="calc-result" style="margin-top:0"><div class="hint">TOTAL INTEREST</div><div class="big">${inr(totalInterest)}</div></div>
+  </div>`;
+
+  h+=`<div class="tblwrap" style="margin-top:12px"><table class="calc-table">
+    <thead><tr><th>Initial slab</th><th>Loan portion</th><th>Rate</th><th>First-month interest</th></tr></thead><tbody>`;
+  parts.forEach((x,i)=>{
+    h+=`<tr><td>Slab ${i+1}</td><td class="r">${inr(x.portion)}</td><td class="r">${x.rate.toFixed(2)}%</td><td class="r">${inr(x.portion*x.rate/1200)}</td></tr>`;
+  });
+  h+=`</tbody><tfoot><tr><th>Total</th><th class="r">${inr(P)}</th><th class="r">${initialWeighted.toFixed(2)}%</th><th class="r">${inr(parts.reduce((a,x)=>a+x.portion*x.rate/1200,0))}</th></tr></tfoot></table></div>`;
+
+  h+=`<div class="tblwrap" style="margin-top:12px"><table class="calc-table">
+    <thead><tr><th>Month</th><th>Opening balance</th><th>Interest</th><th>Principal</th><th>Closing balance</th></tr></thead><tbody>`;
+  rows.forEach(x=>{
+    h+=`<tr><td>${x.month}</td><td class="r">${inr(x.opening)}</td><td class="r">${inr(x.interest)}</td><td class="r">${inr(x.principal)}</td><td class="r">${inr(x.closing)}</td></tr>`;
+  });
+  h+=`</tbody><tfoot><tr><th>Total</th><th></th><th class="r">${inr(totalInterest)}</th><th class="r">${inr(P)}</th><th class="r">${inr(rows[rows.length-1]?.closing||0)}</th></tr></tfoot></table></div>`;
+
+  h+=`<div class="formula-box" style="margin-top:12px">
+    <b>Method:</b> A constant EMI is solved iteratively. Each month, interest is calculated separately on the outstanding balance portions falling in each slab. As the balance falls, the slab portions and applicable rates automatically change.
+    <br><b>Example:</b> ₹5,00,000 starts as ₹3,00,000 @ 7% + ₹2,00,000 @ 8%. When the outstanding balance falls below a slab limit, the applicable portions change automatically.
+  </div>`;
+  box.innerHTML=h;
 }
 
 function initCalculators(){
@@ -4385,7 +4557,7 @@ function runAppHealthCheck(){
   });
 
   // Calculator function checks.
-  ['calcEMI','calcDeposit','calcReinvest','calcAge','calcSIP','calcCurrency'].forEach(fn=>{
+  ['calcEMI','calcSlabEMI','calcDeposit','calcReinvest','calcAge','calcSIP','calcCurrency'].forEach(fn=>{
     add('Calculator: '+fn, typeof window[fn]==='function', typeof window[fn]==='function'?'Available':'Missing');
   });
 
@@ -4410,12 +4582,18 @@ function runAppHealthCheck(){
     add('Progressive slab engine',ok,ok?'₹8,00,000 correctly split into 3 slabs: '+portions:'Unexpected allocation');
   }catch(e){ add('Progressive slab engine',false,e.message); }
 
-  // Daily interest formula test: ₹300,000 at 2.5% for a 30-day month.
+  // User-specified interest formula test: Daily Product ÷ 365 × rate (%).
   try{
-    const x=300000*0.025/30;
-    const ok=Math.abs(x-250)<0.0001;
-    add('Daily interest formula',ok,ok?'₹250.00 for ₹3,00,000 @ 2.50% over 30 days':'Formula test failed');
+    const x=300000/365*2.5;
+    const ok=Math.abs(x-2000)<0.0001;
+    add('Daily interest formula',ok,ok?'₹2,000.00 = ₹3,00,000 ÷ 365 × 2.50%':'Formula test failed');
   }catch(e){ add('Daily interest formula',false,e.message); }
+
+  // Slab EMI example: ₹5,00,000 = ₹3,00,000 @ 7% + ₹2,00,000 @ 8%.
+  try{
+    const ok=typeof calcSlabEMI==='function' && typeof slabEMIParts==='function';
+    add('Slab EMI example',ok,ok?'₹5,00,000 slab structure is available for iterative EMI calculation':'Slab EMI functions are missing');
+  }catch(e){ add('Slab EMI example',false,e.message); }
 
   // Local storage availability (saved slabs rely on it).
   try{
