@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>StatementIQ v2.13 — Bank &amp; Credit Card Statement Analyser</title>
+<title>StatementIQ v2.14 — Bank &amp; Credit Card Statement Analyser</title>
 
 <!-- ==========================================================================
      StatementIQ — single-file, offline, browser-only statement analyser.
@@ -708,7 +708,7 @@ main{padding-top:24px}
 </style>
 
 <style id="financialCalculatorCompatibilityV213">
-/* v2.13 — Financial Calculator copied/adapted from the working Financial Calendar & Calculators module */
+/* v2.14 — Financial Calculator copied/adapted from the working Financial Calendar & Calculators module */
 #pFinancialCalc{--accent:var(--amber);--gold:var(--amber);--muted:var(--ink-soft);--brass:var(--amber);--clay:var(--rust);--card:var(--surface);--text:var(--ink)}
 #pFinancialCalc .fiq-module{display:block}
 #pFinancialCalc .fiq-module[style*="display:none"]{display:none}
@@ -754,7 +754,7 @@ main{padding-top:24px}
   </div>
   <div class="brand-txt">
     <h1>StatementIQ</h1>
-    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.13</b></small>
+    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.14</b></small>
     <div class="developer-credit">Developed by Anil Sharma, Former General Manager, Central Bank of India</div>
   </div>
   <div class="header-actions">
@@ -856,7 +856,7 @@ main{padding-top:24px}
       <div class="card"><h3>Financial health</h3><p class="hint">A simple analytical score based only on the loaded statements — not financial advice.</p><div id="healthBox"></div></div>
     </div>
     <div class="card"><h3>Top spending categories</h3><p class="hint">Consumption spending excludes transfers to self, credit-card settlements, investments, loan principal and matched reversals.</p><div class="tblwrap"><table id="dashCatTbl"></table></div></div>
-    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.13 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
+    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.14 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
   </div>
 </section>
 
@@ -1008,7 +1008,7 @@ main{padding-top:24px}
   <div class="help-hero">
     <div class="help-hero-icon">?</div>
     <div>
-      <div class="eyebrow">STATEMENTIQ USER GUIDE · v2.13</div>
+      <div class="eyebrow">STATEMENTIQ USER GUIDE · v2.14</div>
       <h2>How to use StatementIQ</h2>
       <p>Upload → verify → review → analyse → export. Everything is processed locally in your browser.</p>
     </div>
@@ -1490,7 +1490,7 @@ main{padding-top:24px}
 
 <footer>
   <p class="disc">This tool extracts and analyses data from statements you provide. Always verify the extracted figures against your original statement before using them for tax filing, loan applications, or any financial decision. This is not financial or tax advice.</p>
-  <p>StatementIQ v2.13 · runs entirely offline in your browser · no account, no upload, no tracking</p>
+  <p>StatementIQ v2.14 · runs entirely offline in your browser · no account, no upload, no tracking</p>
 </footer>
 
 <!-- password modal -->
@@ -4570,7 +4570,7 @@ document.getElementById('helpTbl').innerHTML =
 })();
 
 /* ============================================================================
-   14. FINANCIAL CALCULATORS — v2.13
+   14. FINANCIAL CALCULATORS — v2.14
    Proven engine copied/adapted from the uploaded Financial Calendar & Calculators app.
    ========================================================================== */
 const fiqFmtDate = (d) => d.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
@@ -4579,14 +4579,42 @@ const fiqAddMonths = (date, months) => { const d = new Date(date); d.setMonth(d.
 
 const EMI_DEFAULT_SLABS=[{to:300000,rate:7},{to:500000,rate:8},{to:null,rate:9}];
 function emiNormaliseSlabs(slabs){return (slabs||[]).map(x=>({to:(x.to===null||x.to===''||x.to===undefined)?null:Number(x.to),rate:Number(x.rate)||0})).filter(x=>x.to===null||isFinite(x.to));}
-function emiLoadSlabs(){try{const x=JSON.parse(localStorage.getItem('financial_emi_interest_slabs_v1')||'null');if(Array.isArray(x)&&x.length)return emiNormaliseSlabs(x);}catch(e){}return EMI_DEFAULT_SLABS.map(x=>({...x}));}
+function emiLoadSlabs(){
+  try{
+    const x=JSON.parse(localStorage.getItem('financial_emi_interest_slabs_v1')||'null');
+    if(Array.isArray(x)&&x.length){
+      const clean=emiNormaliseSlabs(x);
+      if(clean.length) return clean;
+    }
+  }catch(e){ console.warn('Invalid saved EMI slabs; restoring defaults.',e); }
+  const defaults=EMI_DEFAULT_SLABS.map(x=>({...x}));
+  try{localStorage.setItem('financial_emi_interest_slabs_v1',JSON.stringify(defaults));}catch(e){}
+  return defaults;
+}
 function emiSaveSlabs(slabs){try{localStorage.setItem('financial_emi_interest_slabs_v1',JSON.stringify(emiNormaliseSlabs(slabs)));}catch(e){}}
 function emiAllocate(balance,slabs){const b=Math.max(0,Number(balance)||0),parts=[];let prev=0;for(const s of emiNormaliseSlabs(slabs)){if(b<=prev)break;const upper=s.to===null?Infinity:s.to;const portion=Math.max(0,Math.min(b,upper)-prev);if(portion>0)parts.push({portion,rate:s.rate});if(!isFinite(upper))break;prev=upper;}return parts;}
 function emiSlabInterest(balance,slabs,periodFactor){return emiAllocate(balance,slabs).reduce((a,p)=>a+p.portion*p.rate/100*periodFactor,0);}
 function emiRenderSlabs(){const el=document.getElementById('emiSlabs');if(!el)return;const slabs=emiLoadSlabs();el.innerHTML=slabs.map((x,i)=>`<div class="stmt-slab-row"><div class="wide"><div class="slab-label">Slab ${i+1}</div></div><div><label>Upto amount</label><input class="emi-slab-to" type="number" min="0" step="1" value="${x.to===null?'':x.to}" placeholder="No limit"></div><div><label>Annual rate %</label><input class="emi-slab-rate" type="number" min="0" step="0.01" value="${x.rate}"></div><div><label>Coverage</label><div class="hint">${x.to===null?'Above previous slab':'First ₹'+fiqFmtINR(x.to)}</div></div><div><button class="btn sm" type="button" onclick="emiRemoveSlab(${i})" ${slabs.length<=1?'disabled':''}>Remove</button></div></div>`).join('');el.querySelectorAll('input').forEach(inp=>inp.addEventListener('change',emiPersistSlabs));}
 function emiCurrentSlabs(){return [...document.querySelectorAll('#emiSlabs .stmt-slab-row')].map(r=>({to:r.querySelector('.emi-slab-to').value===''?null:Number(r.querySelector('.emi-slab-to').value),rate:Number(r.querySelector('.emi-slab-rate').value)||0}));}
 function emiPersistSlabs(){emiSaveSlabs(emiCurrentSlabs());if(document.getElementById('emiSlabSave'))document.getElementById('emiSlabSave').textContent='✓ Saved. Slabs remain unchanged until Reset EMI slabs.';renderEmi();}
-function emiAddSlab(){const s=emiLoadSlabs(),last=s[s.length-1];if(last.to===null){const prev=s.length>1?s[s.length-2].to:500000;s.splice(s.length-1,0,{to:Number(prev||0)+200000,rate:last.rate});}else s.push({to:null,rate:last.rate});emiSaveSlabs(s);emiRenderSlabs();renderEmi();}
+function emiAddSlab(){
+  let s=emiLoadSlabs();
+  if(!Array.isArray(s)||!s.length) s=EMI_DEFAULT_SLABS.map(x=>({...x}));
+  const last=s[s.length-1]||{to:null,rate:0};
+  if(last.to===null){
+    const prev=s.length>1 && s[s.length-2].to!==null ? Number(s[s.length-2].to) : 500000;
+    s.splice(s.length-1,0,{to:Math.max(0,prev)+200000,rate:Number(last.rate)||0});
+  }else{
+    s.push({to:null,rate:Number(last.rate)||0});
+  }
+  emiSaveSlabs(s);
+  emiRenderSlabs();
+  try{renderEmi();}catch(e){console.warn('EMI recalculation after adding slab skipped:',e);}
+  const save=document.getElementById('emiSlabSave');
+  if(save) save.textContent='✓ Slab added and saved';
+  const box=document.getElementById('emiSlabSettings');
+  if(box) box.style.display='block';
+}
 function emiRemoveSlab(i){const s=emiLoadSlabs();if(s.length<=1)return;s.splice(i,1);emiSaveSlabs(s);emiRenderSlabs();renderEmi();}
 function emiResetSlabs(){emiSaveSlabs(EMI_DEFAULT_SLABS);emiRenderSlabs();renderEmi();}
 function emiSlabSchedule({principal,count,freqMonths,startDate,repaymentType,moratoriumMonths,moratoriumMode,slabs}){
@@ -4912,8 +4940,16 @@ document.getElementById('emiSlabQuickBtn')?.addEventListener('click',()=>{
   document.getElementById('emiSlabSettings').scrollIntoView({behavior:'smooth',block:'start'});
   renderEmi();
 });
-document.getElementById('emiAddSlabBtn')?.addEventListener('click',emiAddSlab);
-document.getElementById('emiResetSlabBtn')?.addEventListener('click',emiResetSlabs);
+const _emiAddSlabButton=document.getElementById('emiAddSlabBtn');
+if(_emiAddSlabButton){
+  _emiAddSlabButton.onclick=function(e){e.preventDefault();e.stopPropagation();emiAddSlab();return false;};
+}
+const _emiResetSlabButton=document.getElementById('emiResetSlabBtn');
+if(_emiResetSlabButton){
+  _emiResetSlabButton.onclick=function(e){e.preventDefault();e.stopPropagation();emiResetSlabs();return false;};
+}
+window.emiAddSlab=emiAddSlab;
+window.emiResetSlabs=emiResetSlabs;
 
 document.getElementById('startDate').value = new Date().toISOString().slice(0,10);
 try { renderEmi(); } catch (e) { console.error('renderEmi failed:', e); }
@@ -5243,7 +5279,7 @@ document.getElementById('ageAsOf').value = todayStr;
 });
 try { renderAge(); } catch (e) { console.error('renderAge failed:', e); }
 
-/* v2.13 compatibility: preserve StatementIQ's Financial Calculators entry point
+/* v2.14 compatibility: preserve StatementIQ's Financial Calculators entry point
    while using the proven calculator engine from Financial Calendar & Calculators. */
 function showCalc(which){
   const map={emi:'fiq-emi',slabemi:'fiq-emi',deposit:'fiq-deposits',age:'fiq-age'};
