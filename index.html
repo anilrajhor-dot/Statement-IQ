@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>StatementIQ v2.14 — Bank &amp; Credit Card Statement Analyser</title>
+<title>StatementIQ v2.15 — Bank &amp; Credit Card Statement Analyser</title>
 
 <!-- ==========================================================================
      StatementIQ — single-file, offline, browser-only statement analyser.
@@ -708,7 +708,7 @@ main{padding-top:24px}
 </style>
 
 <style id="financialCalculatorCompatibilityV213">
-/* v2.14 — Financial Calculator copied/adapted from the working Financial Calendar & Calculators module */
+/* v2.15 — Financial Calculator copied/adapted from the working Financial Calendar & Calculators module */
 #pFinancialCalc{--accent:var(--amber);--gold:var(--amber);--muted:var(--ink-soft);--brass:var(--amber);--clay:var(--rust);--card:var(--surface);--text:var(--ink)}
 #pFinancialCalc .fiq-module{display:block}
 #pFinancialCalc .fiq-module[style*="display:none"]{display:none}
@@ -738,6 +738,13 @@ main{padding-top:24px}
 #pFinancialCalc .formula-box{background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
 @media(max-width:700px){#pFinancialCalc .grid{grid-template-columns:1fr}#pFinancialCalc .folio-toggle{padding:10px 12px}}
 </style>
+
+<style id="slab-editor-v215">
+#emiSlabSettings #emiSlabs{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+#emiSlabSettings .emi-static-row{display:grid;grid-template-columns:1fr 1.4fr 1.1fr 1.3fr auto;gap:10px;align-items:end;padding:12px;border:1px solid var(--line);border-radius:14px;background:var(--surface,#fff)}
+#emiSlabSettings #emiAddSlabBtn{font-weight:900!important;border:2px solid var(--accent)!important;background:var(--accent)!important;color:#111!important;min-height:48px;box-shadow:0 3px 0 rgba(0,0,0,.12)}
+@media(max-width:700px){#emiSlabSettings .emi-static-row{grid-template-columns:1fr 1fr;}.emi-static-row .wide,.emi-static-row .wide+div{grid-column:auto}.emi-static-row>div:nth-child(4){grid-column:1/-1}.emi-static-row>div:last-child{grid-column:1/-1}}
+</style>
 </head>
 <body>
 
@@ -754,7 +761,7 @@ main{padding-top:24px}
   </div>
   <div class="brand-txt">
     <h1>StatementIQ</h1>
-    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.14</b></small>
+    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.15</b></small>
     <div class="developer-credit">Developed by Anil Sharma, Former General Manager, Central Bank of India</div>
   </div>
   <div class="header-actions">
@@ -856,7 +863,7 @@ main{padding-top:24px}
       <div class="card"><h3>Financial health</h3><p class="hint">A simple analytical score based only on the loaded statements — not financial advice.</p><div id="healthBox"></div></div>
     </div>
     <div class="card"><h3>Top spending categories</h3><p class="hint">Consumption spending excludes transfers to self, credit-card settlements, investments, loan principal and matched reversals.</p><div class="tblwrap"><table id="dashCatTbl"></table></div></div>
-    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.14 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
+    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.15 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
   </div>
 </section>
 
@@ -1008,7 +1015,7 @@ main{padding-top:24px}
   <div class="help-hero">
     <div class="help-hero-icon">?</div>
     <div>
-      <div class="eyebrow">STATEMENTIQ USER GUIDE · v2.14</div>
+      <div class="eyebrow">STATEMENTIQ USER GUIDE · v2.15</div>
       <h2>How to use StatementIQ</h2>
       <p>Upload → verify → review → analyse → export. Everything is processed locally in your browser.</p>
     </div>
@@ -1265,7 +1272,13 @@ main{padding-top:24px}
       <div id="emiSlabSettings" class="card input-card" style="display:none;margin-top:14px;box-shadow:none;border:1px solid var(--line);">
         <div class="stub-title">⚙ EMI Interest Slabs &amp; Rates</div>
         <div class="stub-sub" style="margin:4px 0 14px;color:var(--muted)">Progressive rates apply to the outstanding loan balance each period. Example: first ₹3,00,000 at 7%, next ₹2,00,000 at 8%, and any balance above ₹5,00,000 at 9%.</div>
-        <div id="emiSlabs"></div>
+        <div id="emiSlabs">
+          <div class="stmt-slab-row emi-static-row"><div class="wide"><div class="slab-label">Slab 1</div></div><div><label>Upto amount</label><input class="emi-slab-to" type="number" min="0" step="1" value="300000" placeholder="No limit"></div><div><label>Annual rate %</label><input class="emi-slab-rate" type="number" min="0" step="0.01" value="7"></div><div><label>Coverage</label><div class="hint">First ₹3,00,000</div></div><div><button class="btn sm emi-remove-static" type="button">Remove</button></div></div>
+          <div class="stmt-slab-row emi-static-row"><div class="wide"><div class="slab-label">Slab 2</div></div><div><label>Upto amount</label><input class="emi-slab-to" type="number" min="0" step="1" value="500000" placeholder="No limit"></div><div><label>Annual rate %</label><input class="emi-slab-rate" type="number" min="0" step="0.01" value="8"></div><div><label>Coverage</label><div class="hint">Above previous slab</div></div><div><button class="btn sm emi-remove-static" type="button">Remove</button></div></div>
+          <div class="stmt-slab-row emi-static-row"><div class="wide"><div class="slab-label">Slab 3</div></div><div><label>Upto amount</label><input class="emi-slab-to" type="number" min="0" step="1" value="750000" placeholder="No limit"></div><div><label>Annual rate %</label><input class="emi-slab-rate" type="number" min="0" step="0.01" value="9"></div><div><label>Coverage</label><div class="hint">Above previous slab</div></div><div><button class="btn sm emi-remove-static" type="button">Remove</button></div></div>
+          <div class="stmt-slab-row emi-static-row"><div class="wide"><div class="slab-label">Slab 4</div></div><div><label>Upto amount</label><input class="emi-slab-to" type="number" min="0" step="1" value="1000000" placeholder="No limit"></div><div><label>Annual rate %</label><input class="emi-slab-rate" type="number" min="0" step="0.01" value="10"></div><div><label>Coverage</label><div class="hint">Above previous slab</div></div><div><button class="btn sm emi-remove-static" type="button">Remove</button></div></div>
+          <div class="stmt-slab-row emi-static-row"><div class="wide"><div class="slab-label">Slab 5</div></div><div><label>Upto amount</label><input class="emi-slab-to" type="number" min="0" step="1" value="" placeholder="No limit"></div><div><label>Annual rate %</label><input class="emi-slab-rate" type="number" min="0" step="0.01" value="11"></div><div><label>Coverage</label><div class="hint">Above previous slab — no limit</div></div><div><button class="btn sm emi-remove-static" type="button">Remove</button></div></div>
+        </div>
         <div class="formula-box" style="margin-top:12px"><b>Slab EMI method:</b> each installment calculates interest on the opening outstanding balance by slab. The EMI is solved so that the balance reaches zero at the end of the selected period. Example: ₹5,00,000 = ₹3,00,000 @ 7% + ₹2,00,000 @ 8%.</div>
         <div class="row" style="margin-top:12px"><button id="emiAddSlabBtn" class="btn" type="button">+ Add slab</button><button id="emiResetSlabBtn" class="btn" type="button">Reset EMI slabs</button><span id="emiSlabSave" class="hint"></span></div>
       </div>
@@ -1490,7 +1503,7 @@ main{padding-top:24px}
 
 <footer>
   <p class="disc">This tool extracts and analyses data from statements you provide. Always verify the extracted figures against your original statement before using them for tax filing, loan applications, or any financial decision. This is not financial or tax advice.</p>
-  <p>StatementIQ v2.14 · runs entirely offline in your browser · no account, no upload, no tracking</p>
+  <p>StatementIQ v2.15 · runs entirely offline in your browser · no account, no upload, no tracking</p>
 </footer>
 
 <!-- password modal -->
@@ -1518,6 +1531,32 @@ main{padding-top:24px}
 
 <div id="toasts"></div>
 
+<script>
+/* v2.15 slab editor hardening — direct delegated handlers so the Add slab control cannot be lost. */
+document.addEventListener('click', function(e){
+  const add=e.target.closest && e.target.closest('#emiAddSlabBtn');
+  if(add){
+    e.preventDefault(); e.stopPropagation();
+    try{ if(typeof window.emiAddSlab==='function'){ window.emiAddSlab(); return; } }catch(err){}
+    const box=document.getElementById('emiSlabs'); if(!box)return;
+    const rows=[...box.querySelectorAll('.stmt-slab-row')];
+    const row=document.createElement('div'); row.className='stmt-slab-row emi-static-row';
+    const idx=rows.length+1;
+    row.innerHTML='<div class="wide"><div class="slab-label">Slab '+idx+'</div></div><div><label>Upto amount</label><input class="emi-slab-to" type="number" min="0" step="1" placeholder="No limit"></div><div><label>Annual rate %</label><input class="emi-slab-rate" type="number" min="0" step="0.01" value="11"></div><div><label>Coverage</label><div class="hint">Above previous slab</div></div><div><button class="btn sm emi-remove-static" type="button">Remove</button></div>';
+    const noLimit=rows.find(r=>r.querySelector('.emi-slab-to') && r.querySelector('.emi-slab-to').value==='');
+    box.insertBefore(row,noLimit||null);
+    const save=document.getElementById('emiSlabSave'); if(save)save.textContent='✓ Slab added — edit amount/rate as required';
+    return;
+  }
+  const rem=e.target.closest && e.target.closest('.emi-remove-static');
+  if(rem){
+    e.preventDefault();
+    const rows=[...document.querySelectorAll('#emiSlabs .stmt-slab-row')];
+    if(rows.length>1) rem.closest('.stmt-slab-row').remove();
+    [...document.querySelectorAll('#emiSlabs .stmt-slab-row')].forEach((r,i)=>{const l=r.querySelector('.slab-label');if(l)l.textContent='Slab '+(i+1);});
+  }
+});
+</script>
 <script>
 "use strict";
 pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
@@ -4570,28 +4609,28 @@ document.getElementById('helpTbl').innerHTML =
 })();
 
 /* ============================================================================
-   14. FINANCIAL CALCULATORS — v2.14
+   14. FINANCIAL CALCULATORS — v2.15
    Proven engine copied/adapted from the uploaded Financial Calendar & Calculators app.
    ========================================================================== */
 const fiqFmtDate = (d) => d.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
 const fiqFmtINR = (n) => isFinite(n) ? n.toLocaleString("en-IN", { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : "—";
 const fiqAddMonths = (date, months) => { const d = new Date(date); d.setMonth(d.getMonth() + months); return d; };
 
-const EMI_DEFAULT_SLABS=[{to:300000,rate:7},{to:500000,rate:8},{to:null,rate:9}];
+const EMI_DEFAULT_SLABS=[{to:300000,rate:7},{to:500000,rate:8},{to:750000,rate:9},{to:1000000,rate:10},{to:null,rate:11}];
 function emiNormaliseSlabs(slabs){return (slabs||[]).map(x=>({to:(x.to===null||x.to===''||x.to===undefined)?null:Number(x.to),rate:Number(x.rate)||0})).filter(x=>x.to===null||isFinite(x.to));}
 function emiLoadSlabs(){
   try{
-    const x=JSON.parse(localStorage.getItem('financial_emi_interest_slabs_v1')||'null');
+    const x=JSON.parse(localStorage.getItem('financial_emi_interest_slabs_v2')||'null');
     if(Array.isArray(x)&&x.length){
       const clean=emiNormaliseSlabs(x);
       if(clean.length) return clean;
     }
   }catch(e){ console.warn('Invalid saved EMI slabs; restoring defaults.',e); }
   const defaults=EMI_DEFAULT_SLABS.map(x=>({...x}));
-  try{localStorage.setItem('financial_emi_interest_slabs_v1',JSON.stringify(defaults));}catch(e){}
+  try{localStorage.setItem('financial_emi_interest_slabs_v2',JSON.stringify(defaults));}catch(e){}
   return defaults;
 }
-function emiSaveSlabs(slabs){try{localStorage.setItem('financial_emi_interest_slabs_v1',JSON.stringify(emiNormaliseSlabs(slabs)));}catch(e){}}
+function emiSaveSlabs(slabs){try{localStorage.setItem('financial_emi_interest_slabs_v2',JSON.stringify(emiNormaliseSlabs(slabs)));}catch(e){}}
 function emiAllocate(balance,slabs){const b=Math.max(0,Number(balance)||0),parts=[];let prev=0;for(const s of emiNormaliseSlabs(slabs)){if(b<=prev)break;const upper=s.to===null?Infinity:s.to;const portion=Math.max(0,Math.min(b,upper)-prev);if(portion>0)parts.push({portion,rate:s.rate});if(!isFinite(upper))break;prev=upper;}return parts;}
 function emiSlabInterest(balance,slabs,periodFactor){return emiAllocate(balance,slabs).reduce((a,p)=>a+p.portion*p.rate/100*periodFactor,0);}
 function emiRenderSlabs(){const el=document.getElementById('emiSlabs');if(!el)return;const slabs=emiLoadSlabs();el.innerHTML=slabs.map((x,i)=>`<div class="stmt-slab-row"><div class="wide"><div class="slab-label">Slab ${i+1}</div></div><div><label>Upto amount</label><input class="emi-slab-to" type="number" min="0" step="1" value="${x.to===null?'':x.to}" placeholder="No limit"></div><div><label>Annual rate %</label><input class="emi-slab-rate" type="number" min="0" step="0.01" value="${x.rate}"></div><div><label>Coverage</label><div class="hint">${x.to===null?'Above previous slab':'First ₹'+fiqFmtINR(x.to)}</div></div><div><button class="btn sm" type="button" onclick="emiRemoveSlab(${i})" ${slabs.length<=1?'disabled':''}>Remove</button></div></div>`).join('');el.querySelectorAll('input').forEach(inp=>inp.addEventListener('change',emiPersistSlabs));}
@@ -4735,6 +4774,7 @@ function openLoanMenu(mode){
   if(rateWrap) rateWrap.style.display=standard?'block':'none';
   if(methodWrap) methodWrap.style.display=standard?'none':'none';
   if(slab) slab.style.display=standard?'none':'block';
+  if(!standard && typeof emiRenderSlabs==='function') emiRenderSlabs();
   const b1=document.getElementById('standardEmiMenuBtn'), b2=document.getElementById('slabEmiMenuBtn');
   if(b1){b1.classList.toggle('primary',standard);b1.classList.toggle('active',standard);}
   if(b2){b2.classList.toggle('primary',!standard);b2.classList.toggle('active',!standard);}
@@ -4759,6 +4799,7 @@ function showLoanCalculator(mode){
   const slabSettings=document.getElementById('emiSlabSettings');
   const slabResults=document.getElementById('slabEmiResults');
   if(slabSettings) slabSettings.style.display=mode==='slab'?'block':'none';
+  if(mode==='slab' && typeof emiRenderSlabs==='function') emiRenderSlabs();
   if(slabResults) slabResults.style.display=mode==='slab'?'block':'none';
 }
 
@@ -5279,7 +5320,7 @@ document.getElementById('ageAsOf').value = todayStr;
 });
 try { renderAge(); } catch (e) { console.error('renderAge failed:', e); }
 
-/* v2.14 compatibility: preserve StatementIQ's Financial Calculators entry point
+/* v2.15 compatibility: preserve StatementIQ's Financial Calculators entry point
    while using the proven calculator engine from Financial Calendar & Calculators. */
 function showCalc(which){
   const map={emi:'fiq-emi',slabemi:'fiq-emi',deposit:'fiq-deposits',age:'fiq-age'};
