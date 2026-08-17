@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>StatementIQ v2.9.5 — Bank &amp; Credit Card Statement Analyser</title>
+<title>StatementIQ v2.9.6 — Bank &amp; Credit Card Statement Analyser</title>
 
 <!-- ==========================================================================
      StatementIQ — single-file, offline, browser-only statement analyser.
@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js">/* v2.9.5 zero-as-placeholder */
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js">/* v2.9.6 zero-as-placeholder */
 document.addEventListener('focusin',function(e){const x=e.target;if(x&&x.tagName==='INPUT'&&x.type==='number'&&x.value==='0')x.value='';});
 document.addEventListener('click',function(e){const x=e.target;if(x&&x.tagName==='INPUT'&&x.type==='number'&&x.value==='0')x.value='';});
 document.addEventListener('DOMContentLoaded',()=>{ const b=document.getElementById('globalUploadBar'); if(b) b.style.display='none'; });
@@ -318,7 +318,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 /* v2.0 dashboard */
 .health-score{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.score-ring{width:92px;height:92px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--amber) calc(var(--score)*1%),var(--line) 0);position:relative}.score-ring:after{content:"";position:absolute;inset:9px;border-radius:50%;background:var(--paper)}.score-ring b{position:relative;z-index:1;font-size:24px}.score-copy{min-width:220px}.metric-line{display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-bottom:1px solid var(--line)}.metric-line:last-child{border-bottom:0}.flag{padding:10px 12px;border-radius:10px;background:var(--surface-2);margin:7px 0;border-left:4px solid var(--amber)}.flag.bad{border-left-color:var(--rust)}.flag.ok{border-left-color:var(--green)}.flag b{display:block}.muted{color:var(--ink-soft);font-size:12px}.pill-big{display:inline-flex;padding:4px 9px;border-radius:999px;background:var(--surface-2);font-size:11px;font-weight:700}.dash-empty{padding:16px}.confidence{font-weight:700}.confidence.high{color:var(--green)}.confidence.low{color:var(--rust)}
 
-/* v2.9.5: keep financial metric values together on narrow screens */
+/* v2.9.6: keep financial metric values together on narrow screens */
 .financial-activity .metric-line { display:flex; align-items:center; gap:14px; }
 .financial-activity .metric-line span { flex:1 1 auto; min-width:0; }
 .financial-activity .metric-line b { flex:0 0 auto; white-space:nowrap; text-align:right; }
@@ -331,7 +331,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 }
 
 
-/* v2.9.5 — daily-product interest calculator */
+/* v2.9.6 — daily-product interest calculator */
 .interest-calc .slab-grid{display:grid;grid-template-columns:1.1fr 1.4fr 1.4fr 1fr auto;gap:8px;align-items:center}
 .interest-calc .slab-grid input{min-width:0}
 .interest-calc .interest-table th,.interest-calc .interest-table td{white-space:nowrap}
@@ -349,7 +349,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 }
 
 
-/* v2.9.5 — dedicated calculators */
+/* v2.9.6 — dedicated calculators */
 .calc-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .calc-card{border:1px solid var(--line);border-radius:14px;padding:14px;background:var(--surface)}
 .calc-result{margin-top:14px;padding:14px;border-radius:12px;background:var(--surface-soft);border:1px solid var(--line)}
@@ -361,7 +361,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 @media(max-width:560px){.calc-grid{grid-template-columns:1fr}.calc-result .big{font-size:21px}}
 
 
-/* v2.9.5 — responsive interest tables and totals */
+/* v2.9.6 — responsive interest tables and totals */
 .interest-calc .tblwrap,
 #interestStandalone .tblwrap{
   width:100%;
@@ -400,7 +400,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 }
 
 
-/* v2.9.5 — calculators prominently available on first page */
+/* v2.9.6 — calculators prominently available on first page */
 .first-page-tools{
   padding:14px 18px 4px;
 }
@@ -436,7 +436,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 }
 
 
-/* v2.9.5 — clean calculator hub */
+/* v2.9.6 — clean calculator hub */
 .first-page-menu-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
 .first-page-menu-grid button{min-height:74px;justify-content:flex-start;text-align:left;font-size:14px}
 .first-page-menu-grid button>span:first-child{font-size:22px;flex:none}
@@ -448,7 +448,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 #pInterestCalc>.card,#pFinancialCalc>.card,#pInterestCompare>.card{width:100%;box-sizing:border-box}
 #pInterestCalc .tblwrap,#pInterestCompare .tblwrap{width:100%;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
 
-/* v2.9.5 */
+/* v2.9.6 */
 #btnFinancialCalc{background:var(--accent)!important;color:#0E0E10!important;border-color:var(--accent)!important;font-weight:800!important}
 @media(max-width:760px){.interest-settings-head{display:none!important}#interestSlabs .interest-slab-row{grid-template-columns:1fr 1fr}#interestSlabs .interest-slab-row .wide{grid-column:1/-1}}
 
@@ -456,7 +456,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 #tabs .tab[data-panel="pFinancialCalc"].on{box-shadow:inset 0 -3px 0 #0E0E10}
 #interestStatement:disabled{opacity:.7}
 
-/* v2.9.5 visual refresh + help centre */
+/* v2.9.6 visual refresh + help centre */
 :root{--accent:var(--amber);--surface-soft:var(--surface-2)}
 header.app{padding:18px 22px;gap:18px;background:linear-gradient(135deg,var(--surface) 0%,var(--surface-2) 100%);box-shadow:0 1px 0 var(--line)}
 .brandmark{width:48px;height:48px;border-radius:14px;box-shadow:0 6px 18px rgba(14,14,16,.12)}
@@ -504,7 +504,7 @@ main{padding-top:24px}
 .panel-title-row .btn{white-space:nowrap}
 @media(max-width:560px){.panel-title-row{align-items:flex-start!important}.panel-title-row .btn{width:100%}}
 
-/* v2.9.5 UI correction */
+/* v2.9.6 UI correction */
 #globalUploadBar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 14px;margin:0 auto 14px;max-width:1400px;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--amber);border-radius:12px;box-shadow:var(--shadow)}
 #globalUploadBar div{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
 #globalUploadBar span{font-size:12px;color:var(--ink-faint)}
@@ -513,10 +513,10 @@ main{padding-top:24px}
 /* Make navigation show all primary destinations on phones without horizontal scrolling. */
 @media(max-width:760px){#tabs{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;overflow:visible!important}.tab{white-space:normal!important;min-height:43px;line-height:1.2}.tab[data-panel="pUpload"]{order:-10;font-weight:800;background:var(--surface-2)}.tab[data-panel="pUpload"].on{background:var(--amber);color:var(--charcoal);border-color:var(--amber)}}
 
-/* v2.9.5: the navigation tab is the single Financial Calculators entry point */
+/* v2.9.6: the navigation tab is the single Financial Calculators entry point */
 #btnFinancialCalc{display:none!important}
 
-/* v2.9.5 — prominently highlight the two utility menus */
+/* v2.9.6 — prominently highlight the two utility menus */
 #tabs .tab[data-panel="pFinancialCalc"],
 #tabs .tab[data-panel="pInterestCompare"]{
   font-weight:900!important;
@@ -543,7 +543,7 @@ main{padding-top:24px}
 }
 
 
-/* v2.9.5 — App Health Check */
+/* v2.9.6 — App Health Check */
 .health-tab{font-weight:900!important}
 .health-tab.on{background:#E8F5EC!important;color:#176B43!important;border-color:#78B995!important}
 .health-hero{display:flex;align-items:center;gap:16px;padding:22px;border-radius:18px;background:linear-gradient(135deg,#111113 0%,#242426 100%);color:#fff;margin-bottom:16px}
@@ -566,8 +566,8 @@ main{padding-top:24px}
 @media(max-width:900px){.health-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.health-results{grid-template-columns:1fr}}
 @media(max-width:600px){.health-hero{align-items:flex-start}.health-hero h2{font-size:21px}.health-grid{grid-template-columns:1fr 1fr}.health-stat{padding:12px}.health-stat .value{font-size:23px}}
 
-/* v2.9.5 — corrected user-specified interest formula */
-/* v2.9.5 — Daily Product ÷ 365 × rate (%) ; Slab Loan EMI with editable slabs */
+/* v2.9.6 — corrected user-specified interest formula */
+/* v2.9.6 — Daily Product ÷ 365 × rate (%) ; Slab Loan EMI with editable slabs */
 #interestComparisonSummary .calc-grid{grid-template-columns:repeat(3,minmax(0,1fr))}#interestComparisonSummary .calc-result .big{font-size:22px}@media(max-width:760px){#interestComparisonSummary .calc-grid{grid-template-columns:1fr}}
 
 .slab-emi-launch{font-weight:900;border:2px solid var(--gold)!important}
@@ -722,7 +722,7 @@ main{padding-top:24px}
   </div>
   <div class="brand-txt">
     <h1>StatementIQ</h1>
-    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.9.5</b></small>
+    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.9.6</b></small>
     <div class="developer-credit">Developed by Anil Sharma, Former General Manager, Central Bank of India</div>
   </div>
   <div class="header-actions">
@@ -824,7 +824,7 @@ main{padding-top:24px}
       <div class="card"><h3>Financial health</h3><p class="hint">A simple analytical score based only on the loaded statements — not financial advice.</p><div id="healthBox"></div></div>
     </div>
     <div class="card"><h3>Top spending categories</h3><p class="hint">Consumption spending excludes transfers to self, credit-card settlements, investments, loan principal and matched reversals.</p><div class="tblwrap"><table id="dashCatTbl"></table></div></div>
-    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.9.5 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
+    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.9.6 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
   </div>
 </section>
 
@@ -976,7 +976,7 @@ main{padding-top:24px}
   <div class="help-hero">
     <div class="help-hero-icon">?</div>
     <div>
-      <div class="eyebrow">STATEMENTIQ USER GUIDE · v2.9.5</div>
+      <div class="eyebrow">STATEMENTIQ USER GUIDE · v2.9.6</div>
       <h2>How to use StatementIQ</h2>
       <p>Upload → verify → review → analyse → export. Everything is processed locally in your browser.</p>
     </div>
@@ -1195,7 +1195,7 @@ main{padding-top:24px}
 
 <footer>
   <p class="disc">This tool extracts and analyses data from statements you provide. Always verify the extracted figures against your original statement before using them for tax filing, loan applications, or any financial decision. This is not financial or tax advice.</p>
-  <p>StatementIQ v2.9.5 · runs entirely offline in your browser · no account, no upload, no tracking</p>
+  <p>StatementIQ v2.9.6 · runs entirely offline in your browser · no account, no upload, no tracking</p>
 </footer>
 
 <!-- password modal -->
@@ -4363,7 +4363,7 @@ function renderSlabEMI(){
     <span class="hint" style="display:block;margin-top:4px">Enter the <b>Upto amount</b> and <b>Rate %</b>. Five slabs are built in. Edit the Upto amount and Rate %, or remove a slab if required.</span>
     <div id="slabEmiRows" style="margin-top:8px"></div>
     <div class="row" style="margin-top:10px;gap:8px;flex-wrap:wrap;align-items:center">
-      <button id="slabEmiAddPermanent" class="btn sm" type="button" style="font-weight:900;border:2px solid var(--gold);background:var(--gold);color:#111;min-height:42px" onclick="return addSlabEMIReal()">＋ Add slab &amp; rate</button>
+      <button id="slabEmiAddPermanent" class="btn sm" type="button" style="font-weight:900;border:2px solid var(--gold);background:var(--gold);color:#111;min-height:46px;padding:10px 18px;cursor:pointer">＋ Add slab &amp; rate</button>
       <span class="hint">Adds a new editable slab with its own rate before the No-limit slab.</span>
     </div>
   </div>
@@ -4376,7 +4376,14 @@ function renderSlabEMI(){
   </div>
   <div id="slabEmiResult" style="margin-top:14px"></div>`;
   renderSlabEMIRows();
-  bindSlabEMIAddButton();
+  const addBtn=document.getElementById('slabEmiAddPermanent');
+  if(addBtn){
+    addBtn.onclick=(ev)=>{
+      ev.preventDefault();
+      addSlabEMIReal();
+      return false;
+    };
+  }
   siqZeroPlaceholderInput(document.getElementById('slabEmiP'));
 }
 function renderSlabEMIRows(){
@@ -4391,21 +4398,22 @@ function renderSlabEMIRows(){
     {to:null,rate:11}
   ];
 
-  if(!Array.isArray(SIQSlabEMIRows) || !SIQSlabEMIRows.length){
-    SIQSlabEMIRows=defaults.map(x=>({...x}));
-  }else{
-    // Preserve all previously added slabs; only fill missing built-ins.
-    for(let i=0;i<5;i++){
-      if(!SIQSlabEMIRows[i]) SIQSlabEMIRows[i]={...defaults[i]};
+  // Always guarantee the five built-in slabs.
+  if(!Array.isArray(SIQSlabEMIRows)) SIQSlabEMIRows=[];
+  for(let i=0;i<5;i++){
+    if(!SIQSlabEMIRows[i] || typeof SIQSlabEMIRows[i]!=='object'){
+      SIQSlabEMIRows[i]={...defaults[i]};
     }
   }
+  // Preserve any additional user-added slabs.
+  if(SIQSlabEMIRows.length<5) SIQSlabEMIRows=defaults.map(x=>({...x}));
   SIQSlabEMIRows[SIQSlabEMIRows.length-1].to=null;
   saveSlabEMI();
 
-  box.innerHTML=SIQSlabEMIRows.map((x,i)=>{
+  const html=SIQSlabEMIRows.map((x,i)=>{
     const unlimited=i===SIQSlabEMIRows.length-1;
-    const from=i===0?1:(Number(SIQSlabEMIRows[i-1].to||0)+1);
-    return `<div class="grid g4 slab-editor-row" data-slab="${i}" style="margin:9px 0;padding:12px;border:1px solid var(--line);border-radius:14px;align-items:end;background:#fff">
+    const from=i===0?1:Number(SIQSlabEMIRows[i-1].to||0)+1;
+    return `<div class="slab-editor-row" data-slab="${i}" style="display:grid!important;grid-template-columns:1.15fr 1fr .75fr auto;gap:10px;margin:9px 0;padding:13px;border:1px solid #e6dfd4;border-left:4px solid ${unlimited?'#157a4b':'#f4b400'};border-radius:14px;align-items:end;background:#fff;box-shadow:0 3px 12px rgba(17,17,20,.05)">
       <div>
         <label class="f"><b>Slab ${i+1}</b></label>
         <div class="hint">From ${inr(from)} to ${unlimited?'No limit':inr(x.to||0)}</div>
@@ -4420,11 +4428,14 @@ function renderSlabEMIRows(){
       </div>
       <div>
         ${unlimited
-          ? '<span class="hint" style="font-weight:800">✓ Final slab — No limit</span>'
+          ? '<span class="hint" style="font-weight:800;white-space:nowrap">✓ No limit</span>'
           : `<button class="btn sm slabRemoveBtn" type="button" data-i="${i}">Remove</button>`}
       </div>
     </div>`;
   }).join('');
+
+  // Defensive fallback: never display an empty slab editor.
+  box.innerHTML=html || `<div class="banner bad"><span>!</span><div>Slab settings could not be loaded. <button class="btn sm" type="button" onclick="resetSlabEMI()">Restore 5 built-in slabs</button></div></div>`;
 
   box.querySelectorAll('.slabEmiTo').forEach(el=>{
     el.addEventListener('input',()=>{
@@ -4473,6 +4484,8 @@ function addSlabEMIReal(){
     saveSlabEMI();
     renderSlabEMIRows();
     const btn=document.getElementById('slabEmiAddPermanent');
+    const newRow=document.querySelector('#slabEmiRows .slab-editor-row:last-child');
+    if(newRow) newRow.scrollIntoView({behavior:'smooth',block:'nearest'});
     if(btn){
       const old=btn.innerHTML;
       btn.innerHTML='✓ Slab &amp; rate added';
