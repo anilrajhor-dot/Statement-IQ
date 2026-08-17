@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>StatementIQ v2.11 — Bank &amp; Credit Card Statement Analyser</title>
+<title>StatementIQ v2.12 — Bank &amp; Credit Card Statement Analyser</title>
 
 <!-- ==========================================================================
      StatementIQ — single-file, offline, browser-only statement analyser.
@@ -722,7 +722,7 @@ main{padding-top:24px}
   </div>
   <div class="brand-txt">
     <h1>StatementIQ</h1>
-    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.11</b></small>
+    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.12</b></small>
     <div class="developer-credit">Developed by Anil Sharma, Former General Manager, Central Bank of India</div>
   </div>
   <div class="header-actions">
@@ -824,7 +824,7 @@ main{padding-top:24px}
       <div class="card"><h3>Financial health</h3><p class="hint">A simple analytical score based only on the loaded statements — not financial advice.</p><div id="healthBox"></div></div>
     </div>
     <div class="card"><h3>Top spending categories</h3><p class="hint">Consumption spending excludes transfers to self, credit-card settlements, investments, loan principal and matched reversals.</p><div class="tblwrap"><table id="dashCatTbl"></table></div></div>
-    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.11 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
+    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.12 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
   </div>
 </section>
 
@@ -976,7 +976,7 @@ main{padding-top:24px}
   <div class="help-hero">
     <div class="help-hero-icon">?</div>
     <div>
-      <div class="eyebrow">STATEMENTIQ USER GUIDE · v2.11</div>
+      <div class="eyebrow">STATEMENTIQ USER GUIDE · v2.12</div>
       <h2>How to use StatementIQ</h2>
       <p>Upload → verify → review → analyse → export. Everything is processed locally in your browser.</p>
     </div>
@@ -1195,7 +1195,7 @@ main{padding-top:24px}
 
 <footer>
   <p class="disc">This tool extracts and analyses data from statements you provide. Always verify the extracted figures against your original statement before using them for tax filing, loan applications, or any financial decision. This is not financial or tax advice.</p>
-  <p>StatementIQ v2.11 · runs entirely offline in your browser · no account, no upload, no tracking</p>
+  <p>StatementIQ v2.12 · runs entirely offline in your browser · no account, no upload, no tracking</p>
 </footer>
 
 <!-- password modal -->
@@ -4312,7 +4312,7 @@ function showCalc(which){
 
 let SIQSlabEMIRows=(()=>{
   try{
-    const saved=JSON.parse(localStorage.getItem('siq_slab_emi_slabs_v271')||'null');
+    const saved=JSON.parse(localStorage.getItem('siq_slab_emi_slabs_v212')||'null');
     if(Array.isArray(saved)&&saved.length){
       const base=[
         {to:300000,rate:7},{to:500000,rate:8},
@@ -4329,7 +4329,7 @@ let SIQSlabEMIRows=(()=>{
   ];
 })();
 function saveSlabEMI(){
-  try{localStorage.setItem('siq_slab_emi_slabs_v271',JSON.stringify(SIQSlabEMIRows));}catch(e){}
+  try{localStorage.setItem('siq_slab_emi_slabs_v212',JSON.stringify(SIQSlabEMIRows));}catch(e){}
 }
 
 function renderSlabEMI(){
@@ -4388,47 +4388,67 @@ function renderSlabEMIRows(){
     {to:2500000,rate:10},
     {to:null,rate:11}
   ];
+
+  // Hardened editor: never leave a blank slab area. If saved settings are
+  // malformed for any reason, fall back to the five built-in slabs.
+  let rows;
   try{
-    if(!Array.isArray(SIQSlabEMIRows) || SIQSlabEMIRows.length<2){
-      SIQSlabEMIRows=defaults.map(x=>({...x}));
-    }
-  }catch(e){ SIQSlabEMIRows=defaults.map(x=>({...x})); }
-  // Guarantee five built-in slabs on first use, while preserving user-added slabs.
-  if(SIQSlabEMIRows.length<5){
-    const existing=SIQSlabEMIRows.map(x=>({to:x?.to??null,rate:Number(x?.rate||0)}));
-    SIQSlabEMIRows=defaults.map((d,i)=>existing[i] ? {...d,...existing[i]} : {...d});
+    rows=Array.isArray(SIQSlabEMIRows) ? SIQSlabEMIRows.map(x=>({to:x?.to??null,rate:Number(x?.rate||0)})) : [];
+    if(rows.length<5) rows=defaults.map((d,i)=>rows[i]?{...d,...rows[i]}:{...d});
+    if(!rows.length) rows=defaults.map(x=>({...x}));
+    rows[rows.length-1].to=null;
+    SIQSlabEMIRows=rows;
+  }catch(e){
+    console.warn('StatementIQ slab settings reset:',e);
+    SIQSlabEMIRows=defaults.map(x=>({...x}));
+    rows=SIQSlabEMIRows;
   }
-  SIQSlabEMIRows=SIQSlabEMIRows.map((x,i)=>({to:i===SIQSlabEMIRows.length-1?null:(x?.to==null?'':Number(x.to)),rate:Number(x?.rate||0)}));
-  SIQSlabEMIRows[SIQSlabEMIRows.length-1].to=null;
-  const money=v=>'₹'+Number(v||0).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
 
-  box.innerHTML=SIQSlabEMIRows.map((x,i)=>{
-    const unlimited=i===SIQSlabEMIRows.length-1;
-    const prev=i===0?0:Number(SIQSlabEMIRows[i-1].to)||0;
-    const from=prev+1;
-    return `<div class="slab-editor-row" data-slab="${i}" style="display:grid!important;grid-template-columns:1fr;gap:10px;margin:10px 0;padding:15px;border:2px solid #e5dfd4;border-left:5px solid ${unlimited?'#157a4b':'#f4b400'};border-radius:14px;background:#fff;box-shadow:0 3px 12px rgba(0,0,0,.06)">
-      <div style="display:flex;justify-content:space-between;gap:10px;align-items:center"><strong style="font-size:18px">Slab ${i+1}</strong><span class="hint" style="font-weight:700">${unlimited?'Above previous slab':money(from)+' – '+money(x.to)}</span></div>
-      <div><label class="f">Upto amount</label><input class="slabEmiTo" data-i="${i}" type="number" value="${unlimited?'':(x.to??'')}" min="${from}" ${unlimited?'disabled':''} placeholder="${unlimited?'No limit':'Enter amount'}" style="width:100%;min-height:48px"></div>
-      <div><label class="f">Rate %</label><input class="slabEmiRate" data-i="${i}" type="number" value="${Number(x.rate||0)}" step="0.01" min="0" placeholder="Enter rate" style="width:100%;min-height:48px"></div>
-      <div>${unlimited?'<span class="hint" style="font-weight:800">✓ No-limit slab</span>':`<button class="btn sm slabRemoveBtn" type="button" data-i="${i}">Remove slab ${i+1}</button>`}</div>
-    </div>`;
-  }).join('');
+  const money=v=>'₹'+Number(v||0).toLocaleString('en-IN',{minimumFractionDigits:0,maximumFractionDigits:0});
+  try{
+    box.innerHTML=rows.map((x,i)=>{
+      const unlimited=i===rows.length-1;
+      const prev=i===0?0:Number(rows[i-1].to)||0;
+      const from=prev+1;
+      return `<div class="slab-editor-row" data-slab="${i}" style="display:grid!important;grid-template-columns:1fr;gap:10px;margin:10px 0;padding:15px;border:2px solid #e5dfd4;border-left:5px solid ${unlimited?'#157a4b':'#f4b400'};border-radius:14px;background:#fff;box-shadow:0 3px 12px rgba(0,0,0,.06)">
+        <div style="display:flex;justify-content:space-between;gap:10px;align-items:center"><strong style="font-size:18px">Slab ${i+1}</strong><span class="hint" style="font-weight:700">${unlimited?'Above previous slab':money(from)+' – '+money(x.to)}</span></div>
+        <div><label class="f">Upto amount</label><input class="slabEmiTo" data-i="${i}" type="number" value="${unlimited?'':(x.to??'')}" min="${from}" ${unlimited?'disabled':''} placeholder="${unlimited?'No limit':'Enter amount'}" style="width:100%;min-height:48px"></div>
+        <div><label class="f">Rate %</label><input class="slabEmiRate" data-i="${i}" type="number" value="${Number(x.rate||0)}" step="0.01" min="0" placeholder="Enter rate" style="width:100%;min-height:48px"></div>
+        <div>${unlimited?'<span class="hint" style="font-weight:800">✓ No-limit slab</span>':`<button class="btn sm slabRemoveBtn" type="button" data-i="${i}">Remove slab ${i+1}</button>`}</div>
+      </div>`;
+    }).join('');
+  }catch(e){
+    // Absolute last-resort static editor. This guarantees that a rendering
+    // exception can never produce the blank white slab area seen previously.
+    console.error('StatementIQ slab editor render failed:',e);
+    box.innerHTML=defaults.map((x,i)=>`<div class="slab-editor-row" style="display:grid!important;grid-template-columns:1fr;gap:10px;margin:10px 0;padding:15px;border:2px solid #e5dfd4;border-left:5px solid ${i===4?'#157a4b':'#f4b400'};border-radius:14px;background:#fff">
+      <strong>Slab ${i+1}</strong>
+      <label class="f">Upto amount <input class="slabEmiTo" data-i="${i}" type="number" value="${x.to??''}" ${i===4?'disabled':''} style="width:100%;min-height:48px"></label>
+      <label class="f">Rate % <input class="slabEmiRate" data-i="${i}" type="number" value="${x.rate}" step="0.01" min="0" style="width:100%;min-height:48px"></label>
+    </div>`).join('');
+  }
 
-  box.querySelectorAll('.slabEmiTo').forEach(el=>el.addEventListener('input',()=>{
-    const i=Number(el.dataset.i);
-    if(i<SIQSlabEMIRows.length-1){ SIQSlabEMIRows[i].to=el.value===''?null:Number(el.value); saveSlabEMI(); }
-  }));
-  box.querySelectorAll('.slabEmiRate').forEach(el=>el.addEventListener('input',()=>{
-    const i=Number(el.dataset.i);
-    if(SIQSlabEMIRows[i]){ SIQSlabEMIRows[i].rate=Number(el.value||0); saveSlabEMI(); }
-  }));
-  box.querySelectorAll('.slabRemoveBtn').forEach(btn=>btn.addEventListener('click',ev=>{
+  // One delegated handler set keeps editing/removal reliable after every re-render.
+  box.oninput=function(ev){
+    const el=ev.target;
+    const i=Number(el?.dataset?.i);
+    if(!Number.isInteger(i)||!SIQSlabEMIRows[i]) return;
+    if(el.classList.contains('slabEmiTo') && i<SIQSlabEMIRows.length-1) SIQSlabEMIRows[i].to=el.value===''?null:Number(el.value);
+    if(el.classList.contains('slabEmiRate')) SIQSlabEMIRows[i].rate=Number(el.value||0);
+    saveSlabEMI();
+  };
+  box.onclick=function(ev){
+    const btn=ev.target.closest && ev.target.closest('.slabRemoveBtn');
+    if(!btn) return;
     ev.preventDefault(); ev.stopPropagation();
     const i=Number(btn.dataset.i);
     if(i>=0 && i<SIQSlabEMIRows.length-1 && SIQSlabEMIRows.length>2){
-      SIQSlabEMIRows.splice(i,1); SIQSlabEMIRows[SIQSlabEMIRows.length-1].to=null; saveSlabEMI(); renderSlabEMIRows();
+      SIQSlabEMIRows.splice(i,1);
+      SIQSlabEMIRows[SIQSlabEMIRows.length-1].to=null;
+      saveSlabEMI();
+      renderSlabEMIRows();
     }
-  }));
+  };
   saveSlabEMI();
 }
 
