@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>StatementIQ v2.20 — Bank &amp; Credit Card Statement Analyser</title>
+<title>StatementIQ v2.21 — Bank &amp; Credit Card Statement Analyser</title>
 
 <!-- ==========================================================================
      StatementIQ — single-file, offline, browser-only statement analyser.
@@ -742,6 +742,9 @@ main{padding-top:24px}
 <style id="slab-editor-v215">
 #emiSlabSettings #emiSlabs{display:flex;flex-direction:column;gap:10px;margin-top:10px}
 #emiSlabSettings .emi-static-row{display:grid;grid-template-columns:1fr 1.4fr 1.1fr 1.3fr auto;gap:10px;align-items:end;padding:12px;border:1px solid var(--line);border-radius:14px;background:var(--surface,#fff)}
+
+#emiSlabSettings .emi-slab-toolbar{position:sticky;top:8px;z-index:4;background:var(--surface,#fffdf8);padding:6px 0;border-bottom:1px solid var(--line);}
+#emiSlabSettings #emiAddSlabTopBtn{font-weight:900!important;min-height:48px;}
 #emiSlabSettings #emiAddSlabBtn{font-weight:900!important;border:2px solid var(--accent)!important;background:var(--accent)!important;color:#111!important;min-height:48px;box-shadow:0 3px 0 rgba(0,0,0,.12)}
 @media(max-width:700px){#emiSlabSettings .emi-static-row{grid-template-columns:1fr 1fr;}.emi-static-row .wide,.emi-static-row .wide+div{grid-column:auto}.emi-static-row>div:nth-child(4){grid-column:1/-1}.emi-static-row>div:last-child{grid-column:1/-1}}
 </style>
@@ -807,7 +810,7 @@ main{padding-top:24px}
   </div>
   <div class="brand-txt">
     <h1>StatementIQ</h1>
-    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.20</b></small>
+    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.21</b></small>
     <div class="developer-credit">Developed by Anil Sharma, Former General Manager, Central Bank of India</div>
   </div>
   <div class="header-actions">
@@ -909,7 +912,7 @@ main{padding-top:24px}
       <div class="card"><h3>Financial health</h3><p class="hint">A simple analytical score based only on the loaded statements — not financial advice.</p><div id="healthBox"></div></div>
     </div>
     <div class="card"><h3>Top spending categories</h3><p class="hint">Consumption spending excludes transfers to self, credit-card settlements, investments, loan principal and matched reversals.</p><div class="tblwrap"><table id="dashCatTbl"></table></div></div>
-    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.20 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
+    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.21 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
   </div>
 </section>
 
@@ -1061,7 +1064,7 @@ main{padding-top:24px}
   <div class="help-hero">
     <div class="help-hero-icon">?</div>
     <div>
-      <div class="eyebrow">STATEMENTIQ USER GUIDE · v2.20</div>
+      <div class="eyebrow">STATEMENTIQ USER GUIDE · v2.21</div>
       <h2>How to use StatementIQ</h2>
       <p>Upload → verify → review → analyse → export. Everything is processed locally in your browser.</p>
     </div>
@@ -1317,6 +1320,10 @@ main{padding-top:24px}
       </div>
       <div id="emiSlabSettings" class="card input-card" style="display:none;margin-top:14px;box-shadow:none;border:1px solid var(--line);">
         <div class="stub-title">⚙ EMI Interest Slabs &amp; Rates</div>
+        <div class="emi-slab-toolbar" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:10px 0 12px">
+          <button id="emiAddSlabTopBtn" class="btn primary" type="button">+ Add slab &amp; rate</button>
+          <span class="hint">Add another editable slab before the final No-limit slab.</span>
+        </div>
         <div class="stub-sub" style="margin:4px 0 14px;color:var(--muted)">Progressive rates apply to the outstanding loan balance each period. Example: first ₹3,00,000 at 7%, next ₹2,00,000 at 8%, and any balance above ₹5,00,000 at 9%.</div>
         <div id="emiSlabs">
           <div class="stmt-slab-row emi-static-row"><div class="wide"><div class="slab-label">Slab 1</div></div><div><label>Upto amount</label><input class="emi-slab-to" type="number" min="0" step="1" value="300000" placeholder="No limit"></div><div><label>Annual rate %</label><input class="emi-slab-rate" type="number" min="0" step="0.01" value="7"></div><div><label>Coverage</label><div class="hint">First ₹3,00,000</div></div><div><button class="btn sm emi-remove-static" type="button">Remove</button></div></div>
@@ -1547,7 +1554,7 @@ main{padding-top:24px}
 
 <footer>
   <p class="disc">This tool extracts and analyses data from statements you provide. Always verify the extracted figures against your original statement before using them for tax filing, loan applications, or any financial decision. This is not financial or tax advice.</p>
-  <p>StatementIQ v2.20 · runs entirely offline in your browser · no account, no upload, no tracking</p>
+  <p>StatementIQ v2.21 · runs entirely offline in your browser · no account, no upload, no tracking</p>
 </footer>
 
 <!-- password modal -->
@@ -1578,6 +1585,8 @@ main{padding-top:24px}
 <script>
 /* v2.18 slab editor hardening — direct delegated handlers so the Add slab control cannot be lost. */
 document.addEventListener('click', function(e){
+  const addTop=e.target.closest && e.target.closest('#emiAddSlabTopBtn');
+  if(addTop){ e.preventDefault(); e.stopPropagation(); try{ if(typeof window.emiAddSlab==='function'){ window.emiAddSlab(); return; } }catch(err){} }
   const add=e.target.closest && e.target.closest('#emiAddSlabBtn');
   if(add){
     e.preventDefault(); e.stopPropagation();
@@ -5152,6 +5161,8 @@ document.getElementById('emiSlabQuickBtn')?.addEventListener('click',()=>{
   document.getElementById('emiSlabSettings').scrollIntoView({behavior:'smooth',block:'start'});
   renderEmi();
 });
+const _emiAddSlabTopButton=document.getElementById('emiAddSlabTopBtn');
+if(_emiAddSlabTopButton){ _emiAddSlabTopButton.onclick=function(e){e.preventDefault();e.stopPropagation();emiAddSlab();return false;}; }
 const _emiAddSlabButton=document.getElementById('emiAddSlabBtn');
 if(_emiAddSlabButton){
   _emiAddSlabButton.onclick=function(e){e.preventDefault();e.stopPropagation();emiAddSlab();return false;};
