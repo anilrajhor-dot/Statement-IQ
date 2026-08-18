@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>StatementIQ v2.16 — Bank &amp; Credit Card Statement Analyser</title>
+<title>StatementIQ v2.17 — Bank &amp; Credit Card Statement Analyser</title>
 
 <!-- ==========================================================================
      StatementIQ — single-file, offline, browser-only statement analyser.
@@ -708,7 +708,7 @@ main{padding-top:24px}
 </style>
 
 <style id="financialCalculatorCompatibilityV213">
-/* v2.16 — Financial Calculator copied/adapted from the working Financial Calendar & Calculators module */
+/* v2.17 — Financial Calculator copied/adapted from the working Financial Calendar & Calculators module */
 #pFinancialCalc{--accent:var(--amber);--gold:var(--amber);--muted:var(--ink-soft);--brass:var(--amber);--clay:var(--rust);--card:var(--surface);--text:var(--ink)}
 #pFinancialCalc .fiq-module{display:block}
 #pFinancialCalc .fiq-module[style*="display:none"]{display:none}
@@ -773,6 +773,17 @@ main{padding-top:24px}
 }
 @media(max-width:430px){#pFinancialCalc .slab-summary-grid{grid-template-columns:1fr}}
 </style>
+
+<style id="slab-interest-v217">
+#pFinancialCalc #slabInterestSummary .slab-interest-hero{border:2px solid var(--amber);border-radius:18px;padding:16px;background:linear-gradient(135deg,#fffdf6,#fff);margin-bottom:14px}
+#pFinancialCalc #slabInterestSummary .slab-interest-hero h3{margin:0 0 5px;font-size:20px}
+#pFinancialCalc #slabInterestSummary .slab-interest-hero .hero-value{font-size:30px;font-weight:950;margin-top:6px}
+#pFinancialCalc #slabInterestSummary .slab-detail-table{min-width:980px}
+#pFinancialCalc #slabInterestSummary .slab-detail-table td,#pFinancialCalc #slabInterestSummary .slab-detail-table th{white-space:nowrap}
+#pFinancialCalc #slabInterestSummary .slab-chip{display:inline-block;padding:4px 8px;border-radius:999px;background:var(--surface-2);margin:2px 4px 2px 0;font-size:12px}
+#pFinancialCalc #slabInterestSummary .slab-result-actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+@media(max-width:700px){#pFinancialCalc #slabInterestSummary .slab-interest-hero .hero-value{font-size:25px}}
+</style>
 </head>
 <body>
 
@@ -789,7 +800,7 @@ main{padding-top:24px}
   </div>
   <div class="brand-txt">
     <h1>StatementIQ</h1>
-    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.16</b></small>
+    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.17</b></small>
     <div class="developer-credit">Developed by Anil Sharma, Former General Manager, Central Bank of India</div>
   </div>
   <div class="header-actions">
@@ -891,7 +902,7 @@ main{padding-top:24px}
       <div class="card"><h3>Financial health</h3><p class="hint">A simple analytical score based only on the loaded statements — not financial advice.</p><div id="healthBox"></div></div>
     </div>
     <div class="card"><h3>Top spending categories</h3><p class="hint">Consumption spending excludes transfers to self, credit-card settlements, investments, loan principal and matched reversals.</p><div class="tblwrap"><table id="dashCatTbl"></table></div></div>
-    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.16 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
+    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.17 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
   </div>
 </section>
 
@@ -1043,7 +1054,7 @@ main{padding-top:24px}
   <div class="help-hero">
     <div class="help-hero-icon">?</div>
     <div>
-      <div class="eyebrow">STATEMENTIQ USER GUIDE · v2.16</div>
+      <div class="eyebrow">STATEMENTIQ USER GUIDE · v2.17</div>
       <h2>How to use StatementIQ</h2>
       <p>Upload → verify → review → analyse → export. Everything is processed locally in your browser.</p>
     </div>
@@ -1313,7 +1324,7 @@ main{padding-top:24px}
       <div id="slabCalculateBar" class="card" style="display:none;margin:14px 0 0;padding:14px 16px;border:2px solid var(--amber);background:linear-gradient(135deg,var(--surface),var(--surface-2));box-shadow:0 8px 24px rgba(244,180,0,.12)">
         <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
           <div><b style="font-size:16px">Ready to calculate slab-wise EMI</b><div class="hint">Edit the slabs above, then calculate to generate the complete amortisation schedule and interest analysis.</div></div>
-          <button id="calculateSlabEmiBtn" class="btn primary" type="button">Calculate Slab EMI</button>
+          <button id="calculateSlabEmiBtn" class="btn primary" type="button">Calculate Slab EMI &amp; Interest</button>
         </div>
       </div>
       <div id="slabInterestSummary" class="card" style="display:none;margin-top:14px"></div>
@@ -1529,7 +1540,7 @@ main{padding-top:24px}
 
 <footer>
   <p class="disc">This tool extracts and analyses data from statements you provide. Always verify the extracted figures against your original statement before using them for tax filing, loan applications, or any financial decision. This is not financial or tax advice.</p>
-  <p>StatementIQ v2.16 · runs entirely offline in your browser · no account, no upload, no tracking</p>
+  <p>StatementIQ v2.17 · runs entirely offline in your browser · no account, no upload, no tracking</p>
 </footer>
 
 <!-- password modal -->
@@ -1558,7 +1569,7 @@ main{padding-top:24px}
 <div id="toasts"></div>
 
 <script>
-/* v2.16 slab editor hardening — direct delegated handlers so the Add slab control cannot be lost. */
+/* v2.17 slab editor hardening — direct delegated handlers so the Add slab control cannot be lost. */
 document.addEventListener('click', function(e){
   const add=e.target.closest && e.target.closest('#emiAddSlabBtn');
   if(add){
@@ -4635,7 +4646,7 @@ document.getElementById('helpTbl').innerHTML =
 })();
 
 /* ============================================================================
-   14. FINANCIAL CALCULATORS — v2.16
+   14. FINANCIAL CALCULATORS — v2.17
    Proven engine copied/adapted from the uploaded Financial Calendar & Calculators app.
    ========================================================================== */
 const fiqFmtDate = (d) => d.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
@@ -4992,18 +5003,39 @@ function renderEmi() {
   const summaryEl=document.getElementById('slabInterestSummary');
   if(summaryEl){
     summaryEl.style.display=method==='slab'?'block':'none';
-    if(method==='slab') summaryEl.innerHTML=`
-      <div class="stub-title">Slab-wise interest result</div>
-      <div class="stub-sub">Interest is calculated separately on the portion of each opening outstanding balance falling in each slab, for every repayment period.</div>
-      <div class="slab-summary-grid">
-        <div class="slab-summary-stat"><span class="hint">EMI / instalment</span><b>₹ ${fiqFmtINR(installment)}</b></div>
-        <div class="slab-summary-stat"><span class="hint">Total interest</span><b>₹ ${fiqFmtINR(totalInterest)}</b></div>
-        <div class="slab-summary-stat"><span class="hint">Total repayment</span><b>₹ ${fiqFmtINR(totalRepayment)}</b></div>
-        <div class="slab-summary-stat"><span class="hint">Tenure</span><b>${rows.length} periods</b></div>
-      </div>
-      <div class="table-scroll"><table><thead><tr><th>Slab</th><th>Upto amount</th><th>Rate</th><th>Total slab product</th><th>Total slab interest</th></tr></thead><tbody>
-      ${slabTotals.map((x,i)=>`<tr><td><b>Slab ${i+1}</b></td><td>${x.slab.to===null?'No limit':'₹ '+fiqFmtINR(x.slab.to)}</td><td>${Number(x.slab.rate).toFixed(2)}%</td><td>₹ ${fiqFmtINR(x.product)}</td><td class="debit"><b>₹ ${fiqFmtINR(x.interest)}</b></td></tr>`).join('')}
-      </tbody><tfoot><tr><th colspan="4">Total slab interest</th><th>₹ ${fiqFmtINR(slabTotalInterest)}</th></tr></tfoot></table></div>`;
+    if(method==='slab'){
+      const detailRows=rows.map(r=>{
+        const parts=emiAllocate(r.opening,emiLoadSlabs());
+        const breakdown=parts.map((p,i)=>({slab:i+1,portion:p.portion,rate:p.rate,interest:p.portion*p.rate/100*(freqMonths/12)}));
+        return {r,breakdown};
+      });
+      const slabHeaders=emiLoadSlabs().map((x,i)=>`<span class="slab-chip">S${i+1}: ${x.to===null?'No limit':'up to ₹'+fiqFmtINR(x.to)} @ ${Number(x.rate).toFixed(2)}%</span>`).join('');
+      summaryEl.innerHTML=`
+        <div class="slab-interest-hero">
+          <h3>💰 Slab Interest Calculation</h3>
+          <div class="hint">Interest is calculated on the opening outstanding balance of every repayment period, allocating the balance progressively across your editable slabs.</div>
+          <div class="hero-value">₹ ${fiqFmtINR(totalInterest)}</div>
+          <div class="hint">Total interest over the complete tenure</div>
+        </div>
+        <div class="stub-title">Calculated result</div>
+        <div class="stub-sub">The result below is generated only after <b>Calculate Slab EMI &amp; Interest</b>. The slab interest shown here is part of the EMI calculation and is not a separate flat-rate calculation.</div>
+        <div style="margin:10px 0">${slabHeaders}</div>
+        <div class="slab-summary-grid">
+          <div class="slab-summary-stat"><span class="hint">EMI / instalment</span><b>₹ ${fiqFmtINR(installment)}</b></div>
+          <div class="slab-summary-stat"><span class="hint">Total slab interest</span><b>₹ ${fiqFmtINR(slabTotalInterest)}</b></div>
+          <div class="slab-summary-stat"><span class="hint">Total repayment</span><b>₹ ${fiqFmtINR(totalRepayment)}</b></div>
+          <div class="slab-summary-stat"><span class="hint">Repayment periods</span><b>${rows.length}</b></div>
+        </div>
+        <div class="stub-title" style="margin-top:16px">Slab-wise interest over entire tenure</div>
+        <div class="table-scroll"><table><thead><tr><th>Slab</th><th>Upto amount</th><th>Rate</th><th>Total slab product</th><th>Total slab interest</th></tr></thead><tbody>
+        ${slabTotals.map((x,i)=>`<tr><td><b>Slab ${i+1}</b></td><td>${x.slab.to===null?'No limit':'₹ '+fiqFmtINR(x.slab.to)}</td><td>${Number(x.slab.rate).toFixed(2)}%</td><td>₹ ${fiqFmtINR(x.product)}</td><td class="debit"><b>₹ ${fiqFmtINR(x.interest)}</b></td></tr>`).join('')}
+        </tbody><tfoot><tr><th colspan="4">Total slab interest</th><th>₹ ${fiqFmtINR(slabTotalInterest)}</th></tr></tfoot></table></div>
+        <div class="stub-title" style="margin-top:18px">Period-wise slab interest calculation</div>
+        <div class="stub-sub">Every period is shown so the user can verify exactly which part of the outstanding balance was charged at each slab rate.</div>
+        <div class="table-scroll"><table class="slab-detail-table"><thead><tr><th>Period</th><th>Opening balance</th><th>Slab allocation &amp; interest</th><th>Total interest</th><th>Principal</th><th>EMI / instalment</th><th>Closing balance</th></tr></thead><tbody>
+        ${detailRows.map(({r,breakdown})=>`<tr${r.moratorium?' style="background:#FBFAF6"':''}><td>${r.moratorium?'M'+r.period:r.period}</td><td>₹ ${fiqFmtINR(r.opening)}</td><td>${breakdown.length?breakdown.map(p=>`S${p.slab}: ₹${fiqFmtINR(p.portion)} @ ${Number(p.rate).toFixed(2)}% = ₹${fiqFmtINR(p.interest)}`).join('<br>'):'—'}</td><td class="debit"><b>₹ ${fiqFmtINR(r.interest)}</b></td><td class="credit">₹ ${fiqFmtINR(r.principalPaid)}</td><td>${r.moratorium && !r.moratoriumPaid?'<em>Capitalised</em>':'₹ '+fiqFmtINR(r.installment)}</td><td>₹ ${fiqFmtINR(r.closing)}</td></tr>`).join('')}
+        </tbody><tfoot><tr><th colspan="3">TOTAL</th><th>₹ ${fiqFmtINR(totalInterest)}</th><th>₹ ${fiqFmtINR(rows.reduce((a,r)=>a+r.principalPaid,0))}</th><th>₹ ${fiqFmtINR(totalRepayment)}</th><th>₹ ${fiqFmtINR(rows.at(-1)?.closing||0)}</th></tr></tfoot></table></div>`;
+    }
   }
 
   document.querySelectorAll('.folio-toggle').forEach(btn => {
@@ -5023,9 +5055,11 @@ document.getElementById('calculateSlabEmiBtn')?.addEventListener('click',()=>{
   const method=document.getElementById('emiInterestMethod');
   if(method) method.value='slab';
   const settings=document.getElementById('emiSlabSettings'); if(settings) settings.style.display='block';
-  emiRenderSlabs();
+  // Capture the values currently visible in the editor before calculating.
+  try{ emiSaveSlabs(emiCurrentSlabs()); }catch(e){ console.warn('Could not persist visible slab values:',e); }
   renderEmi();
-  const result=document.getElementById('slabInterestSummary'); if(result){result.style.display='block';result.scrollIntoView({behavior:'smooth',block:'start'});}
+  const result=document.getElementById('slabInterestSummary');
+  if(result){result.style.display='block';result.scrollIntoView({behavior:'smooth',block:'start'});}
 });
 
 document.getElementById('emiInterestMethod')?.addEventListener('change',()=>{const on=document.getElementById('emiInterestMethod').value==='slab';document.getElementById('emiSlabSettings').style.display=on?'block':'none';if(on)emiRenderSlabs();renderEmi();});
@@ -5376,7 +5410,7 @@ document.getElementById('ageAsOf').value = todayStr;
 });
 try { renderAge(); } catch (e) { console.error('renderAge failed:', e); }
 
-/* v2.16 compatibility: preserve StatementIQ's Financial Calculators entry point
+/* v2.17 compatibility: preserve StatementIQ's Financial Calculators entry point
    while using the proven calculator engine from Financial Calendar & Calculators. */
 function showCalc(which){
   const map={emi:'fiq-emi',slabemi:'fiq-emi',deposit:'fiq-deposits',age:'fiq-age'};
