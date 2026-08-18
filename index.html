@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>StatementIQ v2.17 — Bank &amp; Credit Card Statement Analyser</title>
+<title>StatementIQ v2.18 — Bank &amp; Credit Card Statement Analyser</title>
 
 <!-- ==========================================================================
      StatementIQ — single-file, offline, browser-only statement analyser.
@@ -708,7 +708,7 @@ main{padding-top:24px}
 </style>
 
 <style id="financialCalculatorCompatibilityV213">
-/* v2.17 — Financial Calculator copied/adapted from the working Financial Calendar & Calculators module */
+/* v2.18 — Financial Calculator copied/adapted from the working Financial Calendar & Calculators module */
 #pFinancialCalc{--accent:var(--amber);--gold:var(--amber);--muted:var(--ink-soft);--brass:var(--amber);--clay:var(--rust);--card:var(--surface);--text:var(--ink)}
 #pFinancialCalc .fiq-module{display:block}
 #pFinancialCalc .fiq-module[style*="display:none"]{display:none}
@@ -784,6 +784,13 @@ main{padding-top:24px}
 #pFinancialCalc #slabInterestSummary .slab-result-actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
 @media(max-width:700px){#pFinancialCalc #slabInterestSummary .slab-interest-hero .hero-value{font-size:25px}}
 </style>
+
+<style id="slab-interest-v218">
+#slabCalculateBar{border-radius:20px!important}
+#calculateSlabEmiBtn{min-height:52px;font-weight:900}
+#slabInterestSummary{border:2px solid var(--amber);border-radius:20px}
+@media(max-width:700px){#slabCalculateBar>div{display:block!important}#calculateSlabEmiBtn{width:100%;margin-top:12px}.slab-interest-hero .hero-value{font-size:28px}}
+</style>
 </head>
 <body>
 
@@ -800,7 +807,7 @@ main{padding-top:24px}
   </div>
   <div class="brand-txt">
     <h1>StatementIQ</h1>
-    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.17</b></small>
+    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.18</b></small>
     <div class="developer-credit">Developed by Anil Sharma, Former General Manager, Central Bank of India</div>
   </div>
   <div class="header-actions">
@@ -902,7 +909,7 @@ main{padding-top:24px}
       <div class="card"><h3>Financial health</h3><p class="hint">A simple analytical score based only on the loaded statements — not financial advice.</p><div id="healthBox"></div></div>
     </div>
     <div class="card"><h3>Top spending categories</h3><p class="hint">Consumption spending excludes transfers to self, credit-card settlements, investments, loan principal and matched reversals.</p><div class="tblwrap"><table id="dashCatTbl"></table></div></div>
-    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.17 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
+    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.18 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
   </div>
 </section>
 
@@ -1054,7 +1061,7 @@ main{padding-top:24px}
   <div class="help-hero">
     <div class="help-hero-icon">?</div>
     <div>
-      <div class="eyebrow">STATEMENTIQ USER GUIDE · v2.17</div>
+      <div class="eyebrow">STATEMENTIQ USER GUIDE · v2.18</div>
       <h2>How to use StatementIQ</h2>
       <p>Upload → verify → review → analyse → export. Everything is processed locally in your browser.</p>
     </div>
@@ -1540,7 +1547,7 @@ main{padding-top:24px}
 
 <footer>
   <p class="disc">This tool extracts and analyses data from statements you provide. Always verify the extracted figures against your original statement before using them for tax filing, loan applications, or any financial decision. This is not financial or tax advice.</p>
-  <p>StatementIQ v2.17 · runs entirely offline in your browser · no account, no upload, no tracking</p>
+  <p>StatementIQ v2.18 · runs entirely offline in your browser · no account, no upload, no tracking</p>
 </footer>
 
 <!-- password modal -->
@@ -1569,7 +1576,7 @@ main{padding-top:24px}
 <div id="toasts"></div>
 
 <script>
-/* v2.17 slab editor hardening — direct delegated handlers so the Add slab control cannot be lost. */
+/* v2.18 slab editor hardening — direct delegated handlers so the Add slab control cannot be lost. */
 document.addEventListener('click', function(e){
   const add=e.target.closest && e.target.closest('#emiAddSlabBtn');
   if(add){
@@ -4646,7 +4653,7 @@ document.getElementById('helpTbl').innerHTML =
 })();
 
 /* ============================================================================
-   14. FINANCIAL CALCULATORS — v2.17
+   14. FINANCIAL CALCULATORS — v2.18
    Proven engine copied/adapted from the uploaded Financial Calendar & Calculators app.
    ========================================================================== */
 const fiqFmtDate = (d) => d.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
@@ -4696,8 +4703,8 @@ function emiResetSlabs(){emiSaveSlabs(EMI_DEFAULT_SLABS);emiRenderSlabs();render
 function emiSlabSchedule({principal,count,freqMonths,startDate,repaymentType,moratoriumMonths,moratoriumMode,slabs}){
  let rows=[],balance=principal,period=0,moratoriumInterest=0;const morat=Math.max(0,Math.floor(moratoriumMonths||0)),pf=freqMonths/12;
  for(let m=1;m<=morat;m++){period++;const opening=balance,interest=emiSlabInterest(opening,slabs,pf),dueDate=fiqAddMonths(startDate,m);moratoriumInterest+=interest;if(moratoriumMode==='accrued'){balance=opening+interest;rows.push({period,dueDate,opening,installment:0,interest,principalPaid:0,closing:balance,moratorium:true,moratoriumPaid:false});}else rows.push({period,dueDate,opening,installment:interest,interest,principalPaid:0,closing:balance,moratorium:true,moratoriumPaid:true});}
- const scheduleStart=fiqAddMonths(startDate,morat),n=count;
- if(repaymentType==='equal-principal'){const pp0=balance/n;for(let i=1;i<=n;i++){const opening=balance,interest=emiSlabInterest(opening,slabs,pf),pp=i===n?balance:pp0,inst=pp+interest;balance=Math.max(0,balance-pp);period++;rows.push({period,dueDate:fiqAddMonths(scheduleStart,i*freqMonths),opening,installment:inst,interest,principalPaid:pp,closing:balance,moratorium:false});}const rr=rows.filter(r=>!r.moratorium);return {rows,installment:rr[0]?.installment||0,firstInstallment:rr[0]?.installment||0,lastInstallment:rr.at(-1)?.installment||0,moratoriumInterest,effectivePrincipal:balance,moratoriumMonths:morat};}
+ const effectivePrincipal=balance; const scheduleStart=fiqAddMonths(startDate,morat),n=count;
+ if(repaymentType==='equal-principal'){const pp0=balance/n;for(let i=1;i<=n;i++){const opening=balance,interest=emiSlabInterest(opening,slabs,pf),pp=i===n?balance:pp0,inst=pp+interest;balance=Math.max(0,balance-pp);period++;rows.push({period,dueDate:fiqAddMonths(scheduleStart,i*freqMonths),opening,installment:inst,interest,principalPaid:pp,closing:balance,moratorium:false});}const rr=rows.filter(r=>!r.moratorium);return {rows,installment:rr[0]?.installment||0,firstInstallment:rr[0]?.installment||0,lastInstallment:rr.at(-1)?.installment||0,moratoriumInterest,effectivePrincipal,moratoriumMonths:morat,slab:true};}
  const startBalance=balance;function remaining(emi){let b=startBalance;for(let i=1;i<=n;i++){const interest=emiSlabInterest(b,slabs,pf);b-=emi-interest;if(b<=0)return 0;}return b;}
  let lo=0,hi=Math.max(startBalance/n,1);for(let z=0;z<100&&remaining(hi)>0.0001;z++)hi*=2;for(let z=0;z<120;z++){const mid=(lo+hi)/2;if(remaining(mid)>0)lo=mid;else hi=mid;}const installment=hi;balance=startBalance;
  for(let i=1;i<=n;i++){const opening=balance,interest=emiSlabInterest(opening,slabs,pf);let pp=installment-interest,inst=installment;if(i===n){pp=balance;inst=pp+interest;}balance=Math.max(0,balance-pp);period++;rows.push({period,dueDate:fiqAddMonths(scheduleStart,i*freqMonths),opening,installment:inst,interest,principalPaid:pp,closing:balance,moratorium:false});}
@@ -5051,16 +5058,47 @@ function renderEmi() {
   document.getElementById(id).addEventListener('input', renderEmi);
   document.getElementById(id).addEventListener('change', renderEmi);
 });
-document.getElementById('calculateSlabEmiBtn')?.addEventListener('click',()=>{
-  const method=document.getElementById('emiInterestMethod');
-  if(method) method.value='slab';
-  const settings=document.getElementById('emiSlabSettings'); if(settings) settings.style.display='block';
-  // Capture the values currently visible in the editor before calculating.
-  try{ emiSaveSlabs(emiCurrentSlabs()); }catch(e){ console.warn('Could not persist visible slab values:',e); }
-  renderEmi();
+function calculateSlabLoanNow(){
   const result=document.getElementById('slabInterestSummary');
-  if(result){result.style.display='block';result.scrollIntoView({behavior:'smooth',block:'start'});}
-});
+  const method=document.getElementById('emiInterestMethod');
+  const settings=document.getElementById('emiSlabSettings');
+  try{
+    if(method) method.value='slab';
+    if(settings) settings.style.display='block';
+    // Always take the values currently visible on screen. If the editor has not
+    // rendered yet, restore the five built-in slabs first.
+    let visible=emiCurrentSlabs();
+    if(!visible.length){ emiRenderSlabs(); visible=emiCurrentSlabs(); }
+    const clean=emiNormaliseSlabs(visible);
+    if(!clean.length) throw new Error('No valid interest slabs are available.');
+    for(let i=1;i<clean.length;i++){
+      if(clean[i-1].to!==null && clean[i].to!==null && clean[i].to<=clean[i-1].to) throw new Error('Slab limits must increase from one slab to the next.');
+    }
+    emiSaveSlabs(clean);
+    if(result){
+      result.style.display='block';
+      result.innerHTML='<div class=\"slab-interest-hero\"><h3>Calculating slab-wise EMI…</h3><div class=\"hint\">Please wait while the complete tenure schedule is prepared.</div></div>';
+    }
+    // renderEmi contains the common schedule, FY summary and complete amortisation.
+    // Keep it isolated so a chart/UI issue cannot prevent the slab result.
+    renderEmi();
+    const resultAfter=document.getElementById('slabInterestSummary');
+    if(resultAfter && (!resultAfter.innerHTML || resultAfter.innerHTML.includes('Calculating slab-wise EMI'))) throw new Error('The slab result could not be rendered.');
+    if(resultAfter){resultAfter.style.display='block'; resultAfter.scrollIntoView({behavior:'smooth',block:'start'});}
+  }catch(err){
+    console.error('Slab EMI calculation failed:',err);
+    if(result){
+      result.style.display='block';
+      result.innerHTML='<div class=\"slab-interest-hero\"><h3>Unable to calculate Slab Loan EMI</h3><div class=\"hint\">'+String(err.message||err).replace(/[<>]/g,'')+'</div><div class=\"hint\" style=\"margin-top:8px\">Check the loan amount, tenure and slab limits/rates, then press Calculate again.</div></div>';
+      result.scrollIntoView({behavior:'smooth',block:'start'});
+    }
+  }
+}
+const _calculateSlabBtn=document.getElementById('calculateSlabEmiBtn');
+if(_calculateSlabBtn){
+  _calculateSlabBtn.onclick=function(e){e.preventDefault();e.stopPropagation();calculateSlabLoanNow();return false;};
+}
+window.calculateSlabLoanNow=calculateSlabLoanNow;
 
 document.getElementById('emiInterestMethod')?.addEventListener('change',()=>{const on=document.getElementById('emiInterestMethod').value==='slab';document.getElementById('emiSlabSettings').style.display=on?'block':'none';if(on)emiRenderSlabs();renderEmi();});
 document.getElementById('emiSlabQuickBtn')?.addEventListener('click',()=>{
@@ -5410,7 +5448,7 @@ document.getElementById('ageAsOf').value = todayStr;
 });
 try { renderAge(); } catch (e) { console.error('renderAge failed:', e); }
 
-/* v2.17 compatibility: preserve StatementIQ's Financial Calculators entry point
+/* v2.18 compatibility: preserve StatementIQ's Financial Calculators entry point
    while using the proven calculator engine from Financial Calendar & Calculators. */
 function showCalc(which){
   const map={emi:'fiq-emi',slabemi:'fiq-emi',deposit:'fiq-deposits',age:'fiq-age'};
