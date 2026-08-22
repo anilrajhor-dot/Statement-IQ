@@ -1532,6 +1532,7 @@ main{padding-top:24px}
 <button class="btn primary" type="button" onclick="interestRun()">Calculate interest</button>
 <button class="btn sm" type="button" onclick="interestAddSlab()">+ Add slab</button>
 <button class="btn sm" type="button" onclick="interestResetSlabs()">Reset built-in slabs</button>
+<button class="btn sm danger" type="button" onclick="resetInterestAccountStatements()">↻ Reset account statements</button>
 </div>
 <div id="interestSlabTotal" class="hint" style="margin-top:10px"></div><div id="interestSaveStatus" class="hint" style="margin-top:4px;color:var(--green)">✓ Slab settings are saved automatically on this device.</div>
 <div style="margin-top:14px"><div class="slab-grid interest-settings-head" style="font-weight:800;margin-bottom:6px"><div class="wide">Slab</div><div>Upto amount</div><div>Rate %</div><div>Coverage</div><div></div></div><div id="interestSlabs"></div></div>
@@ -1547,7 +1548,7 @@ main{padding-top:24px}
 
 <footer>
   <p class="disc">This tool extracts and analyses data from statements you provide. Always verify the extracted figures against your original statement before using them for tax filing, loan applications, or any financial decision. This is not financial or tax advice.</p>
-  <p>StatementIQ v2.20 · runs entirely offline in your browser · no account, no upload, no tracking</p>
+  <p>StatementIQ v2.23 · runs entirely offline in your browser · no account, no upload, no tracking</p>
 </footer>
 
 <!-- password modal -->
@@ -1576,7 +1577,7 @@ main{padding-top:24px}
 <div id="toasts"></div>
 
 <script>
-/* v2.18 slab editor hardening — direct delegated handlers so the Add slab control cannot be lost. */
+/* v2.23 slab editor hardening — direct delegated handlers so the Add slab control cannot be lost. */
 document.addEventListener('click', function(e){
   const add=e.target.closest && e.target.closest('#emiAddSlabBtn');
   if(add){
@@ -1627,6 +1628,9 @@ const S = {
 // prevents stale objects restored by iOS/browser page caching from appearing
 // after Clear All Data. Saved slab settings are intentionally separate.
 let SIQ_SESSION_ID = 'siq-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+// v2.23: statements explicitly reset from Bank Interest Calculator are hidden
+// from that calculator without deleting the original upload from the main app.
+const SIQ_INTEREST_RESET = new Set();
 
 /* ============================================================================
    1. FORMATTING & PARSING HELPERS (Indian formats)
@@ -3293,16 +3297,35 @@ function interestRun(){
   if(errors.length){ document.getElementById('interestResults').innerHTML='<div class="banner bad"><span>!</span><div>'+errors.map(esc).join('<br>')+'</div></div>'; return; }
   interestSaveConfig(slabs);
   const sel=document.getElementById('interestStatement');
-  const ds=S.sets.find(x=>x.id===sel?.value && x.kind==='bank' && x._session===SIQ_SESSION_ID) || S.sets.find(x=>x.kind==='bank' && x._session===SIQ_SESSION_ID);
+  const ds=S.sets.find(x=>x.id===sel?.value && x.kind==='bank' && x._session===SIQ_SESSION_ID && !SIQ_INTEREST_RESET.has(x.id)) || S.sets.find(x=>x.kind==='bank' && x._session===SIQ_SESSION_ID && !SIQ_INTEREST_RESET.has(x.id));
   if(!ds){ document.getElementById('interestResults').innerHTML='<div class="banner warn"><span>?</span><div>No bank statement is loaded.</div></div>'; return; }
   const result=interestCalculateDaily(ds,slabs);
   interestRenderResults(result,slabs);
 }
+function resetInterestAccountStatements(){
+  const banks=S.sets.filter(x=>x.kind==='bank' && x._session===SIQ_SESSION_ID);
+  if(!banks.length){
+    const sel=document.getElementById('interestStatement');
+    if(sel){ sel.innerHTML='<option value="">No bank statement loaded</option>'; sel.disabled=true; }
+    toast('No account statements are loaded in Bank Interest Calculator.','ok');
+    return;
+  }
+  if(!confirm('Reset account statements in Bank Interest Calculator?\n\nThis removes all currently listed statements from the Interest Comparison dropdown and clears the interest results. Your original uploads remain available in the Upload statements section.')) return;
+  banks.forEach(x=>SIQ_INTEREST_RESET.add(x.id));
+  window.SIQInterestLast=null;
+  const ids=['interestResults','interestDaily','interestSlabTotal','interestComparisonSummary'];
+  ids.forEach(id=>{const el=document.getElementById(id); if(el) el.innerHTML='';});
+  renderInterestComparisonPanel();
+  const sel=document.getElementById('interestStatement');
+  if(sel){ sel.value=''; sel.disabled=true; }
+  toast('Account statements reset in Bank Interest Calculator.','ok');
+}
+
 function renderInterestComparisonPanel(){
   const sel=document.getElementById('interestStatement');
   const resultBox=document.getElementById('interestResults');
   const dailyBox=document.getElementById('interestDaily');
-  const banks=S.sets.filter(x=>x.kind==='bank' && x._session===SIQ_SESSION_ID);
+  const banks=S.sets.filter(x=>x.kind==='bank' && x._session===SIQ_SESSION_ID && !SIQ_INTEREST_RESET.has(x.id));
   if(!banks.length){
     window.SIQInterestLast=null;
     if(resultBox) resultBox.innerHTML='<div class="hint">Load a bank statement to calculate interest.</div>';
@@ -4603,6 +4626,7 @@ document.getElementById('btnSample').onclick = loadSample;
 function clearAll(silent){
   if(!silent && !confirm('Wipe every statement, transaction and reconciliation from memory?\n\nNothing was ever uploaded, so this simply empties the page. Your learned category rules are kept — clear those separately from your browser settings.')) return;
   S.files=[]; S.sets=[]; S.txns=[]; S.cardMeta=[]; S.books=null;
+  SIQ_INTEREST_RESET.clear();
   SIQ_SESSION_ID = 'siq-' + Date.now() + '-' + Math.random().toString(36).slice(2);
   S.recon={c2b:null,b2b:null};
   Object.values(S.charts).forEach(c=>{ try{c.destroy();}catch(e){} });
@@ -4653,6 +4677,7 @@ document.getElementById('btnClear').onclick = ()=>clearAll(false);
 window.hardResetStatementSession = function(){
   try{
     S.files=[]; S.sets=[]; S.txns=[]; S.cardMeta=[]; S.books=null;
+    SIQ_INTEREST_RESET.clear();
     SIQ_SESSION_ID = 'siq-' + Date.now() + '-' + Math.random().toString(36).slice(2);
     S.recon={c2b:null,b2b:null};
     window.SIQInterestLast=null;
@@ -5726,6 +5751,7 @@ window.addEventListener('pageshow', function(e){
   if(e.persisted){
     try{
       S.files=[]; S.sets=[]; S.txns=[]; S.cardMeta=[]; S.books=null;
+      SIQ_INTEREST_RESET.clear();
       S.recon={c2b:null,b2b:null};
       SIQ_SESSION_ID = 'siq-' + Date.now() + '-' + Math.random().toString(36).slice(2);
       const sel=document.getElementById('interestStatement');
