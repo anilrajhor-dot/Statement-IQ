@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>StatementIQ v2.25 — Bank &amp; Credit Card Statement Analyser</title>
+<title>StatementIQ v2.26 — Bank &amp; Credit Card Statement Analyser</title>
 
 <!-- ==========================================================================
      StatementIQ — single-file, offline, browser-only statement analyser.
@@ -818,7 +818,7 @@ main{padding-top:24px}
   </div>
   <div class="brand-txt">
     <h1>StatementIQ</h1>
-    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.25</b></small>
+    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.26</b></small>
     <div class="developer-credit">Developed by Anil Sharma, Former General Manager, Central Bank of India</div>
   </div>
   <div class="header-actions">
@@ -920,7 +920,7 @@ main{padding-top:24px}
       <div class="card"><h3>Financial health</h3><p class="hint">A simple analytical score based only on the loaded statements — not financial advice.</p><div id="healthBox"></div></div>
     </div>
     <div class="card"><h3>Top spending categories</h3><p class="hint">Consumption spending excludes transfers to self, credit-card settlements, investments, loan principal and matched reversals.</p><div class="tblwrap"><table id="dashCatTbl"></table></div></div>
-    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.25 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
+    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.26 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
   </div>
 </section>
 
@@ -1072,7 +1072,7 @@ main{padding-top:24px}
   <div class="help-hero">
     <div class="help-hero-icon">?</div>
     <div>
-      <div class="eyebrow">STATEMENTIQ USER GUIDE · v2.25</div>
+      <div class="eyebrow">STATEMENTIQ USER GUIDE · v2.26</div>
       <h2>How to use StatementIQ</h2>
       <p>Upload → verify → review → analyse → export. Everything is processed locally in your browser.</p>
     </div>
@@ -1559,7 +1559,7 @@ main{padding-top:24px}
 
 <footer>
   <p class="disc">This tool extracts and analyses data from statements you provide. Always verify the extracted figures against your original statement before using them for tax filing, loan applications, or any financial decision. This is not financial or tax advice.</p>
-  <p>StatementIQ v2.25 · runs entirely offline in your browser · no account, no upload, no tracking</p>
+  <p>StatementIQ v2.26 · runs entirely offline in your browser · no account, no upload, no tracking</p>
 </footer>
 
 <!-- password modal -->
@@ -5867,6 +5867,111 @@ document.addEventListener('click', function(ev){
     setTimeout(function(){window.SIQClearInterestComparisonLive();},0);
   }
 }, true);
+</script>
+
+
+<script id="siq-definitive-interest-clear-v226">
+(function(){
+  function clearInterestComparisonNow(){
+    try{
+      // Clear common live registries.
+      const names=[
+        'SIQStatements','statements','uploadedStatements','statementFiles',
+        'interestStatements','interestComparisonStatements',
+        'SIQInterestStatements','SIQInterestFiles','statementStore',
+        'uploadedFiles','files'
+      ];
+      names.forEach(function(k){
+        try{
+          if(Array.isArray(window[k])) window[k].splice(0,window[k].length);
+          else if(window[k] && typeof window[k]==='object' && !(window[k] instanceof HTMLElement)){
+            Object.keys(window[k]).forEach(x=>delete window[k][x]);
+          }
+        }catch(e){}
+      });
+
+      // Clear any arrays/objects whose variable name is clearly statement-related.
+      try{
+        Object.keys(window).forEach(function(k){
+          if(!/statement|interest.*file|uploaded.*file/i.test(k))return;
+          try{
+            const v=window[k];
+            if(Array.isArray(v)) v.splice(0,v.length);
+            else if(v && typeof v==='object' && !(v instanceof HTMLElement) &&
+                    !(v instanceof Window) && !(v instanceof Document)){
+              // Only clear obvious collection-like objects.
+              if(/statements?|files?|store|list|data/i.test(k)){
+                Object.keys(v).forEach(x=>delete v[x]);
+              }
+            }
+          }catch(e){}
+        });
+      }catch(e){}
+
+      // Clear every select that belongs to/appears near Interest Comparison.
+      document.querySelectorAll('select').forEach(function(sel){
+        const context=((sel.id||'')+' '+(sel.name||'')+' '+(sel.className||'')+' '+
+          (sel.parentElement?.innerText||'')).toLowerCase();
+        const opts=Array.from(sel.options||[]);
+        const looksLikeStatement=opts.some(o=>/statement|bank|account|uploaded|pdf|xlsx|csv|file/i.test(o.textContent||''));
+        if(/interest|comparison|statement|bank interest/i.test(context) && looksLikeStatement || looksLikeStatement){
+          sel.innerHTML='';
+          const opt=document.createElement('option');
+          opt.value='';
+          opt.textContent='No bank statement loaded';
+          sel.appendChild(opt);
+          sel.selectedIndex=0;
+        }
+      });
+
+      // Remove statement filename chips/cards from the comparison area and
+      // clear common results.
+      const roots=[];
+      document.querySelectorAll('*').forEach(function(el){
+        const t=(el.innerText||'').trim().toLowerCase();
+        if(t==='interest comparison' || t.includes('bank interest comparison')){
+          roots.push(el.closest('.panel,.card,.section,.tab-panel,section,div')||el);
+        }
+      });
+      roots.forEach(function(root){
+        root.querySelectorAll('select').forEach(function(sel){
+          sel.innerHTML='<option value="">No bank statement loaded</option>';
+          sel.value='';
+        });
+        root.querySelectorAll('[data-statement],.statement-chip,.statement-card,[class*="statement-item"]').forEach(function(x){x.remove();});
+      });
+
+      // Clear file inputs so the same file can be uploaded again.
+      document.querySelectorAll('input[type=file]').forEach(function(x){
+        try{x.value='';}catch(e){}
+      });
+
+      return true;
+    }catch(e){
+      console.error('Definitive Interest Comparison clear failed',e);
+      return false;
+    }
+  }
+
+  window.SIQClearInterestComparisonNow=clearInterestComparisonNow;
+
+  // Capture phase: execute before the application's own clear handler can
+  // re-populate the dropdown.
+  document.addEventListener('click',function(ev){
+    const el=ev.target.closest && ev.target.closest(
+      'button,[role="button"],input[type="button"],input[type="submit"],a'
+    );
+    if(!el)return;
+    const text=(el.innerText||el.value||el.getAttribute('aria-label')||'').trim().toLowerCase();
+    if(text.includes('clear all data') || text==='clear data' || text.includes('clear all')){
+      // Run now, then again after the existing handler has completed.
+      clearInterestComparisonNow();
+      setTimeout(clearInterestComparisonNow,0);
+      setTimeout(clearInterestComparisonNow,100);
+      setTimeout(clearInterestComparisonNow,500);
+    }
+  },true);
+})();
 </script>
 
 </body>
