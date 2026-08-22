@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>StatementIQ v2.23 — Bank &amp; Credit Card Statement Analyser</title>
+<title>StatementIQ v2.6.7 — Bank &amp; Credit Card Statement Analyser</title>
 
 <!-- ==========================================================================
      StatementIQ — single-file, offline, browser-only statement analyser.
@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js">/* v2.11 zero-as-placeholder */
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js">/* v2.6.7 zero-as-placeholder */
 document.addEventListener('focusin',function(e){const x=e.target;if(x&&x.tagName==='INPUT'&&x.type==='number'&&x.value==='0')x.value='';});
 document.addEventListener('click',function(e){const x=e.target;if(x&&x.tagName==='INPUT'&&x.type==='number'&&x.value==='0')x.value='';});
 document.addEventListener('DOMContentLoaded',()=>{ const b=document.getElementById('globalUploadBar'); if(b) b.style.display='none'; });
@@ -318,7 +318,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 /* v2.0 dashboard */
 .health-score{display:flex;align-items:center;gap:18px;flex-wrap:wrap}.score-ring{width:92px;height:92px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--amber) calc(var(--score)*1%),var(--line) 0);position:relative}.score-ring:after{content:"";position:absolute;inset:9px;border-radius:50%;background:var(--paper)}.score-ring b{position:relative;z-index:1;font-size:24px}.score-copy{min-width:220px}.metric-line{display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-bottom:1px solid var(--line)}.metric-line:last-child{border-bottom:0}.flag{padding:10px 12px;border-radius:10px;background:var(--surface-2);margin:7px 0;border-left:4px solid var(--amber)}.flag.bad{border-left-color:var(--rust)}.flag.ok{border-left-color:var(--green)}.flag b{display:block}.muted{color:var(--ink-soft);font-size:12px}.pill-big{display:inline-flex;padding:4px 9px;border-radius:999px;background:var(--surface-2);font-size:11px;font-weight:700}.dash-empty{padding:16px}.confidence{font-weight:700}.confidence.high{color:var(--green)}.confidence.low{color:var(--rust)}
 
-/* v2.11: keep financial metric values together on narrow screens */
+/* v2.6.7: keep financial metric values together on narrow screens */
 .financial-activity .metric-line { display:flex; align-items:center; gap:14px; }
 .financial-activity .metric-line span { flex:1 1 auto; min-width:0; }
 .financial-activity .metric-line b { flex:0 0 auto; white-space:nowrap; text-align:right; }
@@ -331,7 +331,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 }
 
 
-/* v2.11 — daily-product interest calculator */
+/* v2.6.7 — daily-product interest calculator */
 .interest-calc .slab-grid{display:grid;grid-template-columns:1.1fr 1.4fr 1.4fr 1fr auto;gap:8px;align-items:center}
 .interest-calc .slab-grid input{min-width:0}
 .interest-calc .interest-table th,.interest-calc .interest-table td{white-space:nowrap}
@@ -349,7 +349,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 }
 
 
-/* v2.11 — dedicated calculators */
+/* v2.6.7 — dedicated calculators */
 .calc-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .calc-card{border:1px solid var(--line);border-radius:14px;padding:14px;background:var(--surface)}
 .calc-result{margin-top:14px;padding:14px;border-radius:12px;background:var(--surface-soft);border:1px solid var(--line)}
@@ -361,7 +361,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 @media(max-width:560px){.calc-grid{grid-template-columns:1fr}.calc-result .big{font-size:21px}}
 
 
-/* v2.11 — responsive interest tables and totals */
+/* v2.6.7 — responsive interest tables and totals */
 .interest-calc .tblwrap,
 #interestStandalone .tblwrap{
   width:100%;
@@ -400,7 +400,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 }
 
 
-/* v2.11 — calculators prominently available on first page */
+/* v2.6.7 — calculators prominently available on first page */
 .first-page-tools{
   padding:14px 18px 4px;
 }
@@ -436,7 +436,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 }
 
 
-/* v2.11 — clean calculator hub */
+/* v2.6.7 — clean calculator hub */
 .first-page-menu-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
 .first-page-menu-grid button{min-height:74px;justify-content:flex-start;text-align:left;font-size:14px}
 .first-page-menu-grid button>span:first-child{font-size:22px;flex:none}
@@ -448,7 +448,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 #pInterestCalc>.card,#pFinancialCalc>.card,#pInterestCompare>.card{width:100%;box-sizing:border-box}
 #pInterestCalc .tblwrap,#pInterestCompare .tblwrap{width:100%;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
 
-/* v2.11 */
+/* v2.6.7 */
 #btnFinancialCalc{background:var(--accent)!important;color:#0E0E10!important;border-color:var(--accent)!important;font-weight:800!important}
 @media(max-width:760px){.interest-settings-head{display:none!important}#interestSlabs .interest-slab-row{grid-template-columns:1fr 1fr}#interestSlabs .interest-slab-row .wide{grid-column:1/-1}}
 
@@ -456,7 +456,7 @@ footer .disc{max-width:760px;margin:0 auto 10px;line-height:1.6}
 #tabs .tab[data-panel="pFinancialCalc"].on{box-shadow:inset 0 -3px 0 #0E0E10}
 #interestStatement:disabled{opacity:.7}
 
-/* v2.11 visual refresh + help centre */
+/* v2.6.7 visual refresh + help centre */
 :root{--accent:var(--amber);--surface-soft:var(--surface-2)}
 header.app{padding:18px 22px;gap:18px;background:linear-gradient(135deg,var(--surface) 0%,var(--surface-2) 100%);box-shadow:0 1px 0 var(--line)}
 .brandmark{width:48px;height:48px;border-radius:14px;box-shadow:0 6px 18px rgba(14,14,16,.12)}
@@ -504,7 +504,7 @@ main{padding-top:24px}
 .panel-title-row .btn{white-space:nowrap}
 @media(max-width:560px){.panel-title-row{align-items:flex-start!important}.panel-title-row .btn{width:100%}}
 
-/* v2.11 UI correction */
+/* v2.6.7 UI correction */
 #globalUploadBar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 14px;margin:0 auto 14px;max-width:1400px;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--amber);border-radius:12px;box-shadow:var(--shadow)}
 #globalUploadBar div{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
 #globalUploadBar span{font-size:12px;color:var(--ink-faint)}
@@ -513,10 +513,10 @@ main{padding-top:24px}
 /* Make navigation show all primary destinations on phones without horizontal scrolling. */
 @media(max-width:760px){#tabs{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;overflow:visible!important}.tab{white-space:normal!important;min-height:43px;line-height:1.2}.tab[data-panel="pUpload"]{order:-10;font-weight:800;background:var(--surface-2)}.tab[data-panel="pUpload"].on{background:var(--amber);color:var(--charcoal);border-color:var(--amber)}}
 
-/* v2.11: the navigation tab is the single Financial Calculators entry point */
+/* v2.6.7: the navigation tab is the single Financial Calculators entry point */
 #btnFinancialCalc{display:none!important}
 
-/* v2.11 — prominently highlight the two utility menus */
+/* v2.6.7 — prominently highlight the two utility menus */
 #tabs .tab[data-panel="pFinancialCalc"],
 #tabs .tab[data-panel="pInterestCompare"]{
   font-weight:900!important;
@@ -543,7 +543,7 @@ main{padding-top:24px}
 }
 
 
-/* v2.11 — App Health Check */
+/* v2.6.7 — App Health Check */
 .health-tab{font-weight:900!important}
 .health-tab.on{background:#E8F5EC!important;color:#176B43!important;border-color:#78B995!important}
 .health-hero{display:flex;align-items:center;gap:16px;padding:22px;border-radius:18px;background:linear-gradient(135deg,#111113 0%,#242426 100%);color:#fff;margin-bottom:16px}
@@ -566,241 +566,6 @@ main{padding-top:24px}
 @media(max-width:900px){.health-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.health-results{grid-template-columns:1fr}}
 @media(max-width:600px){.health-hero{align-items:flex-start}.health-hero h2{font-size:21px}.health-grid{grid-template-columns:1fr 1fr}.health-stat{padding:12px}.health-stat .value{font-size:23px}}
 
-/* v2.11 — corrected user-specified interest formula */
-/* v2.11 — Daily Product ÷ 365 × rate (%) ; Slab Loan EMI with editable slabs */
-#interestComparisonSummary .calc-grid{grid-template-columns:repeat(3,minmax(0,1fr))}#interestComparisonSummary .calc-result .big{font-size:22px}@media(max-width:760px){#interestComparisonSummary .calc-grid{grid-template-columns:1fr}}
-
-.slab-emi-launch{font-weight:900;border:2px solid var(--gold)!important}
-#calcSlabEmi{border-top:3px solid var(--gold);padding-top:14px}
-
-</style>
-
-<style id="statementiq-safe-ui-v285">
-/* Safe UI polish: CSS only. No DOM observers or runtime UI manipulation. */
-#pFinancialCalc .card,#pInterestCompare .card{
-  background:linear-gradient(145deg,#fff 0%,#fffaf0 100%);
-  border:1px solid #e7dfd1;
-  border-radius:24px;
-  box-shadow:0 12px 32px rgba(17,17,20,.08);
-}
-#pFinancialCalc .panel-title-row{
-  padding:4px 2px 12px;
-}
-#pFinancialCalc h2,#pInterestCompare h2{
-  font-size:clamp(1.55rem,5vw,2rem);
-  font-weight:850;
-  letter-spacing:-.03em;
-}
-#pFinancialCalc .calc-tabs{
-  padding:6px;
-  border:1px solid #e6dfd4;
-  border-radius:18px;
-  background:#f7f3eb;
-}
-#pFinancialCalc .calc-tabs .calc-tab{
-  border-radius:13px!important;
-  font-weight:800!important;
-  min-height:46px;
-  flex:1 1 145px;
-}
-#pFinancialCalc .calc-tabs .calc-tab.primary{
-  background:#f4b400!important;
-  color:#111!important;
-  border-color:#f4b400!important;
-  box-shadow:0 6px 16px rgba(244,180,0,.24);
-}
-#pFinancialCalc .formula-box,#pInterestCompare .formula-box{
-  border-radius:17px!important;
-  border:1px solid #e5ddcf!important;
-  background:#fff!important;
-  box-shadow:0 5px 18px rgba(17,17,20,.045);
-}
-#pFinancialCalc .calc-grid{
-  gap:13px!important;
-}
-#pFinancialCalc input,#pFinancialCalc select,#pInterestCompare input,#pInterestCompare select{
-  border-radius:13px!important;
-  min-height:45px;
-}
-#pFinancialCalc input:focus,#pFinancialCalc select:focus,#pInterestCompare input:focus,#pInterestCompare select:focus{
-  outline:none;
-  border-color:#f4b400!important;
-  box-shadow:0 0 0 4px rgba(244,180,0,.14)!important;
-}
-#pFinancialCalc .slabEmiTo,#pFinancialCalc .slabEmiRate{
-  font-weight:700;
-}
-#pFinancialCalc #slabEmiRows>div{
-  background:#fff!important;
-  border:1px solid #e6dfd4!important;
-  border-left:4px solid #f4b400!important;
-  box-shadow:0 4px 14px rgba(17,17,20,.045);
-}
-#pInterestCompare .slab-grid{
-  overflow-x:auto;
-}
-#pInterestCompare #interestSlabs>div{
-  background:#fff;
-  border:1px solid #e6dfd4;
-  border-radius:15px;
-  margin:8px 0;
-  padding:10px;
-}
-#pInterestCompare .btn.primary,#pFinancialCalc .btn.primary{
-  background:#f4b400!important;
-  color:#111!important;
-  border-color:#f4b400!important;
-  font-weight:850!important;
-}
-#pFinancialCalc .btn,#pInterestCompare .btn{
-  border-radius:13px!important;
-}
-@media(max-width:700px){
-  #pFinancialCalc .card,#pInterestCompare .card{
-    border-radius:19px;
-    padding:15px!important;
-  }
-  #pFinancialCalc .calc-tabs .calc-tab{
-    flex:1 1 100%;
-  }
-  #pFinancialCalc .panel-title-row .btn{
-    width:100%;
-  }
-  #pFinancialCalc .calc-grid{
-    grid-template-columns:1fr!important;
-  }
-  #pFinancialCalc .slabEmiTo,#pFinancialCalc .slabEmiRate{
-    width:100%;
-  }
-}
-</style>
-
-
-<style id="slab-emi-add-fix-v288">
-#addSlabEmiBtn{
-  background:#f4b400!important;color:#111!important;border:2px solid #d99a00!important;
-  font-weight:900!important;min-height:46px!important;padding:10px 18px!important;
-  box-shadow:0 5px 14px rgba(244,180,0,.22)!important;
-}
-#addSlabEmiBtn:hover{transform:translateY(-1px)}
-</style>
-
-<style id="slab-five-editor-v290">
-#slabEmiRows{margin-top:12px;display:block!important;visibility:visible!important;min-height:40px}
-#slabEmiRows .slab-editor-row{box-shadow:0 4px 14px rgba(17,17,20,.055)}
-#slabEmiRows .slab-editor-row:nth-child(1){border-left:4px solid #f4b400!important}
-#slabEmiRows .slab-editor-row:nth-child(2){border-left:4px solid #f4b400!important}
-#slabEmiRows .slab-editor-row:nth-child(3){border-left:4px solid #f4b400!important}
-#slabEmiRows .slab-editor-row:nth-child(4){border-left:4px solid #f4b400!important}
-#slabEmiRows .slab-editor-row:nth-child(5){border-left:4px solid #157a4b!important}
-#slabEmiRows .slabRemoveBtn{border-color:#e6c1b8!important;color:#b84026!important;background:#fff!important;font-weight:800!important}
-#slabEmiRows input:disabled{background:#f5f2ec!important;color:#777!important}
-</style>
-
-<style id="slab-five-visible-v291">
-#slabEmiRows{display:block!important;visibility:visible!important;min-height:40px}
-#slabEmiRows .slab-editor-row{display:grid!important}
-</style>
-
-<style id="slab-add-v292">
-#slabEmiAddRealBtn{font-weight:900!important;min-height:46px;padding:10px 18px!important}
-#slabEmiRows .slab-editor-row{box-shadow:0 3px 12px rgba(0,0,0,.04)}
-</style>
-
-<style id="financialCalculatorCompatibilityV213">
-/* v2.18 — Financial Calculator copied/adapted from the working Financial Calendar & Calculators module */
-#pFinancialCalc{--accent:var(--amber);--gold:var(--amber);--muted:var(--ink-soft);--brass:var(--amber);--clay:var(--rust);--card:var(--surface);--text:var(--ink)}
-#pFinancialCalc .fiq-module{display:block}
-#pFinancialCalc .fiq-module[style*="display:none"]{display:none}
-#pFinancialCalc .fiq-switch{padding:12px;border:1px solid var(--line);background:var(--surface-2)}
-#pFinancialCalc .fiq-switch-btn{min-height:44px}
-#pFinancialCalc .input-card{padding:24px;margin:18px 0}
-#pFinancialCalc .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}
-#pFinancialCalc .summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--line);border-radius:var(--r);overflow:hidden;margin:18px 0 28px}
-#pFinancialCalc .stat{background:var(--surface);padding:16px 18px}
-#pFinancialCalc .stat-label{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);font-weight:700;margin-bottom:6px}
-#pFinancialCalc .stat-value{font-family:var(--mono);font-size:20px;font-weight:700}
-#pFinancialCalc .chart-card{padding:20px 12px 8px;margin-bottom:28px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
-#pFinancialCalc .chart-title{font-weight:700;padding:0 12px 12px}
-#pFinancialCalc .ledger{overflow:hidden;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
-#pFinancialCalc .stub{padding:16px 20px;background:var(--surface-2);border-left:3px solid var(--amber)}
-#pFinancialCalc .stub-title{font-weight:700;font-size:16px}
-#pFinancialCalc .stub-sub{font-size:12.5px;color:var(--ink-soft);margin-top:2px}
-#pFinancialCalc .folio-toggle{width:100%;text-align:left;background:var(--surface-2);border:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:10px 20px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--ink)}
-#pFinancialCalc .folio-name{font-weight:700;font-size:13.5px}
-#pFinancialCalc .folio-meta{font-family:var(--mono);font-size:12px;color:var(--ink-soft)}
-#pFinancialCalc .subtabs{display:flex;gap:8px;margin:18px 0 22px;flex-wrap:wrap}
-#pFinancialCalc .subtab{font-size:12.5px;font-weight:700;color:var(--ink-soft);background:var(--surface);border:1px solid var(--line);padding:8px 14px;cursor:pointer;border-radius:8px}
-#pFinancialCalc .subtab.active{color:#fff;background:var(--green);border-color:var(--green)}
-#pFinancialCalc .depmodule{display:none}
-#pFinancialCalc .depmodule.active{display:block}
-#pFinancialCalc .table-scroll{overflow-x:auto}
-#pFinancialCalc .formula-box{background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
-@media(max-width:700px){#pFinancialCalc .grid{grid-template-columns:1fr}#pFinancialCalc .folio-toggle{padding:10px 12px}}
-</style>
-
-<style id="slab-editor-v215">
-#emiSlabSettings #emiSlabs{display:flex;flex-direction:column;gap:10px;margin-top:10px}
-#emiSlabSettings .emi-static-row{display:grid;grid-template-columns:1fr 1.4fr 1.1fr 1.3fr auto;gap:10px;align-items:end;padding:12px;border:1px solid var(--line);border-radius:14px;background:var(--surface,#fff)}
-
-#emiSlabSettings .emi-slab-toolbar{position:sticky;top:8px;z-index:4;background:var(--surface,#fffdf8);padding:6px 0;border-bottom:1px solid var(--line);}
-#emiSlabSettings #emiAddSlabTopBtn{font-weight:900!important;min-height:48px;}
-#emiSlabSettings #emiAddSlabBtn{font-weight:900!important;border:2px solid var(--accent)!important;background:var(--accent)!important;color:#111!important;min-height:48px;box-shadow:0 3px 0 rgba(0,0,0,.12)}
-@media(max-width:700px){#emiSlabSettings .emi-static-row{grid-template-columns:1fr 1fr;}.emi-static-row .wide,.emi-static-row .wide+div{grid-column:auto}.emi-static-row>div:nth-child(4){grid-column:1/-1}.emi-static-row>div:last-child{grid-column:1/-1}}
-</style>
-
-<style id="slab-emi-ui-v216">
-#pFinancialCalc #emiSlabSettings{background:linear-gradient(180deg,#fffdf8,#fff)!important}
-#pFinancialCalc #emiSlabs{width:100%;box-sizing:border-box}
-#pFinancialCalc #emiSlabs .emi-static-row{width:100%;box-sizing:border-box;display:grid;grid-template-columns:minmax(0,1fr) minmax(150px,1.1fr) minmax(120px,.9fr) minmax(150px,1fr) auto;gap:12px;align-items:end}
-#pFinancialCalc #emiSlabs .emi-static-row>div{min-width:0}
-#pFinancialCalc #emiSlabs input{width:100%;box-sizing:border-box}
-#pFinancialCalc #emiSlabs .slab-label{font-size:15px;font-weight:900}
-#pFinancialCalc #emiSlabs .emi-static-row .wide{grid-column:auto}
-#pFinancialCalc #slabCalculateBar .btn{min-height:48px;font-weight:900}
-#pFinancialCalc #slabInterestSummary{border:1px solid var(--line);box-shadow:0 6px 20px rgba(17,17,20,.05)}
-#pFinancialCalc .slab-summary-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0}
-#pFinancialCalc .slab-summary-stat{padding:13px;border:1px solid var(--line);border-radius:14px;background:var(--surface-2)}
-#pFinancialCalc .slab-summary-stat b{display:block;font-size:18px;margin-top:4px}
-#pFinancialCalc #folios{margin-top:16px}
-#pFinancialCalc .complete-amortisation{border-top:3px solid var(--amber)}
-#pFinancialCalc .complete-amortisation .table-scroll{max-height:none;overflow:auto}
-#pFinancialCalc .complete-amortisation table{min-width:850px}
-@media(max-width:700px){
-  #pFinancialCalc #emiSlabs .emi-static-row{grid-template-columns:1fr!important;gap:10px;padding:14px!important}
-  #pFinancialCalc #emiSlabs .emi-static-row>div{grid-column:1!important;width:100%!important}
-  #pFinancialCalc #emiSlabs .emi-static-row .wide{grid-column:1!important}
-  #pFinancialCalc #emiSlabs .emi-static-row>div:last-child{grid-column:1!important}
-  #pFinancialCalc .slab-summary-grid{grid-template-columns:1fr 1fr}
-  #pFinancialCalc #slabCalculateBar .btn{width:100%}
-}
-@media(max-width:430px){#pFinancialCalc .slab-summary-grid{grid-template-columns:1fr}}
-</style>
-
-<style id="slab-interest-v217">
-#pFinancialCalc #slabInterestSummary .slab-interest-hero{border:2px solid var(--amber);border-radius:18px;padding:16px;background:linear-gradient(135deg,#fffdf6,#fff);margin-bottom:14px}
-#pFinancialCalc #slabInterestSummary .slab-interest-hero h3{margin:0 0 5px;font-size:20px}
-#pFinancialCalc #slabInterestSummary .slab-interest-hero .hero-value{font-size:30px;font-weight:950;margin-top:6px}
-#pFinancialCalc #slabInterestSummary .slab-detail-table{min-width:980px}
-#pFinancialCalc #slabInterestSummary .slab-detail-table td,#pFinancialCalc #slabInterestSummary .slab-detail-table th{white-space:nowrap}
-#pFinancialCalc #slabInterestSummary .slab-chip{display:inline-block;padding:4px 8px;border-radius:999px;background:var(--surface-2);margin:2px 4px 2px 0;font-size:12px}
-#pFinancialCalc #slabInterestSummary .slab-result-actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
-@media(max-width:700px){#pFinancialCalc #slabInterestSummary .slab-interest-hero .hero-value{font-size:25px}}
-</style>
-
-<style id="slab-interest-v218">
-#slabCalculateBar{border-radius:20px!important}
-#calculateSlabEmiBtn{min-height:52px;font-weight:900}
-#slabInterestSummary{border:2px solid var(--amber);border-radius:20px}
-@media(max-width:700px){#slabCalculateBar>div{display:block!important}#calculateSlabEmiBtn{width:100%;margin-top:12px}.slab-interest-hero .hero-value{font-size:28px}}
-</style>
-<style id="slab-emi-v222">
-#pFinancialCalc #periodMonthsTotal{width:100%;min-height:50px;font-weight:800}
-#pFinancialCalc #calculateSlabEmiBtn{width:100%;min-height:56px;font-size:17px;font-weight:950;letter-spacing:.1px}
-#pFinancialCalc #slabCalculateBar{position:relative;z-index:5}
-#pFinancialCalc #emiSlabSettings .emi-slab-toolbar{position:sticky;top:0;z-index:10;background:var(--surface,#fffdf8);padding:10px 0}
-#pFinancialCalc #emiSlabs .stmt-slab-row{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:0 3px 12px rgba(0,0,0,.04)}
-@media(max-width:700px){#pFinancialCalc #calculateSlabEmiBtn{font-size:16px}}
 </style>
 </head>
 <body>
@@ -818,7 +583,7 @@ main{padding-top:24px}
   </div>
   <div class="brand-txt">
     <h1>StatementIQ</h1>
-    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.23</b></small>
+    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.6.7</b></small>
     <div class="developer-credit">Developed by Anil Sharma, Former General Manager, Central Bank of India</div>
   </div>
   <div class="header-actions">
@@ -848,7 +613,7 @@ main{padding-top:24px}
   <button class="tab" data-panel="pBank">Bank statement<span class="pill" id="pillBank">0</span></button>
   <button class="tab" data-panel="pCard">Credit card<span class="pill" id="pillCard">0</span></button>
   <button class="tab" data-panel="pRecon">Reconciliation</button>
-  <button class="tab" data-panel="pHelp">How to use</button> <button class="tab health-tab" data-panel="pHealthCheck">🩺 App Health Check</button> <button class="tab" data-panel="pFinancialCalc">Financial Calculators</button> <button class="tab" data-panel="pInterestCompare">Bank Interest Calculator</button>
+  <button class="tab" data-panel="pHelp">How to use</button> <button class="tab health-tab" data-panel="pHealthCheck">🩺 App Health Check</button> <button class="tab" data-panel="pFinancialCalc">Financial Calculators</button> <button class="tab" data-panel="pInterestCompare">Interest Comparison</button>
 </div>
 
 <main>
@@ -920,7 +685,7 @@ main{padding-top:24px}
       <div class="card"><h3>Financial health</h3><p class="hint">A simple analytical score based only on the loaded statements — not financial advice.</p><div id="healthBox"></div></div>
     </div>
     <div class="card"><h3>Top spending categories</h3><p class="hint">Consumption spending excludes transfers to self, credit-card settlements, investments, loan principal and matched reversals.</p><div class="tblwrap"><table id="dashCatTbl"></table></div></div>
-    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.23 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
+    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.6.7 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
   </div>
 </section>
 
@@ -1072,7 +837,7 @@ main{padding-top:24px}
   <div class="help-hero">
     <div class="help-hero-icon">?</div>
     <div>
-      <div class="eyebrow">STATEMENTIQ USER GUIDE · v2.23</div>
+      <div class="eyebrow">STATEMENTIQ USER GUIDE · v2.6.7</div>
       <h2>How to use StatementIQ</h2>
       <p>Upload → verify → review → analyse → export. Everything is processed locally in your browser.</p>
     </div>
@@ -1105,8 +870,8 @@ main{padding-top:24px}
   <div class="card help-section">
     <div class="section-title-row"><div><span class="eyebrow">NEW FEATURES</span><h3>What you can do now</h3></div><span class="feature-badge">v2.6</span></div>
     <div class="feature-grid">
-      <div><b>🧮 Financial Calculators</b><span>EMI, slab-rate term-loan EMI, deposits, reinvestment deposits, age, SIP and multi-currency conversion from one yellow button.</span></div>
-      <div><b>📊 Interest Comparison</b><span>Compare bank-credited interest with daily-product interest using editable progressive slabs and Daily Product ÷ 365 × rate.</span></div>
+      <div><b>🧮 Financial Calculators</b><span>EMI, deposits, reinvestment deposits, age, SIP and multi-currency conversion from one yellow button at the top.</span></div>
+      <div><b>📊 Interest Comparison</b><span>Compare bank-credited interest with daily-product interest using editable progressive slabs and actual calendar-month days.</span></div>
       <div><b>🔍 Transaction intelligence</b><span>Transactions are classified by economic meaning; review medium-confidence classifications before relying on them.</span></div>
       <div><b>🔄 Reconciliation</b><span>Compare bank/card activity and identify unmatched items, balance differences and statement integrity issues.</span></div>
       <div><b>📈 Period comparison</b><span>Compare periods and identify major category movements rather than looking only at totals.</span></div>
@@ -1131,8 +896,8 @@ main{padding-top:24px}
       <span class="eyebrow">INTEREST COMPARISON</span><h3>Daily-product method</h3>
       <ul class="help-list">
         <li>Calculation runs from the first to the last day of each calendar month.</li>
-        <li>Daily product = applicable closing balance allocated across the applicable slabs.</li>
-        <li>Interest is calculated as Daily Product ÷ 365 × applicable rate (%). The statement period is still split month-wise.</li>
+        <li>Daily product = applicable balance × applicable slab rate.</li>
+        <li>Monthly interest uses the actual number of days in that month.</li>
         <li>Progressive slabs apply separately to each day's balance.</li>
         <li>Three slabs are built in and all limits/rates can be edited.</li>
         <li>Use <b>+ Add slab</b> when the bank has additional rate bands.</li>
@@ -1239,306 +1004,30 @@ main{padding-top:24px}
 
 <section class="panel" id="pFinancialCalc">
   <div class="card">
-    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px">
-      <div><h2 style="margin:0">Financial Calculators</h2><p class="hint" style="margin:4px 0 0">Loan/EMI, slab-wise term loan EMI, deposits, reinvestment deposits, SIP and age calculators — using the proven calculator structure from the Financial Calendar &amp; Calculators app.</p></div>
+    <div class="panel-title-row" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+      <div><h2 style="margin:0">Financial Calculators</h2><p class="hint" style="margin:4px 0 0">EMI, deposit, reinvestment, age, SIP and currency calculators. Inputs are editable and calculations are shown transparently.</p></div>
       <button class="btn sm" type="button" onclick="switchPanel('pUpload')">✕ Close calculators</button>
     </div>
-    
-<div class="fiq-switch card" style="margin-bottom:14px">
-  <div class="eyebrow">FINANCIAL CALCULATORS</div>
-  <div class="row" style="gap:8px;flex-wrap:wrap;margin-top:8px">
-    <button class="btn primary fiq-switch-btn" type="button" onclick="showCalc('emi')">Loan / EMI</button>
-    <button class="btn fiq-switch-btn" type="button" onclick="showCalc('deposit')">Deposits</button>
-    <button class="btn fiq-switch-btn" type="button" onclick="showCalc('age')">Age</button>
-  </div>
-</div>
-<!-- EMI MODULE -->
-  <div class="fiq-module" id="module-emi">
-    <div id="loanCalculatorMenus" class="card" style="margin-bottom:16px;border:2px solid var(--accent)">
-      <div class="eyebrow">LOAN CALCULATORS</div>
-      <h2 style="margin:4px 0 10px">Choose a Loan Calculator</h2>
-      <div class="row" style="gap:10px;flex-wrap:wrap">
-        <button id="standardEmiMenuBtn" class="btn primary loan-menu-btn" type="button" onclick="openLoanMenu('standard')">EMI Calculator</button>
-        <button id="slabEmiMenuBtn" class="btn loan-menu-btn" type="button" onclick="openLoanMenu('slab')">Slab-wise Term Loan EMI</button>
-      </div>
-      <p id="loanMenuDescription" class="hint" style="margin:10px 0 0">Standard EMI using one annual interest rate throughout the loan.</p>
+    <div class="calc-tabs" role="tablist" style="display:flex;gap:8px;flex-wrap:wrap;margin:12px 0">
+      <button class="btn primary calc-tab" type="button" onclick="showCalc('emi')">EMI</button>
+      <button class="btn calc-tab" type="button" onclick="showCalc('deposit')">Deposit</button>
+      <button class="btn calc-tab" type="button" onclick="showCalc('age')">Age</button>
+      <button class="btn calc-tab" type="button" onclick="showCalc('sip')">SIP</button>
+      <button class="btn calc-tab" type="button" onclick="showCalc('currency')">Currency</button>
     </div>
-    <div class="eyebrow">LEDGER &middot; 01 REPAYMENT SCHEDULE</div>
-    <h1 class="page-title">Loan &amp; EMI Passbook</h1>
-    <p class="lede">Enter the loan terms below. Every installment repays interest on the outstanding balance first, then principal &mdash; like an entry in a bank passbook.</p>
-
-    <div class="card input-card">
-      <div class="grid">
-        <div>
-          <label for="principal">Loan amount (&#8377;)</label>
-          <input type="number" id="principal" value="1000000" min="0" />
-        </div>
-        <div>
-          <label for="rate">Interest rate (% p.a.)</label>
-          <input type="number" id="rate" value="9.5" step="0.01" min="0" />
-        </div>
-        <div>
-          <label for="emiInterestMethod">Interest method</label>
-          <select id="emiInterestMethod"><option value="flat" selected>Single annual rate</option><option value="slab">Progressive slab rates — Term Loan</option></select><button id="emiSlabQuickBtn" class="btn sm" type="button" style="margin-top:6px">⚙ Set slab rates</button>
-        </div>
-        <div>
-          <label for="periodMonthsTotal">Loan tenure — Months</label>
-          <select id="periodMonthsTotal"><option value="1">1 Month</option><option value="2">2 Months</option><option value="3">3 Months</option><option value="4">4 Months</option><option value="5">5 Months</option><option value="6">6 Months</option><option value="7">7 Months</option><option value="8">8 Months</option><option value="9">9 Months</option><option value="10">10 Months</option><option value="11">11 Months</option><option value="12">12 Months</option><option value="13">13 Months</option><option value="14">14 Months</option><option value="15">15 Months</option><option value="16">16 Months</option><option value="17">17 Months</option><option value="18">18 Months</option><option value="19">19 Months</option><option value="20">20 Months</option><option value="21">21 Months</option><option value="22">22 Months</option><option value="23">23 Months</option><option value="24">24 Months</option><option value="25">25 Months</option><option value="26">26 Months</option><option value="27">27 Months</option><option value="28">28 Months</option><option value="29">29 Months</option><option value="30">30 Months</option><option value="31">31 Months</option><option value="32">32 Months</option><option value="33">33 Months</option><option value="34">34 Months</option><option value="35">35 Months</option><option value="36">36 Months</option><option value="37">37 Months</option><option value="38">38 Months</option><option value="39">39 Months</option><option value="40">40 Months</option><option value="41">41 Months</option><option value="42">42 Months</option><option value="43">43 Months</option><option value="44">44 Months</option><option value="45">45 Months</option><option value="46">46 Months</option><option value="47">47 Months</option><option value="48">48 Months</option><option value="49">49 Months</option><option value="50">50 Months</option><option value="51">51 Months</option><option value="52">52 Months</option><option value="53">53 Months</option><option value="54">54 Months</option><option value="55">55 Months</option><option value="56">56 Months</option><option value="57">57 Months</option><option value="58">58 Months</option><option value="59">59 Months</option><option value="60" selected>60 Months</option><option value="61">61 Months</option><option value="62">62 Months</option><option value="63">63 Months</option><option value="64">64 Months</option><option value="65">65 Months</option><option value="66">66 Months</option><option value="67">67 Months</option><option value="68">68 Months</option><option value="69">69 Months</option><option value="70">70 Months</option><option value="71">71 Months</option><option value="72">72 Months</option><option value="73">73 Months</option><option value="74">74 Months</option><option value="75">75 Months</option><option value="76">76 Months</option><option value="77">77 Months</option><option value="78">78 Months</option><option value="79">79 Months</option><option value="80">80 Months</option><option value="81">81 Months</option><option value="82">82 Months</option><option value="83">83 Months</option><option value="84">84 Months</option><option value="85">85 Months</option><option value="86">86 Months</option><option value="87">87 Months</option><option value="88">88 Months</option><option value="89">89 Months</option><option value="90">90 Months</option><option value="91">91 Months</option><option value="92">92 Months</option><option value="93">93 Months</option><option value="94">94 Months</option><option value="95">95 Months</option><option value="96">96 Months</option><option value="97">97 Months</option><option value="98">98 Months</option><option value="99">99 Months</option><option value="100">100 Months</option><option value="101">101 Months</option><option value="102">102 Months</option><option value="103">103 Months</option><option value="104">104 Months</option><option value="105">105 Months</option><option value="106">106 Months</option><option value="107">107 Months</option><option value="108">108 Months</option><option value="109">109 Months</option><option value="110">110 Months</option><option value="111">111 Months</option><option value="112">112 Months</option><option value="113">113 Months</option><option value="114">114 Months</option><option value="115">115 Months</option><option value="116">116 Months</option><option value="117">117 Months</option><option value="118">118 Months</option><option value="119">119 Months</option><option value="120">120 Months</option><option value="121">121 Months</option><option value="122">122 Months</option><option value="123">123 Months</option><option value="124">124 Months</option><option value="125">125 Months</option><option value="126">126 Months</option><option value="127">127 Months</option><option value="128">128 Months</option><option value="129">129 Months</option><option value="130">130 Months</option><option value="131">131 Months</option><option value="132">132 Months</option><option value="133">133 Months</option><option value="134">134 Months</option><option value="135">135 Months</option><option value="136">136 Months</option><option value="137">137 Months</option><option value="138">138 Months</option><option value="139">139 Months</option><option value="140">140 Months</option><option value="141">141 Months</option><option value="142">142 Months</option><option value="143">143 Months</option><option value="144">144 Months</option><option value="145">145 Months</option><option value="146">146 Months</option><option value="147">147 Months</option><option value="148">148 Months</option><option value="149">149 Months</option><option value="150">150 Months</option><option value="151">151 Months</option><option value="152">152 Months</option><option value="153">153 Months</option><option value="154">154 Months</option><option value="155">155 Months</option><option value="156">156 Months</option><option value="157">157 Months</option><option value="158">158 Months</option><option value="159">159 Months</option><option value="160">160 Months</option><option value="161">161 Months</option><option value="162">162 Months</option><option value="163">163 Months</option><option value="164">164 Months</option><option value="165">165 Months</option><option value="166">166 Months</option><option value="167">167 Months</option><option value="168">168 Months</option><option value="169">169 Months</option><option value="170">170 Months</option><option value="171">171 Months</option><option value="172">172 Months</option><option value="173">173 Months</option><option value="174">174 Months</option><option value="175">175 Months</option><option value="176">176 Months</option><option value="177">177 Months</option><option value="178">178 Months</option><option value="179">179 Months</option><option value="180">180 Months</option><option value="181">181 Months</option><option value="182">182 Months</option><option value="183">183 Months</option><option value="184">184 Months</option><option value="185">185 Months</option><option value="186">186 Months</option><option value="187">187 Months</option><option value="188">188 Months</option><option value="189">189 Months</option><option value="190">190 Months</option><option value="191">191 Months</option><option value="192">192 Months</option><option value="193">193 Months</option><option value="194">194 Months</option><option value="195">195 Months</option><option value="196">196 Months</option><option value="197">197 Months</option><option value="198">198 Months</option><option value="199">199 Months</option><option value="200">200 Months</option><option value="201">201 Months</option><option value="202">202 Months</option><option value="203">203 Months</option><option value="204">204 Months</option><option value="205">205 Months</option><option value="206">206 Months</option><option value="207">207 Months</option><option value="208">208 Months</option><option value="209">209 Months</option><option value="210">210 Months</option><option value="211">211 Months</option><option value="212">212 Months</option><option value="213">213 Months</option><option value="214">214 Months</option><option value="215">215 Months</option><option value="216">216 Months</option><option value="217">217 Months</option><option value="218">218 Months</option><option value="219">219 Months</option><option value="220">220 Months</option><option value="221">221 Months</option><option value="222">222 Months</option><option value="223">223 Months</option><option value="224">224 Months</option><option value="225">225 Months</option><option value="226">226 Months</option><option value="227">227 Months</option><option value="228">228 Months</option><option value="229">229 Months</option><option value="230">230 Months</option><option value="231">231 Months</option><option value="232">232 Months</option><option value="233">233 Months</option><option value="234">234 Months</option><option value="235">235 Months</option><option value="236">236 Months</option><option value="237">237 Months</option><option value="238">238 Months</option><option value="239">239 Months</option><option value="240">240 Months</option><option value="241">241 Months</option><option value="242">242 Months</option><option value="243">243 Months</option><option value="244">244 Months</option><option value="245">245 Months</option><option value="246">246 Months</option><option value="247">247 Months</option><option value="248">248 Months</option><option value="249">249 Months</option><option value="250">250 Months</option><option value="251">251 Months</option><option value="252">252 Months</option><option value="253">253 Months</option><option value="254">254 Months</option><option value="255">255 Months</option><option value="256">256 Months</option><option value="257">257 Months</option><option value="258">258 Months</option><option value="259">259 Months</option><option value="260">260 Months</option><option value="261">261 Months</option><option value="262">262 Months</option><option value="263">263 Months</option><option value="264">264 Months</option><option value="265">265 Months</option><option value="266">266 Months</option><option value="267">267 Months</option><option value="268">268 Months</option><option value="269">269 Months</option><option value="270">270 Months</option><option value="271">271 Months</option><option value="272">272 Months</option><option value="273">273 Months</option><option value="274">274 Months</option><option value="275">275 Months</option><option value="276">276 Months</option><option value="277">277 Months</option><option value="278">278 Months</option><option value="279">279 Months</option><option value="280">280 Months</option><option value="281">281 Months</option><option value="282">282 Months</option><option value="283">283 Months</option><option value="284">284 Months</option><option value="285">285 Months</option><option value="286">286 Months</option><option value="287">287 Months</option><option value="288">288 Months</option><option value="289">289 Months</option><option value="290">290 Months</option><option value="291">291 Months</option><option value="292">292 Months</option><option value="293">293 Months</option><option value="294">294 Months</option><option value="295">295 Months</option><option value="296">296 Months</option><option value="297">297 Months</option><option value="298">298 Months</option><option value="299">299 Months</option><option value="300">300 Months</option><option value="301">301 Months</option><option value="302">302 Months</option><option value="303">303 Months</option><option value="304">304 Months</option><option value="305">305 Months</option><option value="306">306 Months</option><option value="307">307 Months</option><option value="308">308 Months</option><option value="309">309 Months</option><option value="310">310 Months</option><option value="311">311 Months</option><option value="312">312 Months</option><option value="313">313 Months</option><option value="314">314 Months</option><option value="315">315 Months</option><option value="316">316 Months</option><option value="317">317 Months</option><option value="318">318 Months</option><option value="319">319 Months</option><option value="320">320 Months</option><option value="321">321 Months</option><option value="322">322 Months</option><option value="323">323 Months</option><option value="324">324 Months</option><option value="325">325 Months</option><option value="326">326 Months</option><option value="327">327 Months</option><option value="328">328 Months</option><option value="329">329 Months</option><option value="330">330 Months</option><option value="331">331 Months</option><option value="332">332 Months</option><option value="333">333 Months</option><option value="334">334 Months</option><option value="335">335 Months</option><option value="336">336 Months</option><option value="337">337 Months</option><option value="338">338 Months</option><option value="339">339 Months</option><option value="340">340 Months</option><option value="341">341 Months</option><option value="342">342 Months</option><option value="343">343 Months</option><option value="344">344 Months</option><option value="345">345 Months</option><option value="346">346 Months</option><option value="347">347 Months</option><option value="348">348 Months</option><option value="349">349 Months</option><option value="350">350 Months</option><option value="351">351 Months</option><option value="352">352 Months</option><option value="353">353 Months</option><option value="354">354 Months</option><option value="355">355 Months</option><option value="356">356 Months</option><option value="357">357 Months</option><option value="358">358 Months</option><option value="359">359 Months</option><option value="360">360 Months</option></select>
-          <div class="hint">Select the complete loan tenure in months.</div>
-        </div>
-        <div>
-          <label for="count">No. of installments</label>
-          <input type="number" id="count" value="60" min="1" readonly />
-          <div class="hint">Calculated automatically from loan period and frequency.</div>
-        </div>
-        <div>
-          <label for="freq">Frequency</label>
-          <select id="freq">
-            <option value="1" selected>Monthly</option>
-            <option value="3">Quarterly</option>
-            <option value="6">Half-Yearly</option>
-            <option value="12">Yearly</option>
-          </select>
-        </div>
-        <div>
-          <label for="startDate">First installment date</label>
-          <input type="date" id="startDate" />
-        </div>
-        <div>
-          <label for="repayType">Repayment type</label>
-          <select id="repayType">
-            <option value="equal-installment" selected>Equal installment (EMI stays same)</option>
-            <option value="equal-principal">Equal principal (installment reduces)</option>
-          </select>
-        </div>
-        <div>
-          <label for="moratMonths">Moratorium period (months)</label>
-          <input type="number" id="moratMonths" value="0" min="0" />
-        </div>
-        <div>
-          <label for="moratMode">During moratorium</label>
-          <select id="moratMode">
-            <option value="paid" selected>Interest paid monthly</option>
-            <option value="accrued">Interest accrued (added to principal)</option>
-          </select>
-        </div>
-      </div>
-      <div id="emiSlabSettings" class="card input-card" style="display:none;margin-top:14px;box-shadow:none;border:1px solid var(--line);">
-        <div class="stub-title">⚙ EMI Interest Slabs &amp; Rates</div>
-        <div class="emi-slab-toolbar" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:10px 0 12px">
-          <button id="emiAddSlabTopBtn" class="btn primary" type="button">+ Add slab &amp; rate</button>
-          <span class="hint">Add another editable slab before the final No-limit slab.</span>
-        </div>
-        <div class="stub-sub" style="margin:4px 0 14px;color:var(--muted)">Progressive rates apply to the outstanding loan balance each period. Example: first ₹3,00,000 at 7%, next ₹2,00,000 at 8%, and any balance above ₹5,00,000 at 9%.</div>
-        <div id="emiSlabs">
-          <div class="stmt-slab-row emi-static-row"><div class="wide"><div class="slab-label">Slab 1</div></div><div><label>Upto amount</label><input class="emi-slab-to" type="number" min="0" step="1" value="300000" placeholder="No limit"></div><div><label>Annual rate %</label><input class="emi-slab-rate" type="number" min="0" step="0.01" value="7"></div><div><label>Coverage</label><div class="hint">First ₹3,00,000</div></div><div><button class="btn sm emi-remove-static" type="button">Remove</button></div></div>
-          <div class="stmt-slab-row emi-static-row"><div class="wide"><div class="slab-label">Slab 2</div></div><div><label>Upto amount</label><input class="emi-slab-to" type="number" min="0" step="1" value="500000" placeholder="No limit"></div><div><label>Annual rate %</label><input class="emi-slab-rate" type="number" min="0" step="0.01" value="8"></div><div><label>Coverage</label><div class="hint">Above previous slab</div></div><div><button class="btn sm emi-remove-static" type="button">Remove</button></div></div>
-          <div class="stmt-slab-row emi-static-row"><div class="wide"><div class="slab-label">Slab 3</div></div><div><label>Upto amount</label><input class="emi-slab-to" type="number" min="0" step="1" value="750000" placeholder="No limit"></div><div><label>Annual rate %</label><input class="emi-slab-rate" type="number" min="0" step="0.01" value="9"></div><div><label>Coverage</label><div class="hint">Above previous slab</div></div><div><button class="btn sm emi-remove-static" type="button">Remove</button></div></div>
-          <div class="stmt-slab-row emi-static-row"><div class="wide"><div class="slab-label">Slab 4</div></div><div><label>Upto amount</label><input class="emi-slab-to" type="number" min="0" step="1" value="1000000" placeholder="No limit"></div><div><label>Annual rate %</label><input class="emi-slab-rate" type="number" min="0" step="0.01" value="10"></div><div><label>Coverage</label><div class="hint">Above previous slab</div></div><div><button class="btn sm emi-remove-static" type="button">Remove</button></div></div>
-          <div class="stmt-slab-row emi-static-row"><div class="wide"><div class="slab-label">Slab 5</div></div><div><label>Upto amount</label><input class="emi-slab-to" type="number" min="0" step="1" value="" placeholder="No limit"></div><div><label>Annual rate %</label><input class="emi-slab-rate" type="number" min="0" step="0.01" value="11"></div><div><label>Coverage</label><div class="hint">Above previous slab — no limit</div></div><div><button class="btn sm emi-remove-static" type="button">Remove</button></div></div>
-        </div>
-        <div class="formula-box" style="margin-top:12px"><b>Slab EMI method:</b> each installment calculates interest on the opening outstanding balance by slab. The EMI is solved so that the balance reaches zero at the end of the selected period. Example: ₹5,00,000 = ₹3,00,000 @ 7% + ₹2,00,000 @ 8%.</div>
-        <div class="row" style="margin-top:12px"><button id="emiAddSlabBtn" class="btn" type="button">+ Add slab</button><button id="emiResetSlabBtn" class="btn" type="button">Reset EMI slabs</button><span id="emiSlabSave" class="hint"></span></div>
-      </div>
-      <div id="slabCalculateBar" class="card" style="display:none;margin:14px 0 0;padding:14px 16px;border:2px solid var(--amber);background:linear-gradient(135deg,var(--surface),var(--surface-2));box-shadow:0 8px 24px rgba(244,180,0,.12)">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
-          <div><b style="font-size:16px">Ready to calculate slab-wise EMI</b><div class="hint">Edit the slabs above, then calculate to generate the complete amortisation schedule and interest analysis.</div></div>
-          <button id="calculateSlabEmiBtn" class="btn primary" type="button">Calculate Slab EMI &amp; Interest</button>
-        </div>
-      </div>
-      <div id="slabInterestSummary" class="card" style="display:none;margin-top:14px"></div>
-      <div class="note">Both repayment types pay that period's interest on the outstanding balance first, then principal. With <strong>Equal installment</strong>, the total EMI is fixed and the interest/principal mix shifts each month. With <strong>Equal principal</strong>, the principal portion is fixed every month, so interest &mdash; and therefore the total installment &mdash; shrinks month by month. During a <strong>moratorium</strong>, no principal is repaid: choose whether you pay the interest in cash each month, or let it accrue and get added to the principal (capitalized) before EMI/installments begin.</div>
-    </div>
-
-    <div class="summary" id="summary"></div>
-
-    <div class="card chart-card">
-      <div class="chart-title">Principal vs. interest, per installment</div>
-      <canvas id="chart" height="110"></canvas>
-    </div>
-
-    <div class="card ledger">
-      <div class="stub">
-        <div class="stub-title">Installment-wise register</div>
-        <div class="stub-sub" id="ledgerSub"></div>
-      </div>
-<div id="folios"></div>
-      <div id="fyInterestSummary" style="margin-top:16px"></div>
-    </div>
-  </div>
-
-  <!-- DEPOSITS MODULE -->
-  <div id="fiq-deposits" class="fiq-module" style="display:none">
-    <div class="eyebrow">LEDGER &middot; 02 DEPOSITS</div>
-    <h1 class="page-title">Deposit Calculators</h1>
-    <p class="lede">Fixed / reinvestment deposits, recurring deposits, and SIPs &mdash; each with its own maturity ledger.</p>
-
-    <div class="subtabs" id="depositTabs">
-      <button class="subtab active" data-dep="fd">FD / Reinvestment</button>
-      <button class="subtab" data-dep="rd">Recurring Deposit</button>
-      <button class="subtab" data-dep="sip">SIP</button>
-    </div>
-
-    <!-- FD / REINVESTMENT -->
-    <div class="depmodule active" id="dep-fd">
-      <div class="card input-card">
-        <div class="grid">
-          <div>
-            <label for="fdPrincipal">Principal (&#8377;)</label>
-            <input type="number" id="fdPrincipal" value="100000" min="0" />
-          </div>
-          <div>
-            <label for="fdRate">Interest rate (% p.a.)</label>
-            <input type="number" id="fdRate" value="7.25" step="0.01" min="0" />
-          </div>
-          <div>
-            <label for="fdTenureVal">Tenure</label>
-            <input type="number" id="fdTenureVal" value="3" min="1" />
-          </div>
-          <div>
-            <label for="fdTenureUnit">Period</label>
-            <select id="fdTenureUnit">
-              <option value="days">Days</option>
-              <option value="months" selected>Months</option>
-              <option value="years">Years</option>
-            </select>
-          </div>
-          <div>
-            <label for="fdMode">Interest option</label>
-            <select id="fdMode">
-              <optgroup label="Cumulative (reinvested)">
-                <option value="simple">Simple interest</option>
-                <option value="cum-monthly">Compounded monthly</option>
-                <option value="cum-quarterly" selected>Compounded quarterly</option>
-                <option value="cum-halfyearly">Compounded half-yearly</option>
-                <option value="cum-yearly">Compounded yearly</option>
-              </optgroup>
-              <optgroup label="Interest payout (principal unchanged)">
-                <option value="payout-quarterly">Quarterly payout</option>
-                <option value="payout-monthly">Monthly payout (discounted)</option>
-              </optgroup>
-            </select>
-          </div>
-          <div>
-            <label for="fdStartDate">Deposit date</label>
-            <input type="date" id="fdStartDate" />
-          </div>
-        </div>
-      </div>
-      <div class="note">Reinvestment / cumulative schemes are FDs where interest is added back to principal instead of paid out. For non-cumulative FDs: <strong>quarterly payout</strong> pays the exact simple quarterly interest (P&#215;R/4) with principal untouched, while <strong>monthly payout</strong> pays a <em>discounted</em> monthly rate &mdash; since you receive the money sooner, banks pay slightly less than a plain 1/12th of the annual interest, so that 12 monthly payouts work out equivalent to 4 quarterly ones. This mirrors standard practice at Indian banks (e.g. ICICI, SBI).</div>
-      <div class="summary" id="fdSummary"></div>
-      <div class="card ledger">
-        <div class="stub">
-          <div class="stub-title">Compounding-period register</div>
-          <div class="stub-sub" id="fdLedgerSub"></div>
-        </div>
-        <div class="table-scroll"><table id="fdTable"></table></div>
-      </div>
-    </div>
-
-    <!-- RECURRING DEPOSIT -->
-    <div class="depmodule" id="dep-rd">
-      <div class="card input-card">
-        <div class="grid">
-          <div>
-            <label for="rdInstallment">Monthly installment (&#8377;)</label>
-            <input type="number" id="rdInstallment" value="5000" min="0" />
-          </div>
-          <div>
-            <label for="rdRate">Interest rate (% p.a.)</label>
-            <input type="number" id="rdRate" value="7" step="0.01" min="0" />
-          </div>
-          <div>
-            <label for="rdMonths">Tenure (months)</label>
-            <input type="number" id="rdMonths" value="24" min="1" />
-          </div>
-          <div>
-            <label for="rdStartDate">First installment date</label>
-            <input type="date" id="rdStartDate" />
-          </div>
-        </div>
-      </div>
-      <div class="note">Interest is compounded quarterly on the running balance, in line with standard bank RD practice; the last part-quarter (if any) earns simple interest.</div>
-      <div class="summary" id="rdSummary"></div>
-      <div class="card ledger">
-        <div class="stub">
-          <div class="stub-title">Quarter-wise register</div>
-          <div class="stub-sub" id="rdLedgerSub"></div>
-        </div>
-        <div class="table-scroll"><table id="rdTable"></table></div>
-      </div>
-    </div>
-
-    <!-- SIP -->
-    <div class="depmodule" id="dep-sip">
-      <div class="card input-card">
-        <div class="grid">
-          <div>
-            <label for="sipInstallment">Monthly investment (&#8377;)</label>
-            <input type="number" id="sipInstallment" value="10000" min="0" />
-          </div>
-          <div>
-            <label for="sipRate">Expected return (% p.a.)</label>
-            <input type="number" id="sipRate" value="12" step="0.01" min="0" />
-          </div>
-          <div>
-            <label for="sipMonths">Tenure (months)</label>
-            <input type="number" id="sipMonths" value="60" min="1" />
-          </div>
-          <div>
-            <label for="sipStartDate">First investment date</label>
-            <input type="date" id="sipStartDate" />
-          </div>
-        </div>
-      </div>
-      <div class="note">Returns are assumed constant for illustration; actual mutual fund/SIP returns vary and are not guaranteed.</div>
-      <div class="summary" id="sipSummary"></div>
-      <div class="card ledger">
-        <div class="stub">
-          <div class="stub-title">Month-wise register</div>
-          <div class="stub-sub" id="sipLedgerSub"></div>
-        </div>
-        <div class="table-scroll"><table id="sipTable"></table></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- AGE MODULE -->
-  <div id="fiq-age" class="fiq-module" style="display:none">
-    <div class="eyebrow">LEDGER &middot; 03 AGE</div>
-    <h1 class="page-title">Age Calculator</h1>
-    <p class="lede">Exact age in years, months and days between two dates &mdash; useful for eligibility checks, maturity age, and retirement dates.</p>
-
-    <div class="card input-card">
-      <div class="grid">
-        <div>
-          <label for="ageDob">Date of birth</label>
-          <input type="date" id="ageDob" />
-        </div>
-        <div>
-          <label for="ageAsOf">Age as on</label>
-          <input type="date" id="ageAsOf" />
-        </div>
-      </div>
-    </div>
-
-    <div class="summary" id="ageSummary"></div>
-
-    <div class="card ledger">
-      <div class="stub">
-        <div class="stub-title">Age in other units</div>
-        <div class="stub-sub">For quick cross-checking against eligibility criteria</div>
-      </div>
-      <div class="table-scroll"><table id="ageTable"></table></div>
-    </div>
-  </div>
+    <div id="calcEmi" class="calc-pane"></div>
+    <div id="calcDeposit" class="calc-pane" style="display:none"></div>
+    <div id="calcAge" class="calc-pane" style="display:none"></div>
+    <div id="calcSip" class="calc-pane" style="display:none"></div>
+    <div id="calcCurrency" class="calc-pane" style="display:none"></div>
   </div>
 </section>
+
 <section class="panel" id="pInterestCompare">
 <div class="card">
-<h2>Bank Interest Calculator — Daily Product & Bank Interest Comparison</h2>
-<p class="hint">Compare bank interest credited with independently calculated interest using daily closing balances, progressive slabs and the Daily Product ÷ 365 × rate method.</p>
-<div class="formula-box"><b>Interest formula:</b> Daily Product ÷ 365 × applicable rate (%).</div><div class="formula-box"><b>Slab settings:</b> Three slabs are built in. The first slab covers the first ₹3,00,000. You can add more. All upper amounts and rates are editable.</div>
+<h2>Interest Comparison</h2>
+<p class="hint">Compare bank interest credited with independently calculated interest using daily closing balances, progressive slabs and the actual number of days in each calendar month.</p>
+<div class="formula-box"><b>Slab settings:</b> Three slabs are built in. The first slab covers the first ₹3,00,000. You can add more. All upper amounts and rates are editable.</div>
 <div class="row" style="margin-top:12px;align-items:center;gap:8px;flex-wrap:wrap">
 <label class="f" style="min-width:110px">Statement</label><select id="interestStatement" style="min-width:240px"></select>
 <button class="btn primary" type="button" onclick="interestRun()">Calculate interest</button>
@@ -1559,7 +1048,7 @@ main{padding-top:24px}
 
 <footer>
   <p class="disc">This tool extracts and analyses data from statements you provide. Always verify the extracted figures against your original statement before using them for tax filing, loan applications, or any financial decision. This is not financial or tax advice.</p>
-  <p>StatementIQ v2.23 · runs entirely offline in your browser · no account, no upload, no tracking</p>
+  <p>StatementIQ v2.6.7 · runs entirely offline in your browser · no account, no upload, no tracking</p>
 </footer>
 
 <!-- password modal -->
@@ -1587,34 +1076,6 @@ main{padding-top:24px}
 
 <div id="toasts"></div>
 
-<script>
-/* v2.18 slab editor hardening — direct delegated handlers so the Add slab control cannot be lost. */
-document.addEventListener('click', function(e){
-  const addTop=e.target.closest && e.target.closest('#emiAddSlabTopBtn');
-  if(addTop){ e.preventDefault(); e.stopPropagation(); try{ if(typeof window.emiAddSlab==='function'){ window.emiAddSlab(); return; } }catch(err){} }
-  const add=e.target.closest && e.target.closest('#emiAddSlabBtn');
-  if(add){
-    e.preventDefault(); e.stopPropagation();
-    try{ if(typeof window.emiAddSlab==='function'){ window.emiAddSlab(); return; } }catch(err){}
-    const box=document.getElementById('emiSlabs'); if(!box)return;
-    const rows=[...box.querySelectorAll('.stmt-slab-row')];
-    const row=document.createElement('div'); row.className='stmt-slab-row emi-static-row';
-    const idx=rows.length+1;
-    row.innerHTML='<div class="wide"><div class="slab-label">Slab '+idx+'</div></div><div><label>Upto amount</label><input class="emi-slab-to" type="number" min="0" step="1" placeholder="No limit"></div><div><label>Annual rate %</label><input class="emi-slab-rate" type="number" min="0" step="0.01" value="11"></div><div><label>Coverage</label><div class="hint">Above previous slab</div></div><div><button class="btn sm emi-remove-static" type="button">Remove</button></div>';
-    const noLimit=rows.find(r=>r.querySelector('.emi-slab-to') && r.querySelector('.emi-slab-to').value==='');
-    box.insertBefore(row,noLimit||null);
-    const save=document.getElementById('emiSlabSave'); if(save)save.textContent='✓ Slab added — edit amount/rate as required';
-    return;
-  }
-  const rem=e.target.closest && e.target.closest('.emi-remove-static');
-  if(rem){
-    e.preventDefault();
-    const rows=[...document.querySelectorAll('#emiSlabs .stmt-slab-row')];
-    if(rows.length>1) rem.closest('.stmt-slab-row').remove();
-    [...document.querySelectorAll('#emiSlabs .stmt-slab-row')].forEach((r,i)=>{const l=r.querySelector('.slab-label');if(l)l.textContent='Slab '+(i+1);});
-  }
-});
-</script>
 <script>
 "use strict";
 pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
@@ -2389,7 +1850,7 @@ function setStep(n){
 }
 function switchPanel(id){
   const uploadBar=document.getElementById("globalUploadBar"); if(uploadBar) uploadBar.style.display=(id==="pUpload"?"none":"flex");
-  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('on', p.id===id)); if(id==='pInterestCompare') renderInterestComparisonPanel(); if(id==='pFinancialCalc'){ try{initCalculators(); if(typeof emiRenderSlabs==='function') emiRenderSlabs();}catch(e){} }
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('on', p.id===id)); if(id==='pInterestCompare') renderInterestComparisonPanel(); if(id==='pFinancialCalc'){ try{initCalculators();}catch(e){} }
   
 const btnFinancialCalc = document.getElementById('btnFinancialCalc');
 if(btnFinancialCalc) btnFinancialCalc.onclick = ()=>switchPanel('pFinancialCalc');
@@ -2918,8 +2379,7 @@ function detectSalary(txns){
 const INTEREST_DEFAULT_SLABS = [
   {from:0, to:300000, rate:2.50},
   {from:300001, to:500000, rate:5.00},
-  {from:500001, to:2500000, rate:6.00},
-  {from:2500001, to:null, rate:7.00}
+  {from:500001, to:null, rate:6.00}
 ];
 
 function interestLoadConfig(){
@@ -2978,110 +2438,94 @@ function interestAllocate(balance, slabs){
   }
   return parts;
 }
-
-function interestGetOpeningBalance(ds, rows){
-  try{
-    const candidates=[
-      ds?.summary?.opening,
-      ds?.integrity?.opening
-    ];
-    for(const v of candidates){
-      if(v!==null && v!==undefined && isFinite(Number(v))) return Number(v);
-    }
-    const txt=String(ds?.pagesText||'');
-    const m=txt.match(/(?:opening|brought\s*forward|opening\s+balance)[^0-9\-]{0,30}([\d,]+(?:\.\d+)?)/i);
-    if(m){
-      const n=Number(String(m[1]).replace(/,/g,''));
-      if(isFinite(n)) return n;
-    }
-    // If the first dated transaction has a balance, derive the opening
-    // balance from that row's balance and its movement.
-    if(rows.length){
-      const r=rows[0];
-      if(r.balance!==null && isFinite(Number(r.balance))){
-        return Number(r.balance)-Number(r.credit||0)+Number(r.debit||0);
-      }
-    }
-  }catch(e){}
-  return null;
-}
 function interestBuildDaily(ds){
   const rows=(ds.rows||[]).filter(r=>r.date instanceof Date && !isNaN(r.date)).sort((a,b)=>a.date-b.date);
-  if(!rows.length)return {days:[],partial:true,from:null,to:null};
+  if(!rows.length) return {days:[],partial:true,from:null,to:null};
 
   const first=new Date(rows[0].date.getFullYear(),rows[0].date.getMonth(),rows[0].date.getDate());
   const last=new Date(rows[rows.length-1].date.getFullYear(),rows[rows.length-1].date.getMonth(),rows[rows.length-1].date.getDate());
-  const statementOpening=interestGetOpeningBalance(ds,rows);
-  const byDay={};
-  rows.forEach(r=>{const k=dayKey(r.date);(byDay[k]=byDay[k]||[]).push(r);});
+  const statementOpening=(ds.integrity && ds.integrity.opening!==null && isFinite(Number(ds.integrity.opening)))
+    ? Number(ds.integrity.opening) : null;
 
-  let opening=statementOpening,startDate,firstMonthMode='full';
+  const byDay={};
+  rows.forEach(r=>{
+    const k=dayKey(r.date);
+    (byDay[k]=byDay[k]||[]).push(r);
+  });
+
+  /*
+     Starting-date rule:
+     - If a brought-forward/opening balance exists, start on the 1st of the
+       first calendar month and carry that balance forward.
+     - If there is NO brought-forward balance and the first transaction is
+       after the 1st, interest starts on that first transaction date.  In that
+       case the first day's closing balance must be available in the statement;
+       the app does not invent a pre-transaction balance.
+     - For every later month, start on the 1st and carry the previous month's
+       closing balance into the month.
+  */
+  let opening=statementOpening;
+  let startDate;
+  let firstMonthMode='full';
   if(opening===null && first.getDate()>1){
-    const fr=byDay[dayKey(first)]||[];
-    const wb=fr.filter(r=>r.balance!==null && isFinite(Number(r.balance)));
-    if(!wb.length)return {days:[],partial:true,from:first,to:last,missingOpening:true,errorMessage:'No brought-forward balance is shown and the first transaction is after the 1st. A closing balance on the first transaction day is required.'};
-    opening=Number(wb[wb.length-1].balance);
+    const firstDayRows=byDay[dayKey(first)]||[];
+    const firstWithBal=firstDayRows.filter(r=>r.balance!==null && isFinite(Number(r.balance)));
+    if(!firstWithBal.length){
+      return {days:[],partial:true,from:first,to:last,missingOpening:true,
+        errorMessage:'No brought-forward balance is shown and the first transaction is after the 1st. A closing balance on the first transaction day is required to calculate interest from that date.'};
+    }
+    opening=Number(firstWithBal[firstWithBal.length-1].balance);
     startDate=first;
     firstMonthMode='from-first-transaction';
   }else{
     if(opening===null){
-      const fr=byDay[dayKey(first)]||[];
-      const wb=fr.filter(r=>r.balance!==null && isFinite(Number(r.balance)));
-      if(wb.length){
-        const movement=fr.reduce((a,r)=>a+Number(r.credit||0)-Number(r.debit||0),0);
-        opening=Number(wb[wb.length-1].balance)-movement;
+      const firstDayRows=byDay[dayKey(first)]||[];
+      const firstWithBal=firstDayRows.filter(r=>r.balance!==null && isFinite(Number(r.balance)));
+      if(firstWithBal.length){
+        opening=Number(firstWithBal[firstWithBal.length-1].balance)-Number(firstDayRows.reduce((a,r)=>a+Number(r.credit||0)-Number(r.debit||0),0));
       }
     }
-    if(opening===null || !isFinite(opening))return {days:[],partial:true,from:first,to:last,missingOpening:true,errorMessage:'Opening/brought-forward balance could not be established from the statement.'};
+    if(opening===null || !isFinite(opening)){
+      return {days:[],partial:true,from:first,to:last,missingOpening:true,
+        errorMessage:'Opening/brought-forward balance could not be established from the statement.'};
+    }
     startDate=new Date(first.getFullYear(),first.getMonth(),1);
   }
 
   const days=[];
-  let balance=opening,currentMonth=null,monthOpening=opening;
+  let balance=opening;
   let d=new Date(startDate);
   const end=new Date(last.getFullYear(),last.getMonth()+1,0);
-
   while(d<=end){
-    const k=dayKey(d),tx=byDay[k]||[],mKey=monthKey(d);
-
-    // For every month after the first, the opening on the 1st is the
-    // previous month's last-day closing balance.
-    if(mKey!==currentMonth){
-      if(currentMonth!==null) balance=Number(days[days.length-1].balance);
-      currentMonth=mKey;
-      monthOpening=balance;
-    }
-
-    const openingForDay=balance;
+    const k=dayKey(d);
+    const tx=byDay[k]||[];
     if(tx.length){
-      const movements=tx.filter(r=>Number(r.credit||0)!==0 || Number(r.debit||0)!==0);
-      const withBal=movements.filter(r=>r.balance!==null && isFinite(Number(r.balance)));
+      const withBal=tx.filter(r=>r.balance!==null && isFinite(Number(r.balance)));
       if(withBal.length) balance=Number(withBal[withBal.length-1].balance);
-      else movements.forEach(r=>{balance+=Number(r.credit||0)-Number(r.debit||0);});
+      else {
+        tx.forEach(r=>{ balance += Number(r.credit||0)-Number(r.debit||0); });
+      }
     }
-
     days.push({
-      date:new Date(d),month:mKey,
+      date:new Date(d),
+      month:monthKey(d),
       daysInMonth:new Date(d.getFullYear(),d.getMonth()+1,0).getDate(),
-      opening:openingForDay,monthOpening,balance,
-      hasTransaction:tx.length>0,txCount:tx.length
+      balance,
+      hasTransaction:tx.length>0,
+      txCount:tx.length
     });
     d.setDate(d.getDate()+1);
   }
 
+  const firstMonthEnd=new Date(first.getFullYear(),first.getMonth()+1,0);
   const completeLast=last.getDate()===end.getDate();
-  const monthOpenings={},monthClosings={};
-  days.forEach(x=>{
-    if(monthOpenings[x.month]===undefined)monthOpenings[x.month]=x.monthOpening;
-    monthClosings[x.month]=x.balance;
-  });
   return {
-    days,partial:!(first.getDate()===1 && completeLast)||firstMonthMode!=='full',
-    from:first,to:last,opening:days[0]?.opening??opening,closing:days.at(-1)?.balance??balance,
-    startDate:new Date(startDate),firstMonthMode,monthOpenings,monthClosings
+    days, partial:!(first.getDate()===1 && completeLast) || firstMonthMode!=='full',
+    from:first,to:last,opening,closing:balance,
+    startDate:new Date(startDate),
+    firstMonthMode
   };
 }
-
 function interestCalculateDaily(ds, slabs){
   const daily=interestBuildDaily(ds);
   if(!daily.days.length) return {...daily, monthly:[], total:0, error:daily.errorMessage || (daily.missingOpening?'Opening balance could not be established from this statement.':'No dated transactions found.')};
@@ -3090,21 +2534,21 @@ function interestCalculateDaily(ds, slabs){
   daily.days.forEach(x=>{
     const parts=interestAllocate(x.balance,slabs);
     let interest=0;
-    parts.forEach(p=> interest += p.portion/365*p.rate/100);
+    parts.forEach(p=> interest += p.portion*p.rate/100/x.daysInMonth);
     total += interest;
     out.push({...x, parts, interest});
   });
   const by={};
   out.forEach(x=>{
-    const m=by[x.month]||(by[x.month]={month:x.month,days:x.daysInMonth,calculatedDays:0,dailyProduct:0,interest:0,slabProducts:slabs.map(()=>0),slabInterest:slabs.map(()=>0),actualInterest:0,openingBalance:x.monthOpening,closingBalance:x.balance});
-    m.dailyProduct += x.balance; m.closingBalance=x.balance;
+    const m=by[x.month]||(by[x.month]={month:x.month,days:x.daysInMonth,calculatedDays:0,dailyProduct:0,interest:0,slabProducts:slabs.map(()=>0),slabInterest:slabs.map(()=>0),actualInterest:0});
+    m.dailyProduct += x.balance;
     m.calculatedDays += 1;
     m.interest += x.interest;
-    x.parts.forEach((p,i)=>{m.slabProducts[i]+=p.portion;m.slabInterest[i]+=p.portion/365*p.rate/100;});
+    x.parts.forEach((p,i)=>{m.slabProducts[i]+=p.portion;m.slabInterest[i]+=p.portion*p.rate/100/x.daysInMonth;});
   });
   // Interest actually credited in the statement for comparison.
   (ds.rows||[]).forEach(r=>{
-    if(r.credit>0 && /(monthly\s+interest|interest\s+(credit|credited|paid|payment)|\bint\.?\s*(credit|credited)|interest)/i.test(r.narration||'')){
+    if(r.credit>0 && /monthly interest credit|interest credit|\binterest\b|\bint\.? credit/i.test(r.narration||'')){
       const k=monthKey(r.date);
       const m=by[k]||(by[k]={month:k,days:new Date(r.date.getFullYear(),r.date.getMonth()+1,0).getDate(),calculatedDays:0,dailyProduct:0,interest:0,slabProducts:slabs.map(()=>0),slabInterest:slabs.map(()=>0),actualInterest:0});
       m.actualInterest += Number(r.credit||0);
@@ -3150,42 +2594,17 @@ function interestResetSlabs(){
   const status=document.getElementById('interestSaveStatus');
   if(status) status.textContent='✓ Built-in three slabs restored and saved.';
 }
-
-function interestRenderComparison(result){
-  const months=result?.monthly||[];
-  const calculated=Number(result?.total||0);
-  const bank=months.reduce((a,m)=>a+Number(m.actualInterest||0),0);
-  const hasBank=months.some(m=>Number(m.actualInterest||0)>0);
-  const diff=calculated-bank;
-  let h='<div class="calc-grid" style="margin-top:12px">';
-  h+='<div class="calc-result" style="margin-top:0"><div class="hint">INTEREST CALCULATED</div><div class="big">'+inr(calculated)+'</div></div>';
-  h+='<div class="calc-result" style="margin-top:0"><div class="hint">INTEREST CHARGED / CREDITED BY BANK</div><div class="big">'+(hasBank?inr(bank):'—')+'</div></div>';
-  h+='<div class="calc-result" style="margin-top:0"><div class="hint">DIFFERENCE</div><div class="big">'+(hasBank?inr(Math.abs(diff)):'—')+'</div></div>';
-  h+='</div>';
-  if(hasBank){
-    const status=Math.abs(diff)<0.01
-      ? '<b style="color:var(--green)">✓ Interest calculated matches bank interest.</b>'
-      : (diff>0
-        ? '<b style="color:var(--red)">Calculated interest is higher than bank interest by '+inr(Math.abs(diff))+'.</b>'
-        : '<b style="color:var(--red)">Bank interest is higher than calculated interest by '+inr(Math.abs(diff))+'.</b>');
-    h+='<div class="banner '+(Math.abs(diff)<0.01?'ok':'warn')+'" style="margin-top:10px"><span>'+(Math.abs(diff)<0.01?'✓':'!')+'</span><div>'+status+'</div></div>';
-  }else{
-    h+='<div class="banner warn" style="margin-top:10px"><span>!</span><div><b>Bank interest entry not identified.</b> The comparison requires the actual interest credit entry in the uploaded statement; closing balance or other statement totals are never used as bank interest.</div></div>';
-  }
-  return h;
-}
 function interestRenderResults(result,slabs){
   const box=document.getElementById('interestResults');
   if(!box) return;
   if(result.error){ box.innerHTML='<div class="banner bad"><span>!</span><div>'+esc(result.error)+'</div></div>'; return; }
   const months=result.monthly||[];
-  let h='<div class="formula-box"><b>Method:</b> Daily product ÷ 365 × applicable slab rate (%). Where a brought-forward/opening balance is available, calculation starts on the 1st of the month; for every later month, the opening balance is the previous month closing balance; an opening-balance row is not treated as a transaction. Progressive slabs are applied to each daily balance.</div>';
-  h+=interestRenderComparison(result);
+  let h='<div class="formula-box"><b>Method:</b> Daily closing balance × applicable slab rate ÷ actual days in that calendar month. Progressive slabs are applied to each daily balance.</div>';
   if(result.partial){ const mode=result.firstMonthMode==='from-first-transaction' ? 'No brought-forward balance was available, so the first month is calculated from the first transaction date through month-end. Later months are calculated from the 1st through month-end using the carried closing balance.' : 'The calculation uses the 1st through the last day of each calendar month. Where the statement starts mid-month without a brought-forward balance, the first month starts on the first transaction date.'; h+='<div class="banner warn" style="margin-top:10px"><span>!</span><div><b>Statement period rule.</b> '+mode+'</div></div>'; }
-  h+='<div class="tblwrap" style="margin-top:12px"><table class="interest-table"><thead><tr><th>Month</th><th class="r">Opening balance</th><th class="r">Calendar days</th><th class="r">Calculated days</th><th class="r">Daily product</th><th class="r">Calculated interest</th><th class="r">Interest credited</th><th class="r">Difference</th></tr></thead><tbody>';
+  h+='<div class="tblwrap" style="margin-top:12px"><table class="interest-table"><thead><tr><th>Month</th><th class="r">Calendar days</th><th class="r">Calculated days</th><th class="r">Daily product</th><th class="r">Calculated interest</th><th class="r">Interest credited</th><th class="r">Difference</th></tr></thead><tbody>';
   months.forEach(m=>{
     const diff=m.actualInterest ? m.interest-m.actualInterest : null;
-    h+='<tr><td>'+esc(monthLabel(m.month))+'</td><td class="r num">'+inr(m.openingBalance||0)+'</td><td class="r num">'+m.days+'</td><td class="r num">'+m.calculatedDays+'</td><td class="r num">'+inr(m.dailyProduct)+'</td><td class="r num">'+inr(m.interest)+'</td><td class="r num">'+(m.actualInterest?inr(m.actualInterest):'—')+'</td><td class="r num">'+(diff===null?'—':inr(diff))+'</td></tr>';
+    h+='<tr><td>'+esc(monthLabel(m.month))+'</td><td class="r num">'+m.days+'</td><td class="r num">'+m.calculatedDays+'</td><td class="r num">'+inr(m.dailyProduct)+'</td><td class="r num">'+inr(m.interest)+'</td><td class="r num">'+(m.actualInterest?inr(m.actualInterest):'—')+'</td><td class="r num">'+(diff===null?'—':inr(diff))+'</td></tr>';
   });
   h+='</tbody><tfoot><tr><th>Total</th><th></th><th class="r num">'+months.reduce((a,m)=>a+m.calculatedDays,0)+'</th><th class="r num">'+inr(months.reduce((a,m)=>a+m.dailyProduct,0))+'</th><th class="r num">'+inr(result.total)+'</th><th class="r num">'+inr(months.reduce((a,m)=>a+(m.actualInterest||0),0))+'</th><th></th></tr></tfoot></table></div>';
   h+='<div class="row" style="margin-top:12px"><button class="btn sm" type="button" onclick="interestShowDaily()">Show daily calculation</button></div>';
@@ -3209,7 +2628,7 @@ function interestShowDaily(){
     product:days.reduce((a,d)=>a+((d.parts[i]||{}).portion||0),0),
     interest:days.reduce((a,d)=>{
       const part=d.parts[i];
-      return a+(part ? part.portion/365*part.rate/100 : 0);
+      return a+(part ? part.portion*part.rate/100/d.daysInMonth : 0);
     },0)
   }));
 
@@ -3241,7 +2660,7 @@ function interestShowDaily(){
 
     slabs.forEach((s,i)=>{
       const p=d.parts[i]||{portion:0,rate:s.rate};
-      const dailyInt=p.portion*p.rate/365/100;
+      const dailyInt=p.portion*p.rate/100/d.daysInMonth;
       h+='<td class="r num">'+inr(p.portion)+'</td>'+
          '<td class="r num">'+Number(p.rate).toFixed(2)+'%</td>'+
          '<td class="r num">'+inr(dailyInt)+'</td>';
@@ -3294,7 +2713,6 @@ function interestRemoveSlab(i){
   slabs.splice(i,1);
   interestRenderSlabs(interestNormaliseSlabs(slabs)); interestSaveConfig(interestNormaliseSlabs(slabs));
 }
-
 function interestRun(){
   const slabs=interestNormaliseSlabs(interestSlabRows());
   const errors=interestValidateSlabs(slabs);
@@ -4614,7 +4032,7 @@ function clearAll(silent){
   S.recon={c2b:null,b2b:null};
   Object.values(S.charts).forEach(c=>{ try{c.destroy();}catch(e){} });
   S.charts={};
-  ['fileList','mapBody','c2bOut','b2bOut','consOut','perOut','bookMap','bankIntegrity','interestResults','interestDaily','interestSlabTotal','interestComparisonSummary'].forEach(id=>{ const el=document.getElementById(id); if(el) el.innerHTML=''; });
+  ['fileList','mapBody','c2bOut','b2bOut','consOut','perOut','bookMap','bankIntegrity','interestResults','interestDaily','interestSlabTotal'].forEach(id=>{ const el=document.getElementById(id); if(el) el.innerHTML=''; });
   // Calculated interest belongs to the current statement session. Clear it with
   // the statement data, but retain the user's saved slab configuration.
   window.SIQInterestLast = null;
@@ -4667,871 +4085,243 @@ document.getElementById('helpTbl').innerHTML =
 })();
 
 /* ============================================================================
-   14. FINANCIAL CALCULATORS — v2.18
-   Proven engine copied/adapted from the uploaded Financial Calendar & Calculators app.
+   14. DEDICATED FINANCIAL CALCULATORS
    ========================================================================== */
-const fiqFmtDate = (d) => d.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
-const fiqFmtINR = (n) => isFinite(n) ? n.toLocaleString("en-IN", { maximumFractionDigits: 2, minimumFractionDigits: 2 }) : "—";
-const fiqAddMonths = (date, months) => { const d = new Date(date); d.setMonth(d.getMonth() + months); return d; };
+function calcNum(id){ const e=document.getElementById(id); const n=Number((e?.value||'').toString().replace(/,/g,'')); return isFinite(n)?n:0; }
+function calcMoney(n){ return Number(n||0).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function calcPct(n){ return Number(n||0).toFixed(2)+'%'; }
+function calcDate(id){ const v=document.getElementById(id)?.value; return v?new Date(v+'T00:00:00'):null; }
 
-const EMI_DEFAULT_SLABS=[{to:300000,rate:7},{to:500000,rate:8},{to:750000,rate:9},{to:1000000,rate:10},{to:null,rate:11}];
-function emiNormaliseSlabs(slabs){return (slabs||[]).map(x=>({to:(x.to===null||x.to===''||x.to===undefined)?null:Number(x.to),rate:Number(x.rate)||0})).filter(x=>x.to===null||isFinite(x.to));}
-function emiLoadSlabs(){
-  try{
-    const x=JSON.parse(localStorage.getItem('financial_emi_interest_slabs_v2')||'null');
-    if(Array.isArray(x)&&x.length){
-      const clean=emiNormaliseSlabs(x);
-      if(clean.length) return clean;
-    }
-  }catch(e){ console.warn('Invalid saved EMI slabs; restoring defaults.',e); }
-  const defaults=EMI_DEFAULT_SLABS.map(x=>({...x}));
-  try{localStorage.setItem('financial_emi_interest_slabs_v2',JSON.stringify(defaults));}catch(e){}
-  return defaults;
-}
-function emiSaveSlabs(slabs){try{localStorage.setItem('financial_emi_interest_slabs_v2',JSON.stringify(emiNormaliseSlabs(slabs)));}catch(e){}}
-function emiAllocate(balance,slabs){const b=Math.max(0,Number(balance)||0),parts=[];let prev=0;for(const s of emiNormaliseSlabs(slabs)){if(b<=prev)break;const upper=s.to===null?Infinity:s.to;const portion=Math.max(0,Math.min(b,upper)-prev);if(portion>0)parts.push({portion,rate:s.rate});if(!isFinite(upper))break;prev=upper;}return parts;}
-function emiSlabInterest(balance,slabs,periodFactor){return emiAllocate(balance,slabs).reduce((a,p)=>a+p.portion*p.rate/100*periodFactor,0);}
-function emiRenderSlabs(){const el=document.getElementById('emiSlabs');if(!el)return;const slabs=emiLoadSlabs();el.innerHTML=slabs.map((x,i)=>`<div class="stmt-slab-row"><div class="wide"><div class="slab-label">Slab ${i+1}</div></div><div><label>Upto amount</label><input class="emi-slab-to" type="number" min="0" step="1" value="${x.to===null?'':x.to}" placeholder="No limit"></div><div><label>Annual rate %</label><input class="emi-slab-rate" type="number" min="0" step="0.01" value="${x.rate}"></div><div><label>Coverage</label><div class="hint">${x.to===null?'Above previous slab':'First ₹'+fiqFmtINR(x.to)}</div></div><div><button class="btn sm" type="button" onclick="emiRemoveSlab(${i})" ${slabs.length<=1?'disabled':''}>Remove</button></div></div>`).join('');el.querySelectorAll('input').forEach(inp=>inp.addEventListener('change',emiPersistSlabs));}
-function emiCurrentSlabs(){return [...document.querySelectorAll('#emiSlabs .stmt-slab-row')].map(r=>({to:r.querySelector('.emi-slab-to').value===''?null:Number(r.querySelector('.emi-slab-to').value),rate:Number(r.querySelector('.emi-slab-rate').value)||0}));}
-function emiPersistSlabs(){emiSaveSlabs(emiCurrentSlabs());if(document.getElementById('emiSlabSave'))document.getElementById('emiSlabSave').textContent='✓ Saved. Slabs remain unchanged until Reset EMI slabs.';renderEmi();}
-function emiAddSlab(){
-  let s=emiLoadSlabs();
-  if(!Array.isArray(s)||!s.length) s=EMI_DEFAULT_SLABS.map(x=>({...x}));
-  const last=s[s.length-1]||{to:null,rate:0};
-  if(last.to===null){
-    const prev=s.length>1 && s[s.length-2].to!==null ? Number(s[s.length-2].to) : 500000;
-    s.splice(s.length-1,0,{to:Math.max(0,prev)+200000,rate:Number(last.rate)||0});
-  }else{
-    s.push({to:null,rate:Number(last.rate)||0});
-  }
-  emiSaveSlabs(s);
-  emiRenderSlabs();
-  try{renderEmi();}catch(e){console.warn('EMI recalculation after adding slab skipped:',e);}
-  const save=document.getElementById('emiSlabSave');
-  if(save) save.textContent='✓ Slab added and saved';
-  const box=document.getElementById('emiSlabSettings');
-  if(box) box.style.display='block';
-}
-function emiRemoveSlab(i){const s=emiLoadSlabs();if(s.length<=1)return;s.splice(i,1);emiSaveSlabs(s);emiRenderSlabs();renderEmi();}
-function emiResetSlabs(){emiSaveSlabs(EMI_DEFAULT_SLABS);emiRenderSlabs();renderEmi();}
-function emiSlabSchedule({principal,count,freqMonths,startDate,repaymentType,moratoriumMonths,moratoriumMode,slabs}){
- let rows=[],balance=principal,period=0,moratoriumInterest=0;const morat=Math.max(0,Math.floor(moratoriumMonths||0)),pf=freqMonths/12;
- for(let m=1;m<=morat;m++){period++;const opening=balance,interest=emiSlabInterest(opening,slabs,pf),dueDate=fiqAddMonths(startDate,m);moratoriumInterest+=interest;if(moratoriumMode==='accrued'){balance=opening+interest;rows.push({period,dueDate,opening,installment:0,interest,principalPaid:0,closing:balance,moratorium:true,moratoriumPaid:false});}else rows.push({period,dueDate,opening,installment:interest,interest,principalPaid:0,closing:balance,moratorium:true,moratoriumPaid:true});}
- const effectivePrincipal=balance; const scheduleStart=fiqAddMonths(startDate,morat),n=count;
- if(repaymentType==='equal-principal'){const pp0=balance/n;for(let i=1;i<=n;i++){const opening=balance,interest=emiSlabInterest(opening,slabs,pf),pp=i===n?balance:pp0,inst=pp+interest;balance=Math.max(0,balance-pp);period++;rows.push({period,dueDate:fiqAddMonths(scheduleStart,i*freqMonths),opening,installment:inst,interest,principalPaid:pp,closing:balance,moratorium:false});}const rr=rows.filter(r=>!r.moratorium);return {rows,installment:rr[0]?.installment||0,firstInstallment:rr[0]?.installment||0,lastInstallment:rr.at(-1)?.installment||0,moratoriumInterest,effectivePrincipal,moratoriumMonths:morat,slab:true};}
- const startBalance=balance;function remaining(emi){let b=startBalance;for(let i=1;i<=n;i++){const interest=emiSlabInterest(b,slabs,pf);b-=emi-interest;if(b<=0)return 0;}return b;}
- let lo=0,hi=Math.max(startBalance/n,1);for(let z=0;z<100&&remaining(hi)>0.0001;z++)hi*=2;for(let z=0;z<120;z++){const mid=(lo+hi)/2;if(remaining(mid)>0)lo=mid;else hi=mid;}const installment=hi;balance=startBalance;
- for(let i=1;i<=n;i++){const opening=balance,interest=emiSlabInterest(opening,slabs,pf);let pp=installment-interest,inst=installment;if(i===n){pp=balance;inst=pp+interest;}balance=Math.max(0,balance-pp);period++;rows.push({period,dueDate:fiqAddMonths(scheduleStart,i*freqMonths),opening,installment:inst,interest,principalPaid:pp,closing:balance,moratorium:false});}
- return {rows,installment,moratoriumInterest,effectivePrincipal:startBalance,moratoriumMonths:morat,slab:true};
-}
-
-function computeSchedule({ principal, annualRate, count, freqMonths, startDate, repaymentType, moratoriumMonths, moratoriumMode }) {
-  const monthlyRate = annualRate / 100 / 12;
-  const rows = [];
-  let balance = principal;
-  let period = 0;
-  const morat = Math.max(0, Math.floor(moratoriumMonths || 0));
-  let moratoriumInterest = 0;
-
-  // ---- Moratorium period: no principal repayment; interest is either serviced monthly or capitalized ----
-  for (let m = 1; m <= morat; m++) {
-    period++;
-    const opening = balance;
-    const interest = opening * monthlyRate;
-    moratoriumInterest += interest;
-    const dueDate = fiqAddMonths(startDate, m);
-    if (moratoriumMode === 'accrued') {
-      balance = opening + interest; // capitalized into principal, nothing paid
-      rows.push({ period, dueDate, opening, installment: 0, interest, principalPaid: 0, closing: balance, moratorium: true, moratoriumPaid: false });
-    } else {
-      // interest paid: balance (principal) stays untouched, interest paid in cash each month
-      rows.push({ period, dueDate, opening, installment: interest, interest, principalPaid: 0, closing: balance, moratorium: true, moratoriumPaid: true });
-    }
-  }
-
-  const effectivePrincipal = balance; // what the regular schedule will amortize (= original principal, or capitalized amount)
-  const scheduleStart = fiqAddMonths(startDate, morat);
-  const periodRate = (annualRate / 100) * (freqMonths / 12);
-  const n = count;
-
-  if (repaymentType === 'equal-principal') {
-    // Fixed principal each period; interest (and so the total installment) shrinks as the balance shrinks.
-    const principalPerPeriod = balance / n;
-    for (let i = 1; i <= n; i++) {
-      const opening = balance;
-      const interest = opening * periodRate;
-      let principalPaid = principalPerPeriod;
-      if (i === n) principalPaid = balance; // clear rounding drift on the last row
-      const thisInstallment = principalPaid + interest;
-      balance = Math.max(0, balance - principalPaid);
-      period++;
-      rows.push({ period, dueDate: fiqAddMonths(scheduleStart, i * freqMonths), opening, installment: thisInstallment, interest, principalPaid, closing: balance, moratorium: false });
-    }
-    const regularRows = rows.filter(r => !r.moratorium);
-    return {
-      rows,
-      installment: regularRows[0] ? regularRows[0].installment : 0,
-      firstInstallment: regularRows[0] ? regularRows[0].installment : 0,
-      lastInstallment: regularRows[regularRows.length - 1] ? regularRows[regularRows.length - 1].installment : 0,
-      moratoriumInterest, effectivePrincipal, moratoriumMonths: morat,
-    };
-  }
-
-  // Equal installment (standard EMI): fixed total installment; principal/interest mix shifts over time.
-  let installment;
-  if (periodRate === 0) {
-    installment = balance / n;
-  } else {
-    const factor = Math.pow(1 + periodRate, n);
-    installment = (balance * periodRate * factor) / (factor - 1);
-  }
-  for (let i = 1; i <= n; i++) {
-    const interest = balance * periodRate;
-    let principalPaid = installment - interest;
-    let thisInstallment = installment;
-    if (i === n) {
-      principalPaid = balance;
-      thisInstallment = principalPaid + interest;
-    }
-    const opening = balance;
-    balance = Math.max(0, balance - principalPaid);
-    period++;
-    rows.push({ period, dueDate: fiqAddMonths(scheduleStart, i * freqMonths), opening, installment: thisInstallment, interest, principalPaid, closing: balance, moratorium: false });
-  }
-  return { rows, installment, moratoriumInterest, effectivePrincipal, moratoriumMonths: morat };
-}
-
-let fiqChart = null;
-let expandedYear = null;
-
-
-function emiInterestBreakdown(balance,slabs,freqMonths){
-  return emiAllocate(balance,slabs).map((p,i)=>'S'+(i+1)+': ₹'+fiqFmtINR(p.portion)+' @ '+Number(p.rate).toFixed(2)+'% = ₹'+fiqFmtINR(p.portion*p.rate/100*(freqMonths/12))).join('<br>');
-}
-
-function syncEmiPeriodToCount(){
-  const totalMonths=Math.max(1,Math.floor(Number(document.getElementById('periodMonthsTotal')?.value)||0));
-  const freq=Math.max(1,Number(document.getElementById('freq')?.value)||1);
-  const count=Math.max(1,Math.ceil(totalMonths/freq));
-  const el=document.getElementById('count');
-  if(el) el.value=count;
-  return count;
-}
-
-
-
-function openLoanMenu(mode){
-  const standard=mode==='standard';
-  const method=document.getElementById('emiInterestMethod');
-  if(method) method.value=standard?'flat':'slab';
-  const rateWrap=document.getElementById('rate')?.closest('.grid > div');
-  const methodWrap=document.getElementById('emiInterestMethod')?.closest('.grid > div');
-  const slab=document.getElementById('emiSlabSettings');
-  if(rateWrap) rateWrap.style.display=standard?'block':'none';
-  if(methodWrap) methodWrap.style.display=standard?'none':'none';
-  if(slab) slab.style.display=standard?'none':'block';
-  const calcBar=document.getElementById('slabCalculateBar'); if(calcBar) calcBar.style.display=standard?'none':'block';
-  if(!standard && typeof emiRenderSlabs==='function') emiRenderSlabs();
-  const b1=document.getElementById('standardEmiMenuBtn'), b2=document.getElementById('slabEmiMenuBtn');
-  if(b1){b1.classList.toggle('primary',standard);b1.classList.toggle('active',standard);}
-  if(b2){b2.classList.toggle('primary',!standard);b2.classList.toggle('active',!standard);}
-  const d=document.getElementById('loanMenuDescription');
-  if(d) d.textContent=standard ? 'Standard EMI using one annual interest rate throughout the loan.' : 'Separate slab-wise term loan EMI. Set the outstanding-balance slabs and rates below; the slab settings remain unchanged until Reset EMI slabs.';
-  renderEmi();
-}
-
-function showLoanCalculator(mode){
-  const std=document.getElementById('standardEmiMenuPanel');
-  const slab=document.getElementById('slabTermLoanCalculator');
-  const normalCard=document.getElementById('emiCalculatorCard');
-  const b1=document.getElementById('menuStandardEMI');
-  const b2=document.getElementById('menuSlabEMI');
-  if(std) std.style.display=mode==='standard'?'block':'none';
-  if(slab) slab.style.display=mode==='slab'?'block':'none';
-  if(normalCard) normalCard.style.display=mode==='standard'?'block':'none';
-  if(b1){b1.classList.toggle('primary',mode==='standard');b1.classList.toggle('active',mode==='standard');}
-  if(b2){b2.classList.toggle('primary',mode==='slab');b2.classList.toggle('active',mode==='slab');}
-  // The existing slab inputs/results are moved into the dedicated slab menu
-  // when available, without changing the underlying calculation engine.
-  const slabSettings=document.getElementById('emiSlabSettings');
-  const slabResults=document.getElementById('slabEmiResults');
-  if(slabSettings) slabSettings.style.display=mode==='slab'?'block':'none';
-  if(mode==='slab' && typeof emiRenderSlabs==='function') emiRenderSlabs();
-  if(slabResults) slabResults.style.display=mode==='slab'?'block':'none';
-}
-
-function ensureEmiStartDate(){
-  const el=document.getElementById('startDate');
-  if(el && !el.value){
-    const d=new Date();
-    const pad=n=>String(n).padStart(2,'0');
-    el.value=d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
-  }
-  return el?.value||'';
-}
-
-function renderEmi() {
-  const principal = Number(document.getElementById('principal').value) || 0;
-  const annualRate = Number(document.getElementById('rate').value) || 0;
-  const count = syncEmiPeriodToCount();
-  const freqMonths = Number(document.getElementById('freq').value);
-  const repaymentType = document.getElementById('repayType').value;
-  const moratoriumMonths = Number(document.getElementById('moratMonths').value) || 0;
-  const moratoriumMode = document.getElementById('moratMode').value;
-  const startDateVal = ensureEmiStartDate();
-  if (!principal || !count || !startDateVal) return;
-
-  const startDate = new Date(startDateVal + "T00:00:00");
-  const method=document.getElementById('emiInterestMethod')?.value||'flat';
-  const args={ principal, annualRate, count, freqMonths, startDate, repaymentType, moratoriumMonths, moratoriumMode };
-  const calc=method==='slab'?emiSlabSchedule({...args,slabs:emiLoadSlabs()}):computeSchedule(args);
-  const { rows, installment, firstInstallment, lastInstallment, moratoriumInterest, effectivePrincipal } = calc;
-
-  const regularRows = rows.filter(r => !r.moratorium);
-  const totalInterest = rows.reduce((s, r) => s + r.interest, 0);
-  const totalRepayment = rows.reduce((s, r) => s + r.installment, 0);
-
-  const stats = repaymentType === 'equal-principal'
-    ? [
-        { label: "First installment", value: fiqFmtINR(firstInstallment), color: "var(--ink)" },
-        { label: "Last installment", value: fiqFmtINR(lastInstallment), color: "var(--ink)" },
-        { label: "Total repayment", value: fiqFmtINR(totalRepayment), color: "var(--ink)" },
-        { label: "Total interest paid", value: fiqFmtINR(totalInterest), color: "var(--clay)" },
-      ]
-    : [
-        { label: "Installment amount", value: fiqFmtINR(installment), color: "var(--ink)" },
-        { label: "Total repayment", value: fiqFmtINR(totalRepayment), color: "var(--ink)" },
-        { label: "Total interest paid", value: fiqFmtINR(totalInterest), color: "var(--clay)" },
-        { label: "Total principal", value: fiqFmtINR(principal), color: "var(--green)" },
-      ];
-  if(method==='slab'){
-    stats.push({ label: "Interest method", value: "Progressive slabs", color: "var(--brass)" });
-  }
-  if (moratoriumMonths > 0) {
-    if (moratoriumMode === 'accrued') {
-      stats.push({ label: "Interest capitalized in moratorium", value: fiqFmtINR(moratoriumInterest), color: "var(--brass)" });
-      if (Math.abs(effectivePrincipal - principal) > 0.5) {
-        stats.push({ label: "Principal after moratorium", value: fiqFmtINR(effectivePrincipal), color: "var(--ink)" });
-      }
-    } else {
-      stats.push({ label: "Moratorium interest paid", value: fiqFmtINR(moratoriumInterest), color: "var(--brass)" });
-    }
-  }
-  document.getElementById('summary').innerHTML = stats.map(s => `
-    <div class="stat">
-      <div class="stat-label">${s.label}</div>
-      <div class="stat-value" style="color:${s.color}">&#8377; ${s.value}</div>
-    </div>`).join('');
-
-  const labels = rows.map(r => `#${r.period}`);
-  const step = Math.max(1, Math.ceil(rows.length / 12));
-  try {
-    if (typeof Chart === 'undefined') throw new Error('Chart.js did not load (offline or blocked CDN) — skipping fiqChart, rest of the app is unaffected.');
-    const ctx = document.getElementById('fiqChart').getContext('2d');
-    if (fiqChart) fiqChart.destroy();
-    const isDark = document.body.classList.contains('dark');
-    const chartText = isDark ? '#E6EEE9' : '#5B6B63';
-    const chartGrid = isDark ? '#3A4942' : '#E7ECE7';
-    const chartPrincipal = isDark ? '#2FA58B' : '#0F6E5C';
-    const chartInterest = isDark ? '#F07A69' : '#B5493B';
-    const chartBalance = isDark ? '#E0A43A' : '#C98A2C';
-    fiqChart = new Chart(ctx, {
-      data: {
-        labels,
-        datasets: [
-          { type: 'bar', label: 'Principal', data: rows.map(r => r.principalPaid), backgroundColor: chartPrincipal, stack: 'a' },
-        { type: 'bar', label: 'Interest', data: rows.map(r => r.interest), backgroundColor: chartInterest, stack: 'a' },
-        { type: 'line', label: 'Balance', data: rows.map(r => r.closing), borderColor: chartBalance, borderWidth: 2, pointRadius: 0, yAxisID: 'y' },
-      ],
-    },
-    options: {
-      responsive: true,
-      interaction: { mode: 'index', intersect: false },
-      scales: {
-        x: { ticks: { autoSkip: false, callback: (v, i) => i % step === 0 ? labels[i] : '', font: { size: 11 }, color: chartText }, grid: { display: false } },
-        y: { ticks: { font: { size: 11 }, color: chartText, callback: (v) => (v/1000).toFixed(0) + 'k' }, grid: { color: chartGrid }, stacked: true },
-      },
-      plugins: {
-        legend: { labels: { font: { size: 12, family: "'IBM Plex Sans', sans-serif" } } },
-        tooltip: { titleFont: { family: "'IBM Plex Mono', monospace" }, bodyFont: { family: "'IBM Plex Mono', monospace" },
-          callbacks: { label: (ctx) => `${ctx.dataset.label}: ₹ ${fiqFmtINR(ctx.parsed.y)}` } },
-      },
-    },
-    });
-  } catch (chartErr) {
-    console.warn('EMI fiqChart skipped:', chartErr.message);
-    const canvas = document.getElementById('fiqChart');
-    if (canvas) canvas.style.display = 'none';
-  }
-
-  const byYear = new Map();
-  rows.forEach(r => {
-    const y = r.dueDate.getFullYear();
-    if (!byYear.has(y)) byYear.set(y, []);
-    byYear.get(y).push(r);
+function showCalc(which){
+  ['emi','deposit','age','sip','currency'].forEach(x=>{
+    const p=document.getElementById('calc'+x.charAt(0).toUpperCase()+x.slice(1));
+    if(p) p.style.display=(x===which?'block':'none');
   });
-  const years = Array.from(byYear.entries());
+  document.querySelectorAll('.calc-tab').forEach(b=>b.classList.remove('primary'));
+  const map={emi:'EMI',deposit:'Deposit',age:'Age',sip:'SIP',currency:'Currency'};
+  document.querySelectorAll('.calc-tab').forEach(b=>{if(b.textContent.trim()===map[which])b.classList.add('primary');});
+}
 
-  document.getElementById('ledgerSub').textContent = `${rows.length} entries — complete tenure amortisation — ${method==='slab'?'progressive slab interest':'single annual rate'}`;
+function initCalculators(){
+  const e=document.getElementById('calcEmi');
+  if(e) e.innerHTML=`
+    <h3>EMI Calculator</h3>
+    <div class="calc-grid">
+      <div><label class="f">Loan amount</label><input id="emiP" type="number" value="1000000" min="0"></div>
+      <div><label class="f">Annual interest rate %</label><input id="emiR" type="number" value="8.5" step="0.01" min="0"></div>
+      <div><label class="f">Tenure (months)</label><input id="emiN" type="number" value="60" min="1"></div>
+      <div><label class="f">Moratorium (months)</label><input id="emiM" type="number" value="0" min="0"></div>
+      <div><label class="f">Moratorium interest payment</label><select id="emiMip"><option value="pay">Pay monthly interest</option><option value="accrue">Accrue/capitalize interest</option></select></div>
+      <div><label class="f">Post-moratorium tenure (months)</label><input id="emiPost" type="number" value="60" min="1"></div>
+    </div>
+    <div class="row" style="margin-top:12px"><button class="btn primary" onclick="calcEMI()">Calculate EMI</button></div>
+    <div id="emiResult"></div>
+    <p class="hint">During moratorium, monthly interest can either be paid each month or accrued/capitalized. The result explicitly separates moratorium interest from post-moratorium EMI.</p>`;
 
-  // Complete amortisation schedule: every installment is shown, without requiring
-  // the user to open individual years.
-  document.getElementById('folios').innerHTML = `
-    <div class="complete-amortisation card" style="padding:0;overflow:hidden">
-      <div class="stub">
-        <div class="stub-title">Complete amortisation schedule</div>
-        <div class="stub-sub">Entire tenure shown below — opening balance, slab-wise interest, total interest, principal, EMI/installment and closing balance.</div>
-      </div>
-      <div class="table-scroll">
-        <table>
-          <thead><tr>
-            <th>#</th><th>Due date</th><th>Opening bal.</th><th>Slab-wise interest</th><th>Total interest</th><th>Principal</th><th>EMI / instalment</th><th>Closing bal.</th>
-          </tr></thead>
-          <tbody>${rows.map(r=>`
-            <tr${r.moratorium?' style="background:#FBFAF6;"':''}>
-              <td>${r.moratorium?'M'+r.period:r.period}</td>
-              <td>${fiqFmtDate(r.dueDate)}</td>
-              <td>${fiqFmtINR(r.opening)}</td>
-              <td>${method==='slab'?emiInterestBreakdown(r.opening,emiLoadSlabs(),freqMonths):'—'}</td>
-              <td class="debit">${fiqFmtINR(r.interest)}</td>
-              <td class="credit">${fiqFmtINR(r.principalPaid)}</td>
-              <td>${r.moratorium && !r.moratoriumPaid?'<em style="font-weight:400;color:var(--muted)">Interest capitalised</em>':fiqFmtINR(r.installment)}</td>
-              <td style="font-weight:600">${fiqFmtINR(r.closing)}</td>
-            </tr>`).join('')}</tbody>
-          <tfoot><tr><th colspan="4">TOTAL</th><th class="debit">${fiqFmtINR(totalInterest)}</th><th class="credit">${fiqFmtINR(rows.reduce((a,r)=>a+r.principalPaid,0))}</th><th>${fiqFmtINR(totalRepayment)}</th><th>${fiqFmtINR(rows[rows.length-1]?.closing||0)}</th></tr></tfoot>
-        </table>
-      </div>
+  const d=document.getElementById('calcDeposit');
+  if(d) d.innerHTML=`
+    <h3>Deposit Calculator</h3>
+    <div class="calc-grid">
+      <div><label class="f">Principal / deposit</label><input id="depP" type="number" value="100000" min="0"></div>
+      <div><label class="f">Annual interest rate %</label><input id="depR" type="number" value="7" step="0.01" min="0"></div>
+      <div><label class="f">Term (months)</label><input id="depN" type="number" value="12" min="1"></div>
+      <div><label class="f">Interest payout frequency</label><select id="depMode"><option value="monthly">Monthly</option><option value="quarterly">Quarterly</option><option value="halfyearly">Half-yearly</option><option value="yearly">Yearly</option></select></div>
+      <div><label class="f">Calculation basis</label><select id="depBasis"><option value="monthly">Periodic payout</option><option value="daily">Daily basis</option></select></div>
+      <div><label class="f">Days (for daily calculation)</label><input id="depDays" type="number" value="365" min="1"></div>
+    </div>
+    <div class="row" style="margin-top:12px"><button class="btn primary" onclick="calcDeposit()">Calculate deposit</button></div>
+    <div id="depResult"></div>
+    <h4>Reinvestment deposit</h4>
+    <p class="hint">For reinvestment, quarterly interest is accrued into the deposit instead of being paid out. This is calculated separately from the interest-payout deposit.</p>
+    <div class="calc-grid">
+      <div><label class="f">Principal</label><input id="rdP" type="number" value="100000" min="0"></div>
+      <div><label class="f">Annual rate %</label><input id="rdR" type="number" value="7" step="0.01" min="0"></div>
+      <div><label class="f">Term (months)</label><input id="rdN" type="number" value="36" min="1"></div>
+    </div>
+    <div class="row" style="margin-top:12px"><button class="btn primary" onclick="calcReinvest()">Calculate reinvestment</button></div>
+    <div id="rdResult"></div>`;
+
+  const a=document.getElementById('calcAge');
+  if(a) a.innerHTML=`
+    <h3>Age Calculator</h3>
+    <div class="calc-grid">
+      <div><label class="f">Date of birth</label><input id="ageDob" type="date"></div>
+      <div><label class="f">Calculate age on</label><input id="ageOn" type="date"></div>
+    </div>
+    <div class="row" style="margin-top:12px"><button class="btn primary" onclick="calcAge()">Calculate age</button></div>
+    <div id="ageResult"></div>`;
+
+  const sp=document.getElementById('calcSip');
+  if(sp) sp.innerHTML=`
+    <h3>SIP Calculator</h3>
+    <div class="calc-grid">
+      <div><label class="f">Monthly SIP</label><input id="sipP" type="number" value="10000" min="0"></div>
+      <div><label class="f">Expected annual return %</label><input id="sipR" type="number" value="12" step="0.01"></div>
+      <div><label class="f">Tenure (years)</label><input id="sipY" type="number" value="10" min="1"></div>
+      <div><label class="f">Investment timing</label><select id="sipTiming"><option value="begin">Beginning of month</option><option value="end" selected>End of month</option></select></div>
+    </div>
+    <div class="row" style="margin-top:12px"><button class="btn primary" onclick="calcSIP()">Calculate SIP</button></div>
+    <div id="sipResult"></div>`;
+
+  const c=document.getElementById('calcCurrency');
+  if(c) c.innerHTML=`
+    <h3>Currency Calculator</h3>
+    <div class="calc-grid">
+      <div><label class="f">Amount</label><input id="fxAmount" type="number" value="1" min="0"></div>
+      <div><label class="f">From currency</label><select id="fxFrom"><option value="INR" selected>🇮🇳 INR — Indian Rupee</option><option value="USD">🇺🇸 USD — US Dollar</option><option value="EUR">🇪🇺 EUR — Euro</option><option value="GBP">🇬🇧 GBP — Pound Sterling</option><option value="JPY">🇯🇵 JPY — Japanese Yen</option><option value="AUD">🇦🇺 AUD — Australian Dollar</option><option value="CAD">🇨🇦 CAD — Canadian Dollar</option><option value="SGD">🇸🇬 SGD — Singapore Dollar</option><option value="AED">🇦🇪 AED — UAE Dirham</option><option value="SAR">🇸🇦 SAR — Saudi Riyal</option><option value="CHF">🇨🇭 CHF — Swiss Franc</option><option value="CNY">🇨🇳 CNY — Chinese Yuan</option><option value="HKD">🇭🇰 HKD — Hong Kong Dollar</option><option value="NZD">🇳🇿 NZD — New Zealand Dollar</option><option value="ZAR">🇿🇦 ZAR — South African Rand</option><option value="MYR">🇲🇾 MYR — Malaysian Ringgit</option><option value="THB">🇹🇭 THB — Thai Baht</option><option value="QAR">🇶🇦 QAR — Qatari Riyal</option><option value="KWD">🇰🇼 KWD — Kuwaiti Dinar</option><option value="BHD">🇧🇭 BHD — Bahraini Dinar</option></select></div>
+      <div><label class="f">To currency</label><select id="fxTo"><option value="INR" >🇮🇳 INR — Indian Rupee</option><option value="USD" selected>🇺🇸 USD — US Dollar</option><option value="EUR">🇪🇺 EUR — Euro</option><option value="GBP">🇬🇧 GBP — Pound Sterling</option><option value="JPY">🇯🇵 JPY — Japanese Yen</option><option value="AUD">🇦🇺 AUD — Australian Dollar</option><option value="CAD">🇨🇦 CAD — Canadian Dollar</option><option value="SGD">🇸🇬 SGD — Singapore Dollar</option><option value="AED">🇦🇪 AED — UAE Dirham</option><option value="SAR">🇸🇦 SAR — Saudi Riyal</option><option value="CHF">🇨🇭 CHF — Swiss Franc</option><option value="CNY">🇨🇳 CNY — Chinese Yuan</option><option value="HKD">🇭🇰 HKD — Hong Kong Dollar</option><option value="NZD">🇳🇿 NZD — New Zealand Dollar</option><option value="ZAR">🇿🇦 ZAR — South African Rand</option><option value="MYR">🇲🇾 MYR — Malaysian Ringgit</option><option value="THB">🇹🇭 THB — Thai Baht</option><option value="QAR">🇶🇦 QAR — Qatari Riyal</option><option value="KWD">🇰🇼 KWD — Kuwaiti Dinar</option><option value="BHD">🇧🇭 BHD — Bahraini Dinar</option></select></div>
+      <div><label class="f">Exchange rate (1 From = To)</label><input id="fxRate" type="number" value="0.0115" step="0.000001" min="0"></div>
+    </div>
+    <div class="row" style="margin-top:12px"><button class="btn primary" onclick="calcCurrency()">Convert</button></div>
+    <div id="fxResult"></div>
+    <p class="hint">The offline calculator uses the rate you enter. For a live rate, update the rate before calculating.</p>`;
+
+  const today=new Date();
+  const iso=d=>d.toISOString().slice(0,10);
+  const on=document.getElementById('ageOn'); if(on) on.value=iso(today);
+  const dob=document.getElementById('ageDob'); if(dob){const x=new Date(today.getFullYear()-30,today.getMonth(),today.getDate());dob.value=iso(x);}
+  showCalc('emi');
+}
+
+function calcEMI(){
+  const P=calcNum('emiP'), annual=calcNum('emiR'), totalN=Math.max(1,Math.floor(calcNum('emiN')));
+  const mor=Math.min(totalN,Math.max(0,Math.floor(calcNum('emiM'))));
+  const post=Math.max(1,Math.floor(calcNum('emiPost')||totalN-mor));
+  const r=annual/1200;
+  let principal=P, morInterest=0, morPaid=0, schedule=[];
+  for(let m=1;m<=mor;m++){
+    const i=principal*r;
+    morInterest+=i;
+    if(document.getElementById('emiMip')?.value==='pay') morPaid+=i;
+    else principal+=i;
+    schedule.push({month:m,interest:i,payment:document.getElementById('emiMip')?.value==='pay'?i:0,balance:principal});
+  }
+  const n=post;
+  const emi = r===0 ? principal/n : principal*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);
+  let totalPost=0, postInterest=0, bal=principal;
+  for(let m=1;m<=n;m++){
+    const i=bal*r, p=Math.min(bal,emi-i); bal=Math.max(0,bal-p); postInterest+=i; totalPost+=emi;
+  }
+  const totalInterest=morInterest+postInterest;
+  document.getElementById('emiResult').innerHTML=`
+    <div class="calc-result">
+      <div class="big">Post-moratorium EMI: ₹${calcMoney(emi)}</div>
+      <table class="calc-table">
+        <tr><td>Original loan</td><td>₹${calcMoney(P)}</td></tr>
+        <tr><td>Moratorium</td><td>${mor} months</td></tr>
+        <tr><td>Interest during moratorium</td><td>₹${calcMoney(morInterest)}</td></tr>
+        <tr><td>Interest paid during moratorium</td><td>₹${calcMoney(morPaid)}</td></tr>
+        <tr><td>Balance entering EMI period</td><td>₹${calcMoney(principal)}</td></tr>
+        <tr><td>Post-moratorium interest</td><td>₹${calcMoney(postInterest)}</td></tr>
+        <tr><td>Total interest</td><td>₹${calcMoney(totalInterest)}</td></tr>
+        <tr><td>Post-moratorium tenure</td><td>${n} months</td></tr>
+      </table>
     </div>`;
-
-  // Financial year interest summary: April to March.
-  const fyMap = new Map();
-  rows.forEach(r => {
-    const d=r.dueDate, y=d.getMonth()>=3?d.getFullYear():d.getFullYear()-1;
-    const key=`FY ${y}-${String(y+1).slice(-2)}`;
-    if(!fyMap.has(key)) fyMap.set(key,{interest:0,principal:0,installment:0,from:y,to:y+1});
-    const z=fyMap.get(key); z.interest+=r.interest; z.principal+=r.principalPaid; z.installment+=r.installment;
-  });
-  const fyEntries=[...fyMap.entries()].sort((a,b)=>a[1].from-b[1].from);
-  document.getElementById('fyInterestSummary').innerHTML=`
-    <div class="stub-title">Financial Year-wise Interest</div>
-    <div class="stub-sub" style="margin:4px 0 10px;color:var(--muted)">Interest payable during each Indian financial year (1 April to 31 March).</div>
-    <div class="table-scroll"><table>
-      <thead><tr><th>Financial Year</th><th>Interest</th><th>Principal</th><th>Total instalments</th></tr></thead>
-      <tbody>${fyEntries.map(([fy,z])=>`<tr><td><strong>${fy}</strong></td><td class="debit">${fiqFmtINR(z.interest)}</td><td class="credit">${fiqFmtINR(z.principal)}</td><td>${fiqFmtINR(z.installment)}</td></tr>`).join('')}</tbody>
-      <tfoot><tr><th>Total</th><th>${fiqFmtINR(fyEntries.reduce((a,[,z])=>a+z.interest,0))}</th><th>${fiqFmtINR(fyEntries.reduce((a,[,z])=>a+z.principal,0))}</th><th>${fiqFmtINR(fyEntries.reduce((a,[,z])=>a+z.installment,0))}</th></tr></tfoot>
-    </table></div>`;
-
-  // Dedicated slab-wise interest result for the full tenure.
-  const slabTotals=emiLoadSlabs().map((slab,i)=>({slab,i,interest:0,product:0}));
-  rows.forEach(r=>{
-    emiAllocate(r.opening,emiLoadSlabs()).forEach((part,i)=>{
-      if(slabTotals[i]){ slabTotals[i].product += part.portion; slabTotals[i].interest += part.portion*part.rate/100*(freqMonths/12); }
-    });
-  });
-  const slabTotalInterest=slabTotals.reduce((a,x)=>a+x.interest,0);
-  const summaryEl=document.getElementById('slabInterestSummary');
-  if(summaryEl){
-    summaryEl.style.display=method==='slab'?'block':'none';
-    if(method==='slab'){
-      const detailRows=rows.map(r=>{
-        const parts=emiAllocate(r.opening,emiLoadSlabs());
-        const breakdown=parts.map((p,i)=>({slab:i+1,portion:p.portion,rate:p.rate,interest:p.portion*p.rate/100*(freqMonths/12)}));
-        return {r,breakdown};
-      });
-      const slabHeaders=emiLoadSlabs().map((x,i)=>`<span class="slab-chip">S${i+1}: ${x.to===null?'No limit':'up to ₹'+fiqFmtINR(x.to)} @ ${Number(x.rate).toFixed(2)}%</span>`).join('');
-      summaryEl.innerHTML=`
-        <div class="slab-interest-hero">
-          <h3>💰 Slab Interest Calculation</h3>
-          <div class="hint">Interest is calculated on the opening outstanding balance of every repayment period, allocating the balance progressively across your editable slabs.</div>
-          <div class="hero-value">₹ ${fiqFmtINR(totalInterest)}</div>
-          <div class="hint">Total interest over the complete tenure</div>
-        </div>
-        <div class="stub-title">Calculated result</div>
-        <div class="stub-sub">The result below is generated only after <b>Calculate Slab EMI &amp; Interest</b>. The slab interest shown here is part of the EMI calculation and is not a separate flat-rate calculation.</div>
-        <div style="margin:10px 0">${slabHeaders}</div>
-        <div class="slab-summary-grid">
-          <div class="slab-summary-stat"><span class="hint">EMI / instalment</span><b>₹ ${fiqFmtINR(installment)}</b></div>
-          <div class="slab-summary-stat"><span class="hint">Total slab interest</span><b>₹ ${fiqFmtINR(slabTotalInterest)}</b></div>
-          <div class="slab-summary-stat"><span class="hint">Total repayment</span><b>₹ ${fiqFmtINR(totalRepayment)}</b></div>
-          <div class="slab-summary-stat"><span class="hint">Repayment periods</span><b>${rows.length}</b></div>
-        </div>
-        <div class="stub-title" style="margin-top:16px">Slab-wise interest over entire tenure</div>
-        <div class="table-scroll"><table><thead><tr><th>Slab</th><th>Upto amount</th><th>Rate</th><th>Total slab product</th><th>Total slab interest</th></tr></thead><tbody>
-        ${slabTotals.map((x,i)=>`<tr><td><b>Slab ${i+1}</b></td><td>${x.slab.to===null?'No limit':'₹ '+fiqFmtINR(x.slab.to)}</td><td>${Number(x.slab.rate).toFixed(2)}%</td><td>₹ ${fiqFmtINR(x.product)}</td><td class="debit"><b>₹ ${fiqFmtINR(x.interest)}</b></td></tr>`).join('')}
-        </tbody><tfoot><tr><th colspan="4">Total slab interest</th><th>₹ ${fiqFmtINR(slabTotalInterest)}</th></tr></tfoot></table></div>
-        <div class="stub-title" style="margin-top:18px">Period-wise slab interest calculation</div>
-        <div class="stub-sub">Every period is shown so the user can verify exactly which part of the outstanding balance was charged at each slab rate.</div>
-        <div class="table-scroll"><table class="slab-detail-table"><thead><tr><th>Period</th><th>Opening balance</th><th>Slab allocation &amp; interest</th><th>Total interest</th><th>Principal</th><th>EMI / instalment</th><th>Closing balance</th></tr></thead><tbody>
-        ${detailRows.map(({r,breakdown})=>`<tr${r.moratorium?' style="background:#FBFAF6"':''}><td>${r.moratorium?'M'+r.period:r.period}</td><td>₹ ${fiqFmtINR(r.opening)}</td><td>${breakdown.length?breakdown.map(p=>`S${p.slab}: ₹${fiqFmtINR(p.portion)} @ ${Number(p.rate).toFixed(2)}% = ₹${fiqFmtINR(p.interest)}`).join('<br>'):'—'}</td><td class="debit"><b>₹ ${fiqFmtINR(r.interest)}</b></td><td class="credit">₹ ${fiqFmtINR(r.principalPaid)}</td><td>${r.moratorium && !r.moratoriumPaid?'<em>Capitalised</em>':'₹ '+fiqFmtINR(r.installment)}</td><td>₹ ${fiqFmtINR(r.closing)}</td></tr>`).join('')}
-        </tbody><tfoot><tr><th colspan="3">TOTAL</th><th>₹ ${fiqFmtINR(totalInterest)}</th><th>₹ ${fiqFmtINR(rows.reduce((a,r)=>a+r.principalPaid,0))}</th><th>₹ ${fiqFmtINR(totalRepayment)}</th><th>₹ ${fiqFmtINR(rows.at(-1)?.closing||0)}</th></tr></tfoot></table></div>`;
-    }
+}
+function calcDeposit(){
+  const P=calcNum('depP'), annual=calcNum('depR')/100, n=Math.max(1,Math.floor(calcNum('depN')));
+  const mode=document.getElementById('depMode')?.value||'monthly';
+  const basis=document.getElementById('depBasis')?.value||'monthly';
+  const days=Math.max(1,Math.floor(calcNum('depDays')));
+  const intervals={monthly:12,quarterly:4,halfyearly:2,yearly:1}[mode]||12;
+  let amount=P, interest=0, payment=0;
+  if(basis==='daily'){
+    interest=P*annual*days/365;
+    amount=P;
+    payment=interest;
+  }else{
+    // Interest-payout deposit: interest is paid out at the selected frequency,
+    // so it is NOT added to principal. Reinvestment is handled separately.
+    const periods=Math.floor((n/12)*intervals);
+    payment=P*annual/intervals;
+    interest=payment*periods;
+    amount=P;
   }
-
-  document.querySelectorAll('.folio-toggle').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const y = Number(btn.dataset.year);
-      expandedYear = expandedYear === y ? null : y;
-      renderEmi();
-    });
-  });
+  document.getElementById('depResult').innerHTML=`<div class="calc-result"><div class="big">Principal at maturity: ₹${calcMoney(amount)}</div><table class="calc-table"><tr><td>Principal</td><td>₹${calcMoney(P)}</td></tr><tr><td>Total interest paid</td><td>₹${calcMoney(interest)}</td></tr><tr><td>Interest per ${mode==='halfyearly'?'half-year':mode.replace('ly','') || mode}</td><td>₹${calcMoney(payment)}</td></tr><tr><td>Payment frequency</td><td>${mode}</td></tr><tr><td>Basis</td><td>${basis}</td></tr></table></div>`;
+}
+function calcReinvest(){
+  const P=calcNum('rdP'), annual=calcNum('rdR')/100, n=Math.max(1,Math.floor(calcNum('rdN')));
+  const q=annual/4, quarters=n/3, amount=P*Math.pow(1+q,quarters), interest=amount-P;
+  document.getElementById('rdResult').innerHTML=`<div class="calc-result"><div class="big">Reinvestment maturity: ₹${calcMoney(amount)}</div><table class="calc-table"><tr><td>Principal</td><td>₹${calcMoney(P)}</td></tr><tr><td>Interest accrued/reinvested</td><td>₹${calcMoney(interest)}</td></tr><tr><td>Compounding</td><td>Quarterly</td></tr><tr><td>Term</td><td>${n} months</td></tr></table></div>`;
+}
+function calcAge(){
+  const dob=calcDate('ageDob'), on=calcDate('ageOn');
+  const box=document.getElementById('ageResult');
+  if(!dob||!on||on<dob){box.innerHTML='<div class="banner bad">Please enter valid dates.</div>';return;}
+  let y=on.getFullYear()-dob.getFullYear(), m=on.getMonth()-dob.getMonth(), d=on.getDate()-dob.getDate();
+  if(d<0){m--; const prev=new Date(on.getFullYear(),on.getMonth(),0).getDate(); d+=prev;}
+  if(m<0){y--;m+=12;}
+  const totalDays=Math.floor((on-dob)/86400000);
+  box.innerHTML=`<div class="calc-result"><div class="big">${y} years, ${m} months, ${d} days</div><p>Total elapsed days: ${totalDays.toLocaleString('en-IN')}</p></div>`;
+}
+function calcSIP(){
+  const p=calcNum('sipP'), annual=calcNum('sipR')/100, years=Math.max(0,calcNum('sipY')), n=Math.round(years*12), r=annual/12;
+  let fv=r===0?p*n:p*((Math.pow(1+r,n)-1)/r)*(document.getElementById('sipTiming')?.value==='begin'?(1+r):1);
+  const invested=p*n, gain=fv-invested;
+  document.getElementById('sipResult').innerHTML=`<div class="calc-result"><div class="big">Estimated value: ₹${calcMoney(fv)}</div><table class="calc-table"><tr><td>Total invested</td><td>₹${calcMoney(invested)}</td></tr><tr><td>Estimated gain</td><td>₹${calcMoney(gain)}</td></tr><tr><td>Tenure</td><td>${years} years</td></tr></table><p class="hint">SIP return is an estimate based on the assumed annual return; actual market returns vary.</p></div>`;
+}
+function calcCurrency(){
+  const a=calcNum('fxAmount'), rate=calcNum('fxRate'), from=(document.getElementById('fxFrom')?.value||'').toUpperCase(), to=(document.getElementById('fxTo')?.value||'').toUpperCase();
+  document.getElementById('fxResult').innerHTML=`<div class="calc-result"><div class="big">${calcMoney(a)} ${esc(from)} = ${calcMoney(a*rate)} ${esc(to)}</div><p>Rate used: 1 ${esc(from)} = ${calcMoney(rate)} ${esc(to)}</p></div>`;
 }
 
-['principal','rate','periodMonthsTotal','freq','startDate','repayType','moratMonths','moratMode'].forEach(id => {
-  document.getElementById(id).addEventListener('input', renderEmi);
-  document.getElementById(id).addEventListener('change', renderEmi);
-});
-function calculateSlabLoanNow(){
-  const result=document.getElementById('slabInterestSummary');
-  try{
-    const method=document.getElementById('emiInterestMethod');
-    const settings=document.getElementById('emiSlabSettings');
-    if(method) method.value='slab';
-    if(settings) settings.style.display='block';
 
-    // A missing first-installment date must never block an EMI calculation.
-    const startDateText=ensureEmiStartDate();
-    const principal=Number(document.getElementById('principal')?.value)||0;
-    const count=syncEmiPeriodToCount();
-    const freqMonths=Number(document.getElementById('freq')?.value)||1;
-    const repaymentType=document.getElementById('repayType')?.value||'equal-installment';
-    const moratoriumMonths=Number(document.getElementById('moratMonths')?.value)||0;
-    const moratoriumMode=document.getElementById('moratMode')?.value||'paid';
-    if(principal<=0) throw new Error('Enter a loan amount greater than zero.');
-    if(count<=0) throw new Error('Select a loan tenure.');
-    if(!startDateText) throw new Error('Select the first instalment date.');
 
-    // Read exactly what is on screen. If the editor has not rendered, restore defaults.
-    let visible=emiCurrentSlabs();
-    if(!visible.length){ emiRenderSlabs(); visible=emiCurrentSlabs(); }
-    const slabs=emiNormaliseSlabs(visible);
-    if(!slabs.length) throw new Error('No interest slabs are available.');
-    if(slabs.some(x=>x.rate<0 || !isFinite(x.rate))) throw new Error('Enter a valid annual rate for every slab.');
-    for(let i=0;i<slabs.length;i++){
-      if(slabs[i].to!==null && (!isFinite(slabs[i].to)||slabs[i].to<=0)) throw new Error('Enter a valid upper amount for each limited slab.');
-      if(i>0 && slabs[i-1].to!==null && slabs[i].to!==null && slabs[i].to<=slabs[i-1].to) throw new Error('Slab limits must increase from one slab to the next.');
-      if(i>0 && slabs[i-1].to===null) throw new Error('The No-limit slab must be the final slab.');
-    }
-    if(slabs[slabs.length-1].to!==null) slabs.push({to:null,rate:slabs[slabs.length-1].rate});
-    emiSaveSlabs(slabs);
-    emiRenderSlabs();
 
-    const startDate=new Date(startDateText+'T00:00:00');
-    const calc=emiSlabSchedule({principal,count,freqMonths,startDate,repaymentType,moratoriumMonths,moratoriumMode,slabs});
-    const rows=calc.rows||[];
-    if(!rows.length) throw new Error('No repayment periods were generated.');
-    const totalInterest=rows.reduce((a,r)=>a+(Number(r.interest)||0),0);
-    const totalRepayment=rows.reduce((a,r)=>a+(Number(r.installment)||0),0);
-    const totalPrincipal=rows.reduce((a,r)=>a+(Number(r.principalPaid)||0),0);
-    const regular=rows.filter(r=>!r.moratorium);
+function renderInterestCalculator(){ return renderInterestComparisonPanel(); }
 
-    // Populate the standard EMI result areas as well.
-    const summary=document.getElementById('summary');
-    if(summary) summary.innerHTML=`<div class="stat"><span>Slab EMI</span><b>₹ ${fiqFmtINR(calc.installment||regular[0]?.installment||0)}</b></div><div class="stat"><span>Total interest</span><b>₹ ${fiqFmtINR(totalInterest)}</b></div><div class="stat"><span>Total repayment</span><b>₹ ${fiqFmtINR(totalRepayment)}</b></div><div class="stat"><span>Tenure</span><b>${count} periods</b></div>`;
-
-    // Financial-year summary.
-    const fyMap=new Map();
-    rows.forEach(r=>{const d=r.dueDate;const y=d.getMonth()>=3?d.getFullYear():d.getFullYear()-1;const key=`FY ${y}-${String(y+1).slice(-2)}`;if(!fyMap.has(key))fyMap.set(key,{interest:0,principal:0,installment:0,from:y});const z=fyMap.get(key);z.interest+=r.interest;z.principal+=r.principalPaid;z.installment+=r.installment;});
-    const fy=[...fyMap.entries()].sort((a,b)=>a[1].from-b[1].from);
-    const fyEl=document.getElementById('fyInterestSummary');
-    if(fyEl) fyEl.innerHTML=`<div class="stub-title">Financial Year-wise Interest</div><div class="table-scroll"><table><thead><tr><th>Financial Year</th><th>Interest</th><th>Principal</th><th>Instalments</th></tr></thead><tbody>${fy.map(([k,z])=>`<tr><td><b>${k}</b></td><td>₹ ${fiqFmtINR(z.interest)}</td><td>₹ ${fiqFmtINR(z.principal)}</td><td>₹ ${fiqFmtINR(z.installment)}</td></tr>`).join('')}</tbody><tfoot><tr><th>Total</th><th>₹ ${fiqFmtINR(totalInterest)}</th><th>₹ ${fiqFmtINR(totalPrincipal)}</th><th>₹ ${fiqFmtINR(totalRepayment)}</th></tr></tfoot></table></div>`;
-
-    // Complete slab interest analysis.
-    const totals=slabs.map((slab,i)=>({slab,i,interest:0,product:0}));
-    rows.forEach(r=>emiAllocate(r.opening,slabs).forEach((p,i)=>{if(totals[i]){totals[i].product+=p.portion;totals[i].interest+=p.portion*p.rate/100*(freqMonths/12);}}));
-    const detail=rows.map(r=>{const parts=emiAllocate(r.opening,slabs);return {r,parts};});
-    if(result){
-      result.style.display='block';
-      result.innerHTML=`<div class="slab-interest-hero"><h3>💰 Slab Loan EMI — Calculated</h3><div class="hero-value">₹ ${fiqFmtINR(calc.installment||regular[0]?.installment||0)}</div><div class="hint">Fixed EMI after moratorium, using progressive interest slabs on the opening outstanding balance.</div></div><div class="slab-summary-grid"><div class="slab-summary-stat"><span class="hint">Loan amount</span><b>₹ ${fiqFmtINR(principal)}</b></div><div class="slab-summary-stat"><span class="hint">Total interest</span><b>₹ ${fiqFmtINR(totalInterest)}</b></div><div class="slab-summary-stat"><span class="hint">Total repayment</span><b>₹ ${fiqFmtINR(totalRepayment)}</b></div><div class="slab-summary-stat"><span class="hint">Repayment periods</span><b>${regular.length}</b></div></div><div class="stub-title" style="margin-top:16px">Slab-wise interest over entire tenure</div><div class="table-scroll"><table><thead><tr><th>Slab</th><th>Upto</th><th>Rate</th><th>Slab product</th><th>Interest</th></tr></thead><tbody>${totals.map(x=>`<tr><td><b>Slab ${x.i+1}</b></td><td>${x.slab.to===null?'No limit':'₹ '+fiqFmtINR(x.slab.to)}</td><td>${Number(x.slab.rate).toFixed(2)}%</td><td>₹ ${fiqFmtINR(x.product)}</td><td><b>₹ ${fiqFmtINR(x.interest)}</b></td></tr>`).join('')}</tbody><tfoot><tr><th colspan="4">Total</th><th>₹ ${fiqFmtINR(totalInterest)}</th></tr></tfoot></table></div><div class="stub-title" style="margin-top:18px">Complete amortisation &amp; period-wise slab interest</div><div class="table-scroll"><table><thead><tr><th>Period</th><th>Opening</th><th>Slab interest calculation</th><th>Interest</th><th>Principal</th><th>EMI</th><th>Closing</th></tr></thead><tbody>${detail.map(({r,parts})=>`<tr><td>${r.moratorium?'M'+r.period:r.period}</td><td>₹ ${fiqFmtINR(r.opening)}</td><td>${parts.length?parts.map((p,i)=>`S${i+1}: ₹${fiqFmtINR(p.portion)} × ${Number(p.rate).toFixed(2)}% = ₹${fiqFmtINR(p.portion*p.rate/100*(freqMonths/12))}`).join('<br>'):'—'}</td><td>₹ ${fiqFmtINR(r.interest)}</td><td>₹ ${fiqFmtINR(r.principalPaid)}</td><td>${r.moratorium&&!r.moratoriumPaid?'Capitalised':'₹ '+fiqFmtINR(r.installment)}</td><td>₹ ${fiqFmtINR(r.closing)}</td></tr>`).join('')}</tbody><tfoot><tr><th colspan="3">TOTAL</th><th>₹ ${fiqFmtINR(totalInterest)}</th><th>₹ ${fiqFmtINR(totalPrincipal)}</th><th>₹ ${fiqFmtINR(totalRepayment)}</th><th>₹ ${fiqFmtINR(rows.at(-1)?.closing||0)}</th></tr></tfoot></table></div>`;
-      result.scrollIntoView({behavior:'smooth',block:'start'});
-    }
-  }catch(err){
-    console.error('Slab EMI calculation failed:',err);
-    if(result){result.style.display='block';result.innerHTML=`<div class="slab-interest-hero"><h3>Unable to calculate Slab Loan EMI</h3><div class="hint">${String(err.message||err).replace(/[<>]/g,'')}</div></div>`;result.scrollIntoView({behavior:'smooth',block:'start'});}
-  }
-}
-const _calculateSlabBtn=document.getElementById('calculateSlabEmiBtn');
-if(_calculateSlabBtn){
-  _calculateSlabBtn.onclick=function(e){e.preventDefault();e.stopPropagation();calculateSlabLoanNow();return false;};
-}
-window.calculateSlabLoanNow=calculateSlabLoanNow;
-
-document.getElementById('emiInterestMethod')?.addEventListener('change',()=>{const on=document.getElementById('emiInterestMethod').value==='slab';document.getElementById('emiSlabSettings').style.display=on?'block':'none';if(on)emiRenderSlabs();renderEmi();});
-document.getElementById('emiSlabQuickBtn')?.addEventListener('click',()=>{
-  const sel=document.getElementById('emiInterestMethod');
-  sel.value='slab';
-  document.getElementById('emiSlabSettings').style.display='block';
-  emiRenderSlabs();
-  document.getElementById('emiSlabSettings').scrollIntoView({behavior:'smooth',block:'start'});
-  renderEmi();
-});
-const _emiAddSlabTopButton=document.getElementById('emiAddSlabTopBtn');
-if(_emiAddSlabTopButton){ _emiAddSlabTopButton.onclick=function(e){e.preventDefault();e.stopPropagation();emiAddSlab();return false;}; }
-const _emiAddSlabButton=document.getElementById('emiAddSlabBtn');
-if(_emiAddSlabButton){
-  _emiAddSlabButton.onclick=function(e){e.preventDefault();e.stopPropagation();emiAddSlab();return false;};
-}
-const _emiResetSlabButton=document.getElementById('emiResetSlabBtn');
-if(_emiResetSlabButton){
-  _emiResetSlabButton.onclick=function(e){e.preventDefault();e.stopPropagation();emiResetSlabs();return false;};
-}
-window.emiAddSlab=emiAddSlab;
-window.emiResetSlabs=emiResetSlabs;
-
-document.getElementById('startDate').value = new Date().toISOString().slice(0,10);
-try { renderEmi(); } catch (e) { console.error('renderEmi failed:', e); }
-
-/* ---------- Deposits: sub-tab switching ---------- */
-document.querySelectorAll('#depositTabs .subtab').forEach(t => {
-  t.addEventListener('click', () => {
-    document.querySelectorAll('#depositTabs .subtab').forEach(x => x.classList.remove('active'));
-    document.querySelectorAll('.depmodule').forEach(x => x.classList.remove('active'));
-    t.classList.add('active');
-    document.getElementById('dep-' + t.dataset.dep).classList.add('active');
-  });
-});
-
-const todayStr = new Date().toISOString().slice(0,10);
-['fdStartDate','rdStartDate','sipStartDate'].forEach(id => document.getElementById(id).value = todayStr);
-
-/* ---------- FD / Reinvestment ---------- */
-function tenureToDays(val, unit) {
-  if (unit === 'days') return val;
-  if (unit === 'months') return val * 30.4368; // avg month length for day-count estimate
-  return val * 365; // years
-}
-
-function computeFD({ principal, annualRate, tenureVal, tenureUnit, mode, startDate }) {
-  const totalDays = tenureToDays(tenureVal, tenureUnit);
-  const tenureYears = totalDays / 365;
-  const rows = [];
-
-  function maturityDate() {
-    if (tenureUnit === 'days') {
-      const d = new Date(startDate); d.setDate(d.getDate() + Math.round(tenureVal)); return d;
-    }
-    const totalMonths = tenureUnit === 'years' ? tenureVal * 12 : tenureVal;
-    return fiqAddMonths(startDate, totalMonths);
-  }
-
-  if (mode === 'simple') {
-    const interest = principal * (annualRate / 100) * tenureYears;
-    rows.push({ period: 1, date: maturityDate(), opening: principal, interest, closing: principal + interest });
-    return { rows, maturity: principal + interest, totalInterest: interest, reinvest: true };
-  }
-
-  let compoundsPerYear, periodRate, reinvest;
-  if (mode === 'payout-quarterly') {
-    // exact simple interest each quarter — no discount, principal untouched
-    compoundsPerYear = 4;
-    periodRate = (annualRate / 100) / 4;
-    reinvest = false;
-  } else if (mode === 'payout-monthly') {
-    // discounted monthly rate: 12 monthly payouts ≈ equivalent value to 4 exact quarterly payouts
-    compoundsPerYear = 12;
-    periodRate = (annualRate / 100) / (12 * (1 + annualRate / 400));
-    reinvest = false;
-  } else {
-    const map = { 'cum-monthly': 12, 'cum-quarterly': 4, 'cum-halfyearly': 2, 'cum-yearly': 1 };
-    compoundsPerYear = map[mode] || 4;
-    periodRate = (annualRate / 100) / compoundsPerYear;
-    reinvest = true;
-  }
-
-  const monthsPerPeriod = 12 / compoundsPerYear;
-  // derive period count from exact calendar months when the tenure was entered in months/years,
-  // to avoid drift from the average day-length approximation used for day-based tenures
-  const totalPeriods = tenureUnit === 'days'
-    ? compoundsPerYear * tenureYears
-    : (tenureUnit === 'years' ? tenureVal * 12 : tenureVal) / monthsPerPeriod;
-  const fullPeriods = Math.abs(totalPeriods - Math.round(totalPeriods)) < 1e-6 ? Math.round(totalPeriods) : Math.floor(totalPeriods);
-  let balance = principal;
-  let totalPayout = 0;
-
-  for (let i = 1; i <= fullPeriods; i++) {
-    const opening = reinvest ? balance : principal;
-    const interest = opening * periodRate;
-    if (reinvest) balance += interest; else totalPayout += interest;
-    const d = fiqAddMonths(startDate, i * monthsPerPeriod);
-    rows.push({ period: i, date: d, opening, interest, closing: reinvest ? balance : principal });
-  }
-  const leftoverPeriods = totalPeriods - fullPeriods;
-  if (leftoverPeriods > 1e-6) {
-    const opening = reinvest ? balance : principal;
-    const interest = opening * periodRate * leftoverPeriods;
-    if (reinvest) balance += interest; else totalPayout += interest;
-    rows.push({ period: fullPeriods + 1, date: maturityDate(), opening, interest, closing: reinvest ? balance : principal, partial: true });
-  }
-
-  const totalInterest = reinvest ? balance - principal : totalPayout;
-  const maturity = reinvest ? balance : principal;
-  return { rows, maturity, totalInterest, reinvest };
-}
-
-function renderFD() {
-  const principal = Number(document.getElementById('fdPrincipal').value) || 0;
-  const annualRate = Number(document.getElementById('fdRate').value) || 0;
-  const tenureVal = Number(document.getElementById('fdTenureVal').value) || 0;
-  const tenureUnit = document.getElementById('fdTenureUnit').value;
-  const mode = document.getElementById('fdMode').value;
-  const startDateVal = document.getElementById('fdStartDate').value;
-  if (!principal || !tenureVal || !startDateVal) return;
-  const startDate = new Date(startDateVal + "T00:00:00");
-
-  const { rows, maturity, totalInterest, reinvest } = computeFD({ principal, annualRate, tenureVal, tenureUnit, mode, startDate });
-  const years = tenureToDays(tenureVal, tenureUnit) / 365;
-  const effYield = years > 0 ? (Math.pow((principal + totalInterest) / principal, 1 / years) - 1) * 100 : 0;
-
-  const stats = reinvest
-    ? [
-        { label: "Maturity value", value: fiqFmtINR(maturity), color: "var(--ink)" },
-        { label: "Total interest", value: fiqFmtINR(totalInterest), color: "var(--clay)" },
-        { label: "Principal", value: fiqFmtINR(principal), color: "var(--green)" },
-        { label: "Effective annual yield", value: effYield.toFixed(2) + " %", color: "var(--brass)", raw: true },
-      ]
-    : [
-        { label: "Total interest paid out", value: fiqFmtINR(totalInterest), color: "var(--clay)" },
-        { label: "Principal (returned at maturity)", value: fiqFmtINR(principal), color: "var(--green)" },
-        { label: "Total received", value: fiqFmtINR(principal + totalInterest), color: "var(--ink)" },
-        { label: "Effective annual yield", value: effYield.toFixed(2) + " %", color: "var(--brass)", raw: true },
-      ];
-  document.getElementById('fdSummary').innerHTML = stats.map(s => `<div class="stat"><div class="stat-label">${s.label}</div><div class="stat-value" style="color:${s.color}">${s.raw ? s.value : '&#8377; ' + s.value}</div></div>`).join('');
-
-  document.getElementById('fdLedgerSub').textContent = `${rows.length} interest ${rows.length === 1 ? (reinvest ? 'credit' : 'payout') : (reinvest ? 'credits' : 'payouts')} ${reinvest ? 'to maturity' : 'over the tenure'}`;
-  document.getElementById('fdTable').innerHTML = `
-    <thead><tr><th>#</th><th>${reinvest ? 'Credit date' : 'Payout date'}</th><th>Opening bal.</th><th>Interest ${reinvest ? 'credited' : 'paid'}</th><th>${reinvest ? 'Closing bal.' : 'Principal'}</th></tr></thead>
-    <tbody>${rows.map(r => `
-      <tr>
-        <td>${r.period}${r.partial ? ' (part)' : ''}</td>
-        <td>${fiqFmtDate(r.date)}</td>
-        <td>${fiqFmtINR(r.opening)}</td>
-        <td class="credit">${fiqFmtINR(r.interest)}</td>
-        <td style="font-weight:600">${fiqFmtINR(r.closing)}</td>
-      </tr>`).join('')}</tbody>`;
-}
-
-['fdPrincipal','fdRate','fdTenureVal','fdTenureUnit','fdMode','fdStartDate'].forEach(id => {
-  document.getElementById(id).addEventListener('input', renderFD);
-  document.getElementById(id).addEventListener('change', renderFD);
-});
-
-/* ---------- Recurring Deposit ---------- */
-function computeRD({ installment, annualRate, months, startDate }) {
-  const quarterlyRate = annualRate / 100 / 4;
-  let balance = 0;
-  let qStartBalance = 0;
-  let qDeposits = [];
-  const quarters = [];
-  let qIndex = 1;
-
-  for (let m = 1; m <= months; m++) {
-    balance += installment;
-    qDeposits.push(m);
-    if (m % 3 === 0) {
-      const interest = balance * quarterlyRate;
-      balance += interest;
-      const d = fiqAddMonths(startDate, m);
-      quarters.push({ quarter: qIndex, date: d, opening: qStartBalance, deposited: qDeposits.length * installment, interest, closing: balance, partial: false });
-      qStartBalance = balance;
-      qDeposits = [];
-      qIndex++;
-    }
-  }
-  if (qDeposits.length > 0) {
-    const fraction = qDeposits.length / 3;
-    const interest = balance * quarterlyRate * fraction;
-    balance += interest;
-    const d = fiqAddMonths(startDate, months);
-    quarters.push({ quarter: qIndex, date: d, opening: qStartBalance, deposited: qDeposits.length * installment, interest, closing: balance, partial: true });
-  }
-  const totalDeposited = installment * months;
-  return { quarters, maturity: balance, totalDeposited, totalInterest: balance - totalDeposited };
-}
-
-function renderRD() {
-  const installment = Number(document.getElementById('rdInstallment').value) || 0;
-  const annualRate = Number(document.getElementById('rdRate').value) || 0;
-  const months = Number(document.getElementById('rdMonths').value) || 0;
-  const startDateVal = document.getElementById('rdStartDate').value;
-  if (!installment || !months || !startDateVal) return;
-  const startDate = new Date(startDateVal + "T00:00:00");
-
-  const { quarters, maturity, totalDeposited, totalInterest } = computeRD({ installment, annualRate, months, startDate });
-
-  document.getElementById('rdSummary').innerHTML = [
-    { label: "Maturity value", value: fiqFmtINR(maturity), color: "var(--ink)" },
-    { label: "Total deposited", value: fiqFmtINR(totalDeposited), color: "var(--green)" },
-    { label: "Total interest", value: fiqFmtINR(totalInterest), color: "var(--clay)" },
-    { label: "Monthly installment", value: fiqFmtINR(installment), color: "var(--ink)" },
-  ].map(s => `<div class="stat"><div class="stat-label">${s.label}</div><div class="stat-value" style="color:${s.color}">&#8377; ${s.value}</div></div>`).join('');
-
-  document.getElementById('rdLedgerSub').textContent = `${quarters.length} quarters over ${months} months`;
-  document.getElementById('rdTable').innerHTML = `
-    <thead><tr><th>Qtr</th><th>Credit date</th><th>Opening bal.</th><th>Deposited</th><th>Interest credited</th><th>Closing bal.</th></tr></thead>
-    <tbody>${quarters.map(q => `
-      <tr>
-        <td>${q.quarter}${q.partial ? ' (part)' : ''}</td>
-        <td>${fiqFmtDate(q.date)}</td>
-        <td>${fiqFmtINR(q.opening)}</td>
-        <td class="credit">${fiqFmtINR(q.deposited)}</td>
-        <td class="debit">${fiqFmtINR(q.interest)}</td>
-        <td style="font-weight:600">${fiqFmtINR(q.closing)}</td>
-      </tr>`).join('')}</tbody>`;
-}
-
-['rdInstallment','rdRate','rdMonths','rdStartDate'].forEach(id => {
-  document.getElementById(id).addEventListener('input', renderRD);
-  document.getElementById(id).addEventListener('change', renderRD);
-});
-
-/* ---------- SIP ---------- */
-function computeSIP({ installment, annualRate, months, startDate }) {
-  const i = annualRate / 100 / 12;
-  let balance = 0;
-  let invested = 0;
-  const rows = [];
-  for (let m = 1; m <= months; m++) {
-    balance = (balance + installment) * (1 + i);
-    invested += installment;
-    const d = fiqAddMonths(startDate, m - 1);
-    rows.push({ month: m, date: d, invested, corpus: balance, gain: balance - invested });
-  }
-  return { rows, maturity: balance, totalInvested: invested, totalGain: balance - invested };
-}
-
-function renderSIP() {
-  const installment = Number(document.getElementById('sipInstallment').value) || 0;
-  const annualRate = Number(document.getElementById('sipRate').value) || 0;
-  const months = Number(document.getElementById('sipMonths').value) || 0;
-  const startDateVal = document.getElementById('sipStartDate').value;
-  if (!installment || !months || !startDateVal) return;
-  const startDate = new Date(startDateVal + "T00:00:00");
-
-  const { rows, maturity, totalInvested, totalGain } = computeSIP({ installment, annualRate, months, startDate });
-
-  document.getElementById('sipSummary').innerHTML = [
-    { label: "Maturity value", value: fiqFmtINR(maturity), color: "var(--ink)" },
-    { label: "Total invested", value: fiqFmtINR(totalInvested), color: "var(--green)" },
-    { label: "Wealth gained", value: fiqFmtINR(totalGain), color: "var(--clay)" },
-    { label: "Monthly investment", value: fiqFmtINR(installment), color: "var(--ink)" },
-  ].map(s => `<div class="stat"><div class="stat-label">${s.label}</div><div class="stat-value" style="color:${s.color}">&#8377; ${s.value}</div></div>`).join('');
-
-  document.getElementById('sipLedgerSub').textContent = `${rows.length} monthly investments`;
-  document.getElementById('sipTable').innerHTML = `
-    <thead><tr><th>#</th><th>Date</th><th>Invested (cum.)</th><th>Gain</th><th>Corpus value</th></tr></thead>
-    <tbody>${rows.map(r => `
-      <tr>
-        <td>${r.month}</td>
-        <td>${fiqFmtDate(r.date)}</td>
-        <td>${fiqFmtINR(r.invested)}</td>
-        <td class="credit">${fiqFmtINR(r.gain)}</td>
-        <td style="font-weight:600">${fiqFmtINR(r.corpus)}</td>
-      </tr>`).join('')}</tbody>`;
-}
-
-['sipInstallment','sipRate','sipMonths','sipStartDate'].forEach(id => {
-  document.getElementById(id).addEventListener('input', renderSIP);
-  document.getElementById(id).addEventListener('change', renderSIP);
-});
-
-try { renderFD(); } catch (e) { console.error('renderFD failed:', e); }
-try { renderRD(); } catch (e) { console.error('renderRD failed:', e); }
-try { renderSIP(); } catch (e) { console.error('renderSIP failed:', e); }
-
-/* ---------- Age Calculator ---------- */
-function diffYMD(from, to) {
-  let y = to.getFullYear() - from.getFullYear();
-  let m = to.getMonth() - from.getMonth();
-  let d = to.getDate() - from.getDate();
-  if (d < 0) {
-    m--;
-    const prevMonth = new Date(to.getFullYear(), to.getMonth(), 0);
-    d += prevMonth.getDate();
-  }
-  if (m < 0) { y--; m += 12; }
-  return { y, m, d };
-}
-
-function nextBirthday(dob, asOf) {
-  let next = new Date(asOf.getFullYear(), dob.getMonth(), dob.getDate());
-  if (next < asOf) next = new Date(asOf.getFullYear() + 1, dob.getMonth(), dob.getDate());
-  const daysLeft = Math.round((next - asOf) / 86400000);
-  return { next, daysLeft };
-}
-
-function renderAge() {
-  const dobVal = document.getElementById('ageDob').value;
-  const asOfVal = document.getElementById('ageAsOf').value;
-  if (!dobVal || !asOfVal) return;
-  const dob = new Date(dobVal + "T00:00:00");
-  const asOf = new Date(asOfVal + "T00:00:00");
-
-  if (asOf < dob) {
-    document.getElementById('ageSummary').innerHTML = `<div class="stat"><div class="stat-label">Notice</div><div class="stat-value" style="color:var(--clay);font-size:14px">"Age as on" date is before the date of birth.</div></div>`;
-    document.getElementById('ageTable').innerHTML = '';
+function renderInterestComparison(){
+  const box=document.getElementById('interestComparisonResult');
+  if(!box)return;
+  const ds=S.sets.find(x=>x.kind==='bank');
+  if(!ds){
+    box.innerHTML='<div class="banner warn"><span>!</span><div>Load a bank statement first. The comparison uses interest-credit entries found in the statement.</div></div>';
     return;
   }
-
-  const { y, m, d } = diffYMD(dob, asOf);
-  const totalDays = Math.round((asOf - dob) / 86400000);
-  const totalWeeks = Math.floor(totalDays / 7);
-  const totalMonths = y * 12 + m;
-  const { next, daysLeft } = nextBirthday(dob, asOf);
-
-  document.getElementById('ageSummary').innerHTML = [
-    { label: "Exact age", value: `${y}y ${m}m ${d}d`, color: "var(--ink)", raw: true },
-    { label: "Total days lived", value: totalDays.toLocaleString('en-IN'), color: "var(--green)", raw: true },
-    { label: "Total months", value: totalMonths, color: "var(--ink)", raw: true },
-    { label: "Next birthday", value: `${fiqFmtDate(next)} (${daysLeft}d)`, color: "var(--brass)", raw: true },
-  ].map(s => `<div class="stat"><div class="stat-label">${s.label}</div><div class="stat-value" style="color:${s.color};${s.raw ? 'font-size:17px' : ''}">${s.raw ? s.value : s.value}</div></div>`).join('');
-
-  const rows = [
-    { unit: "Years, months, days", value: `${y} years, ${m} months, ${d} days` },
-    { unit: "Total complete months", value: totalMonths.toLocaleString('en-IN') },
-    { unit: "Total weeks", value: totalWeeks.toLocaleString('en-IN') },
-    { unit: "Total days", value: totalDays.toLocaleString('en-IN') },
-    { unit: "Date of birth", value: fiqFmtDate(dob) },
-    { unit: "Age as on", value: fiqFmtDate(asOf) },
-  ];
-  document.getElementById('ageTable').innerHTML = `
-    <thead><tr><th style="text-align:left">Unit</th><th style="text-align:right">Value</th></tr></thead>
-    <tbody>${rows.map(r => `<tr><td>${r.unit}</td><td style="text-align:right;font-weight:600">${r.value}</td></tr>`).join('')}</tbody>`;
-}
-
-document.getElementById('ageDob').value = "1990-01-01";
-document.getElementById('ageAsOf').value = todayStr;
-['ageDob','ageAsOf'].forEach(id => {
-  document.getElementById(id).addEventListener('input', renderAge);
-  document.getElementById(id).addEventListener('change', renderAge);
-});
-try { renderAge(); } catch (e) { console.error('renderAge failed:', e); }
-
-/* v2.18 compatibility: preserve StatementIQ's Financial Calculators entry point
-   while using the proven calculator engine from Financial Calendar & Calculators. */
-function showCalc(which){
-  const map={emi:'fiq-emi',slabemi:'fiq-emi',deposit:'fiq-deposits',age:'fiq-age'};
-  Object.entries(map).forEach(([k,id])=>{
-    const el=document.getElementById(id);
-    if(el) el.style.display=(k===which || (which==='slabemi'&&k==='emi'))?'block':'none';
-  });
-  document.querySelectorAll('#pFinancialCalc .fiq-switch-btn').forEach(b=>b.classList.remove('primary'));
-  const label=which==='deposit'?'Deposits':which==='age'?'Age':'Loan / EMI';
-  document.querySelectorAll('#pFinancialCalc .fiq-switch-btn').forEach(b=>{if(b.textContent.trim()===label)b.classList.add('primary');});
-  if(which==='slabemi'){
-    const slab=document.getElementById('emiSlabSettings');
-    if(slab){slab.style.display='block'; emiRenderSlabs(); slab.scrollIntoView({behavior:'smooth',block:'start'});}
+  const rows=[...document.querySelectorAll('#interestSlabs .interest-slab-row')];
+  const slabs=interestNormaliseSlabs(rows.length ? rows.map(r=>({
+    to:r.querySelector('.slab-to')?.value===''?null:interestNum(r.querySelector('.slab-to')?.value),
+    rate:interestNum(r.querySelector('.slab-rate')?.value)
+  })) : interestLoadConfig());
+  const validation=interestValidateSlabs(slabs);
+  if(validation.length){
+    box.innerHTML='<div class="banner bad"><span>!</span><div>'+validation.map(esc).join('<br>')+'</div></div>';
+    return;
   }
-  try{ if(which==='emi'||which==='slabemi') renderEmi(); }catch(e){}
+  const result=interestCalculateDaily(ds,slabs);
+  if(result.error){
+    box.innerHTML='<div class="banner bad"><span>!</span><div>'+esc(result.error)+'</div></div>';
+    return;
+  }
+  const months=result.monthly||[];
+  let totalCalc=0,totalBank=0;
+  months.forEach(m=>{totalCalc+=Number(m.interest||0);totalBank+=Number(m.actualInterest||0);});
+  const totalDiff=totalCalc-totalBank;
+  let h='<div class="calc-grid" style="margin-bottom:12px">'+
+    '<div class="calc-result" style="margin-top:0"><div class="hint">CALCULATED INTEREST</div><div class="big">₹'+calcMoney(totalCalc)+'</div></div>'+
+    '<div class="calc-result" style="margin-top:0"><div class="hint">BANK INTEREST CREDITED</div><div class="big">₹'+calcMoney(totalBank)+'</div></div>'+
+    '<div class="calc-result" style="margin-top:0"><div class="hint">DIFFERENCE</div><div class="big">'+(totalDiff<0?'−':'')+'₹'+calcMoney(Math.abs(totalDiff))+'</div></div>'+
+  '</div>';
+  h+='<div class="tblwrap"><table class="interest-table"><thead><tr>'+
+    '<th>Month</th><th class="r">Days</th><th class="r">Daily Product</th>'+
+    '<th class="r">Calculated Interest</th><th class="r">Bank Interest Credited</th>'+
+    '<th class="r">Difference</th><th>Status</th></tr></thead><tbody>';
+  months.forEach(m=>{
+    const calc=Number(m.interest||0),bank=Number(m.actualInterest||0),diff=calc-bank;
+    const status=bank===0?'<span class="hint">No interest credit found</span>':
+      Math.abs(diff)<0.01?'<span style="color:var(--green);font-weight:700">Matches</span>':
+      '<span style="color:var(--rust);font-weight:700">Review</span>';
+    h+='<tr><td>'+esc(monthLabel(m.month))+'</td><td class="r num">'+m.days+'</td>'+
+      '<td class="r num">'+inr(m.dailyProduct)+'</td><td class="r num">'+inr(calc)+'</td>'+
+      '<td class="r num">'+(bank?inr(bank):'—')+'</td><td class="r num">'+(bank?inr(diff):'—')+'</td><td>'+status+'</td></tr>';
+  });
+  h+='</tbody><tfoot><tr><th>Total</th><th></th>'+
+    '<th class="r num">'+inr(months.reduce((a,m)=>a+Number(m.dailyProduct||0),0))+'</th>'+
+    '<th class="r num">'+inr(totalCalc)+'</th><th class="r num">'+inr(totalBank)+'</th>'+
+    '<th class="r num">'+inr(totalDiff)+'</th><th></th></tr></tfoot></table></div>';
+  h+='<div class="formula-box" style="margin-top:12px"><b>Important:</b> a difference is a review point, not proof of a bank error. Check the statement period, applicable rates, rounding and the bank’s interest-credit convention.</div>';
+  box.innerHTML=h;
 }
-function renderSlabEMI(){ try{ if(typeof emiRenderSlabs==='function') emiRenderSlabs(); }catch(e){ console.warn('Slab editor init',e); } }
-function initCalculators(){
-  try{renderEmi();}catch(e){console.warn('EMI init',e)}
-  try{renderFD();}catch(e){console.warn('FD init',e)}
-  try{renderRD();}catch(e){console.warn('RD init',e)}
-  try{renderSIP();}catch(e){console.warn('SIP init',e)}
-  try{renderAge();}catch(e){console.warn('Age init',e)}
-}
-
-
 
 function renderStandaloneInterest(){
   const root=document.getElementById('interestStandalone');
@@ -5595,7 +4385,7 @@ function runAppHealthCheck(){
   });
 
   // Calculator function checks.
-  ['calcEMI','calcSlabEMI','calcDeposit','calcReinvest','calcAge','calcSIP','calcCurrency'].forEach(fn=>{
+  ['calcEMI','calcDeposit','calcReinvest','calcAge','calcSIP','calcCurrency'].forEach(fn=>{
     add('Calculator: '+fn, typeof window[fn]==='function', typeof window[fn]==='function'?'Available':'Missing');
   });
 
@@ -5620,18 +4410,12 @@ function runAppHealthCheck(){
     add('Progressive slab engine',ok,ok?'₹8,00,000 correctly split into 3 slabs: '+portions:'Unexpected allocation');
   }catch(e){ add('Progressive slab engine',false,e.message); }
 
-  // User-specified interest formula test: Daily Product ÷ 365 × rate (%).
+  // Daily interest formula test: ₹300,000 at 2.5% for a 30-day month.
   try{
-    const x=300000/365*2.5;
-    const ok=Math.abs(x-2000)<0.0001;
-    add('Daily interest formula',ok,ok?'₹2,000.00 = ₹3,00,000 ÷ 365 × 2.50%':'Formula test failed');
+    const x=300000*0.025/30;
+    const ok=Math.abs(x-250)<0.0001;
+    add('Daily interest formula',ok,ok?'₹250.00 for ₹3,00,000 @ 2.50% over 30 days':'Formula test failed');
   }catch(e){ add('Daily interest formula',false,e.message); }
-
-  // Slab EMI example: ₹5,00,000 = ₹3,00,000 @ 7% + ₹2,00,000 @ 8%.
-  try{
-    const ok=typeof calcSlabEMI==='function' && typeof slabEMIParts==='function';
-    add('Slab EMI example',ok,ok?'₹5,00,000 slab structure is available for iterative EMI calculation':'Slab EMI functions are missing');
-  }catch(e){ add('Slab EMI example',false,e.message); }
 
   // Local storage availability (saved slabs rely on it).
   try{
@@ -5674,115 +4458,6 @@ document.addEventListener('DOMContentLoaded', function(){
   try{ renderStandaloneInterest(); }catch(e){}
 });
 
-</script>
-<script id="slab-emi-final-v223">
-(function(){
-  function num(id, fallback=0){ const el=document.getElementById(id); const n=Number(el?.value); return Number.isFinite(n)?n:fallback; }
-  function fmt(n){ return Number(n||0).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2}); }
-  function monthsDate(date, n){ const d=new Date(date); d.setMonth(d.getMonth()+n); return d; }
-  function getSlabs(){
-    const rows=[...document.querySelectorAll('#emiSlabs .stmt-slab-row')];
-    let slabs=rows.map(r=>({
-      to:(r.querySelector('.emi-slab-to')?.value||'').trim()===''?null:Number(r.querySelector('.emi-slab-to')?.value),
-      rate:Number(r.querySelector('.emi-slab-rate')?.value)
-    })).filter(x=>x.to===null || Number.isFinite(x.to));
-    if(!slabs.length){ slabs=[{to:300000,rate:7},{to:500000,rate:8},{to:750000,rate:9},{to:1000000,rate:10},{to:null,rate:11}]; }
-    if(slabs[slabs.length-1].to!==null) slabs.push({to:null,rate:slabs[slabs.length-1].rate});
-    return slabs;
-  }
-  function allocate(balance, slabs){
-    const b=Math.max(0,Number(balance)||0); let prev=0; const out=[];
-    for(const s of slabs){
-      const upper=s.to===null?Infinity:s.to;
-      if(b<=prev) break;
-      const portion=Math.max(0,Math.min(b,upper)-prev);
-      if(portion>0) out.push({portion,rate:s.rate});
-      if(!Number.isFinite(upper)) break;
-      prev=upper;
-    }
-    return out;
-  }
-  function interest(balance, slabs){ return allocate(balance,slabs).reduce((a,p)=>a+p.portion*(p.rate/100)/12,0); }
-  function renderError(msg){
-    const el=document.getElementById('slabInterestSummary');
-    if(el){el.style.display='block';el.innerHTML='<div class="slab-interest-hero"><h3>Unable to calculate Slab Loan EMI</h3><div class="hint">'+String(msg).replace(/[<>]/g,'')+'</div></div>';el.scrollIntoView({behavior:'smooth',block:'start'});}
-  }
-  function calculate(){
-    const result=document.getElementById('slabInterestSummary');
-    try{
-      const principal=num('principal');
-      const tenure=Math.max(1,Math.floor(num('periodMonthsTotal',60)));
-      const moratorium=Math.max(0,Math.min(tenure-1,Math.floor(num('moratMonths',0))));
-      const repaymentMonths=tenure-moratorium;
-      const repaymentType=document.getElementById('repayType')?.value||'equal-installment';
-      const moratMode=document.getElementById('moratMode')?.value||'paid';
-      const startText=document.getElementById('startDate')?.value || new Date().toISOString().slice(0,10);
-      const start=new Date(startText+'T00:00:00');
-      if(!Number.isFinite(principal)||principal<=0) throw new Error('Enter a loan amount greater than zero.');
-      if(repaymentMonths<=0) throw new Error('Moratorium must be shorter than the total tenure.');
-      const slabs=getSlabs();
-      for(let i=0;i<slabs.length;i++){
-        if(!Number.isFinite(slabs[i].rate)||slabs[i].rate<0) throw new Error('Enter a valid annual rate for every slab.');
-        if(i<slabs.length-1 && (slabs[i].to===null || !Number.isFinite(slabs[i].to) || slabs[i].to<=0)) throw new Error('Enter a valid upper amount for each limited slab.');
-        if(i>0 && slabs[i-1].to!==null && slabs[i].to!==null && slabs[i].to<=slabs[i-1].to) throw new Error('Slab limits must increase from one slab to the next.');
-        if(i>0 && slabs[i-1].to===null) throw new Error('The No-limit slab must be the final slab.');
-      }
-      let balance=principal, rows=[], moratInterest=0;
-      for(let m=1;m<=moratorium;m++){
-        const opening=balance, intr=interest(opening,slabs); moratInterest+=intr;
-        if(moratMode==='accrued') balance+=intr;
-        rows.push({period:'M'+m,date:monthsDate(start,m),opening,interest:intr,principal:0,installment:moratMode==='accrued'?0:intr,closing:balance,moratorium:true,parts:allocate(opening,slabs)});
-      }
-      const repaymentStart=monthsDate(start,moratorium);
-      const periodInterest=(b)=>interest(b,slabs);
-      let emi;
-      if(repaymentType==='equal-principal') emi=null;
-      else {
-        const startBalance=balance;
-        function remaining(test){ let b=startBalance; for(let i=1;i<=repaymentMonths;i++){ b-=test-periodInterest(b); if(b<=0) return 0; } return b; }
-        let lo=0,hi=Math.max(startBalance/repaymentMonths,1);
-        for(let k=0;k<100 && remaining(hi)>0.000001;k++) hi*=2;
-        for(let k=0;k<120;k++){const mid=(lo+hi)/2;if(remaining(mid)>0)lo=mid;else hi=mid;}
-        emi=hi;
-      }
-      for(let i=1;i<=repaymentMonths;i++){
-        const opening=balance, intr=periodInterest(opening); let principalPaid,inst;
-        if(repaymentType==='equal-principal'){
-          principalPaid=i===repaymentMonths?balance: (principal / repaymentMonths);
-          if(principalPaid>balance) principalPaid=balance;
-          inst=principalPaid+intr;
-        }else{
-          principalPaid=emi-intr;
-          if(i===repaymentMonths){principalPaid=balance;inst=principalPaid+intr;} else inst=emi;
-        }
-        if(principalPaid<0) throw new Error('The slab rates produce an EMI below the interest due.');
-        balance=Math.max(0,balance-principalPaid);
-        rows.push({period:i,date:monthsDate(repaymentStart,i),opening,interest:intr,principal:principalPaid,installment:inst,closing:balance,moratorium:false,parts:allocate(opening,slabs)});
-      }
-      const totalInterest=rows.reduce((a,r)=>a+r.interest,0);
-      const totalPrincipal=rows.reduce((a,r)=>a+r.principal,0);
-      const totalRepayment=rows.reduce((a,r)=>a+r.installment,0);
-      const regular=rows.filter(r=>!r.moratorium);
-      const actualEmi=repaymentType==='equal-principal'?regular[0]?.installment||0:emi;
-      const slabTotals=slabs.map((s,i)=>({i,slab:s,interest:0,product:0}));
-      rows.forEach(r=>r.parts.forEach((p,i)=>{if(slabTotals[i]){slabTotals[i].product+=p.portion;slabTotals[i].interest+=p.portion*(p.rate/100)/12;}}));
-      const fy=new Map();
-      rows.forEach(r=>{const d=r.date;const y=d.getMonth()>=3?d.getFullYear():d.getFullYear()-1;const key='FY '+y+'-'+String(y+1).slice(-2);if(!fy.has(key))fy.set(key,{from:y,interest:0,principal:0,installment:0});const z=fy.get(key);z.interest+=r.interest;z.principal+=r.principal;z.installment+=r.installment;});
-      const detail=rows.map(r=>'<tr><td>'+r.period+'</td><td>'+r.date.toLocaleDateString('en-IN')+'</td><td>₹ '+fmt(r.opening)+'</td><td>'+r.parts.map((p,i)=>'S'+(i+1)+': ₹'+fmt(p.portion)+' @ '+p.rate+'%').join('<br>')+'</td><td>₹ '+fmt(r.interest)+'</td><td>₹ '+fmt(r.principal)+'</td><td>₹ '+fmt(r.installment)+'</td><td>₹ '+fmt(r.closing)+'</td></tr>').join('');
-      const slabRows=slabTotals.map(x=>'<tr><td><b>Slab '+(x.i+1)+'</b></td><td>'+(x.slab.to===null?'No limit':'₹ '+fmt(x.slab.to))+'</td><td>'+x.slab.rate+'%</td><td>₹ '+fmt(x.product)+'</td><td><b>₹ '+fmt(x.interest)+'</b></td></tr>').join('');
-      const fyRows=[...fy.entries()].sort((a,b)=>a[1].from-b[1].from).map(([k,z])=>'<tr><td><b>'+k+'</b></td><td>₹ '+fmt(z.interest)+'</td><td>₹ '+fmt(z.principal)+'</td><td>₹ '+fmt(z.installment)+'</td></tr>').join('');
-      if(result){result.style.display='block';result.innerHTML='<div class="slab-interest-hero"><h3>💰 Slab Loan EMI — Calculated</h3><div class="hero-value">₹ '+fmt(actualEmi)+'</div><div class="hint">Total tenure: '+tenure+' months • Moratorium: '+moratorium+' months • Repayment: '+repaymentMonths+' months</div></div><div class="slab-summary-grid"><div class="slab-summary-stat"><span class="hint">Loan amount</span><b>₹ '+fmt(principal)+'</b></div><div class="slab-summary-stat"><span class="hint">Total interest</span><b>₹ '+fmt(totalInterest)+'</b></div><div class="slab-summary-stat"><span class="hint">Total repayment</span><b>₹ '+fmt(totalRepayment)+'</b></div><div class="slab-summary-stat"><span class="hint">Principal repaid</span><b>₹ '+fmt(totalPrincipal)+'</b></div></div><div class="stub-title" style="margin-top:16px">Slab-wise interest — entire tenure</div><div class="table-scroll"><table><thead><tr><th>Slab</th><th>Upto</th><th>Rate</th><th>Slab product</th><th>Interest</th></tr></thead><tbody>'+slabRows+'</tbody><tfoot><tr><th colspan="4">Total</th><th>₹ '+fmt(totalInterest)+'</th></tr></tfoot></table></div><div class="stub-title" style="margin-top:18px">Financial year-wise interest</div><div class="table-scroll"><table><thead><tr><th>Financial year</th><th>Interest</th><th>Principal</th><th>Instalments</th></tr></thead><tbody>'+fyRows+'</tbody></table></div><div class="stub-title" style="margin-top:18px">Complete amortisation schedule</div><div class="table-scroll"><table><thead><tr><th>Period</th><th>Date</th><th>Opening</th><th>Slab allocation</th><th>Interest</th><th>Principal</th><th>Instalment</th><th>Closing</th></tr></thead><tbody>'+detail+'</tbody><tfoot><tr><th colspan="4">Total</th><th>₹ '+fmt(totalInterest)+'</th><th>₹ '+fmt(totalPrincipal)+'</th><th>₹ '+fmt(totalRepayment)+'</th><th>₹ '+fmt(rows.at(-1)?.closing||0)+'</th></tr></tfoot></table></div>';result.scrollIntoView({behavior:'smooth',block:'start'});}
-    }catch(e){console.error(e);renderError(e.message||e);}
-  }
-  function bind(){
-    const btn=document.getElementById('calculateSlabEmiBtn');
-    if(btn){btn.onclick=function(e){e.preventDefault();e.stopImmediatePropagation();calculate();return false;};}
-    const tenure=document.getElementById('periodMonthsTotal');
-    if(tenure) tenure.addEventListener('change',function(){const c=document.getElementById('count');if(c)c.value=Math.max(1,Number(this.value)||1);});
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',bind); else bind();
-  window.calculateSlabLoanFinal=calculate;
-})();
 </script>
 </body>
 </html>
