@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>StatementIQ v2.23 — Bank &amp; Credit Card Statement Analyser</title>
+<title>StatementIQ v2.24 — Bank &amp; Credit Card Statement Analyser</title>
 
 <!-- ==========================================================================
      StatementIQ — single-file, offline, browser-only statement analyser.
@@ -818,7 +818,7 @@ main{padding-top:24px}
   </div>
   <div class="brand-txt">
     <h1>StatementIQ</h1>
-    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.23</b></small>
+    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.24</b></small>
     <div class="developer-credit">Developed by Anil Sharma, Former General Manager, Central Bank of India</div>
   </div>
   <div class="header-actions">
@@ -920,7 +920,7 @@ main{padding-top:24px}
       <div class="card"><h3>Financial health</h3><p class="hint">A simple analytical score based only on the loaded statements — not financial advice.</p><div id="healthBox"></div></div>
     </div>
     <div class="card"><h3>Top spending categories</h3><p class="hint">Consumption spending excludes transfers to self, credit-card settlements, investments, loan principal and matched reversals.</p><div class="tblwrap"><table id="dashCatTbl"></table></div></div>
-    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.23 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
+    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.24 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
   </div>
 </section>
 
@@ -1072,7 +1072,7 @@ main{padding-top:24px}
   <div class="help-hero">
     <div class="help-hero-icon">?</div>
     <div>
-      <div class="eyebrow">STATEMENTIQ USER GUIDE · v2.23</div>
+      <div class="eyebrow">STATEMENTIQ USER GUIDE · v2.24</div>
       <h2>How to use StatementIQ</h2>
       <p>Upload → verify → review → analyse → export. Everything is processed locally in your browser.</p>
     </div>
@@ -1559,7 +1559,7 @@ main{padding-top:24px}
 
 <footer>
   <p class="disc">This tool extracts and analyses data from statements you provide. Always verify the extracted figures against your original statement before using them for tax filing, loan applications, or any financial decision. This is not financial or tax advice.</p>
-  <p>StatementIQ v2.23 · runs entirely offline in your browser · no account, no upload, no tracking</p>
+  <p>StatementIQ v2.24 · runs entirely offline in your browser · no account, no upload, no tracking</p>
 </footer>
 
 <!-- password modal -->
@@ -3310,15 +3310,32 @@ function renderInterestComparisonPanel(){
   const sel=document.getElementById('interestStatement');
   const resultBox=document.getElementById('interestResults');
   const dailyBox=document.getElementById('interestDaily');
-  const banks=S.sets.filter(x=>x.kind==='bank');
+  // Only live bank statements in S.sets are eligible. Never use a cached
+  // list or previously rendered option as a source for this selector.
+  const banks=S.sets.filter(x=>x && x.kind==='bank');
   if(!banks.length){
     window.SIQInterestLast=null;
     if(resultBox) resultBox.innerHTML='<div class="hint">Load a bank statement to calculate interest.</div>';
     if(dailyBox) dailyBox.innerHTML='';
   }
   if(sel){
-    sel.innerHTML=banks.length ? banks.map(d=>'<option value="'+esc(d.id)+'">'+esc(d.name)+'</option>').join('') : '<option value="">No bank statement loaded</option>';
-    sel.disabled=!banks.length;
+    const previous=sel.value;
+    sel.replaceChildren();
+    if(banks.length){
+      banks.forEach(d=>{
+        const opt=document.createElement('option');
+        opt.value=String(d.id); opt.textContent=String(d.name||'Bank statement');
+        sel.appendChild(opt);
+      });
+      sel.disabled=false;
+      if(banks.some(d=>String(d.id)===String(previous))) sel.value=previous;
+      else sel.value=String(banks[0].id);
+    }else{
+      const opt=document.createElement('option');
+      opt.value=''; opt.textContent='No bank statement loaded';
+      sel.appendChild(opt);
+      sel.value=''; sel.disabled=true;
+    }
   }
   interestRenderSlabs(interestLoadConfig());
 }
@@ -4618,12 +4635,25 @@ function clearAll(silent){
   // Calculated interest belongs to the current statement session. Clear it with
   // the statement data, but retain the user's saved slab configuration.
   window.SIQInterestLast = null;
+  // Interest Comparison must never retain statement names from a previous
+  // session or from statements that have just been cleared.  Rebuild the
+  // selector from the live in-memory S.sets collection only.
   const interestSel=document.getElementById('interestStatement');
-  if(interestSel){ interestSel.innerHTML='<option value="">No bank statement loaded</option>'; interestSel.disabled=true; }
+  if(interestSel){
+    interestSel.replaceChildren();
+    const opt=document.createElement('option');
+    opt.value=''; opt.textContent='No bank statement loaded';
+    interestSel.appendChild(opt);
+    interestSel.value='';
+    interestSel.disabled=true;
+  }
   const interestSlabBox=document.getElementById('interestSlabs');
   if(interestSlabBox) interestSlabBox.innerHTML='';
   ['mapCard','reviewCard','bankBody','cardBody','bookRunRow','dashBody'].forEach(id=>{ const el=document.getElementById(id); if(el) el.style.display='none'; });
   ['bankEmpty','cardEmpty','uploadEmpty','dashEmpty'].forEach(id=>{ const el=document.getElementById(id); if(el) el.style.display='block'; });
+  // Force a final refresh after clearing so Interest Comparison cannot
+  // resurrect stale dropdown options from the previous DOM state.
+  renderInterestComparisonPanel();
   document.getElementById('pillBank').textContent='0';
   document.getElementById('pillCard').textContent='0';
   document.getElementById('bookName').textContent='';
