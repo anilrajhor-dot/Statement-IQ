@@ -4641,6 +4641,30 @@ function clearAll(silent){
 }
 document.getElementById('btnClear').onclick = ()=>clearAll(false);
 
+// v2.21 HARD SESSION RESET: if a browser retains stale DOM state, rebuild the
+// page after clearing. Saved interest-slab preferences remain in localStorage.
+window.hardResetStatementSession = function(){
+  try{
+    S.files=[]; S.sets=[]; S.txns=[]; S.cardMeta=[]; S.books=null;
+    S.recon={c2b:null,b2b:null};
+    window.SIQInterestLast=null;
+    Object.values(S.charts||{}).forEach(c=>{try{c.destroy()}catch(e){}});
+    S.charts={};
+    const fi=document.getElementById('fileInput'); if(fi) fi.value='';
+    const sel=document.getElementById('interestStatement');
+    if(sel){ sel.replaceChildren(); const o=document.createElement('option'); o.value=''; o.textContent='No bank statement loaded'; sel.appendChild(o); sel.disabled=true; }
+    ['interestResults','interestDaily','interestSlabTotal','interestComparisonSummary'].forEach(id=>{const e=document.getElementById(id);if(e)e.innerHTML='';});
+    sessionStorage.setItem('siq_force_clean_reload','1');
+  }catch(e){}
+  location.reload();
+};
+
+// Replace the normal handler with a deterministic reset.
+document.getElementById('btnClear').onclick = ()=>{
+  if(!confirm('Wipe every statement, transaction and reconciliation from memory?')) return;
+  hardResetStatementSession();
+};
+
 document.getElementById('btnTheme').onclick = ()=>{
   const dark = document.documentElement.getAttribute('data-theme')==='dark';
   document.documentElement.setAttribute('data-theme', dark?'light':'dark');
