@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>StatementIQ v2.24 — Bank &amp; Credit Card Statement Analyser</title>
+<title>StatementIQ v2.25 — Bank &amp; Credit Card Statement Analyser</title>
 
 <!-- ==========================================================================
      StatementIQ — single-file, offline, browser-only statement analyser.
@@ -818,7 +818,7 @@ main{padding-top:24px}
   </div>
   <div class="brand-txt">
     <h1>StatementIQ</h1>
-    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.24</b></small>
+    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.25</b></small>
     <div class="developer-credit">Developed by Anil Sharma, Former General Manager, Central Bank of India</div>
   </div>
   <div class="header-actions">
@@ -920,7 +920,7 @@ main{padding-top:24px}
       <div class="card"><h3>Financial health</h3><p class="hint">A simple analytical score based only on the loaded statements — not financial advice.</p><div id="healthBox"></div></div>
     </div>
     <div class="card"><h3>Top spending categories</h3><p class="hint">Consumption spending excludes transfers to self, credit-card settlements, investments, loan principal and matched reversals.</p><div class="tblwrap"><table id="dashCatTbl"></table></div></div>
-    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.24 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
+    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.25 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
   </div>
 </section>
 
@@ -1072,7 +1072,7 @@ main{padding-top:24px}
   <div class="help-hero">
     <div class="help-hero-icon">?</div>
     <div>
-      <div class="eyebrow">STATEMENTIQ USER GUIDE · v2.24</div>
+      <div class="eyebrow">STATEMENTIQ USER GUIDE · v2.25</div>
       <h2>How to use StatementIQ</h2>
       <p>Upload → verify → review → analyse → export. Everything is processed locally in your browser.</p>
     </div>
@@ -1559,7 +1559,7 @@ main{padding-top:24px}
 
 <footer>
   <p class="disc">This tool extracts and analyses data from statements you provide. Always verify the extracted figures against your original statement before using them for tax filing, loan applications, or any financial decision. This is not financial or tax advice.</p>
-  <p>StatementIQ v2.24 · runs entirely offline in your browser · no account, no upload, no tracking</p>
+  <p>StatementIQ v2.25 · runs entirely offline in your browser · no account, no upload, no tracking</p>
 </footer>
 
 <!-- password modal -->
@@ -5814,5 +5814,60 @@ document.addEventListener('DOMContentLoaded', function(){
   window.calculateSlabLoanFinal=calculate;
 })();
 </script>
+
+<script id="siq-clear-interest-comparison-v225">
+window.SIQClearInterestComparisonLive = function(){
+  try{
+    [
+      'SIQStatements','statements','uploadedStatements','statementFiles',
+      'interestStatements','interestComparisonStatements'
+    ].forEach(function(k){
+      try{
+        if(Array.isArray(window[k])) window[k].length=0;
+        else if(window[k] && typeof window[k]==='object') window[k]={};
+      }catch(e){}
+    });
+
+    [
+      'currentStatement','selectedStatement','activeStatement',
+      'selectedInterestStatement','currentInterestStatement'
+    ].forEach(function(k){
+      try{ if(k in window) window[k]=null; }catch(e){}
+    });
+
+    document.querySelectorAll(
+      '#interestComparison select, select[id*="interest" i], select[id*="statement" i]'
+    ).forEach(function(sel){
+      sel.innerHTML='<option value="">No bank statement loaded</option>';
+      sel.value='';
+    });
+
+    document.querySelectorAll(
+      '#interestComparison input[type="file"], input[type="file"][id*="statement" i]'
+    ).forEach(function(input){ try{ input.value=''; }catch(e){} });
+
+    document.querySelectorAll(
+      '#interestComparison [data-statement], #interestComparison .statement-chip, #interestComparison .statement-card'
+    ).forEach(function(el){ el.remove(); });
+
+    return true;
+  }catch(e){
+    console.error('Interest Comparison clear failed',e);
+    return false;
+  }
+};
+
+document.addEventListener('click', function(ev){
+  const el=ev.target.closest && ev.target.closest(
+    'button,[role="button"],a,input[type="button"],input[type="submit"]'
+  );
+  if(!el)return;
+  const text=(el.innerText||el.value||el.getAttribute('aria-label')||'').trim().toLowerCase();
+  if(text.includes('clear all data') || text==='clear data' || text.includes('clear all')){
+    setTimeout(function(){window.SIQClearInterestComparisonLive();},0);
+  }
+}, true);
+</script>
+
 </body>
 </html>
