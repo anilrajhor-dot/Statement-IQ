@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>StatementIQ v2.35 — Bank &amp; Credit Card Statement Analyser</title>
+<title>StatementIQ v2.36 — Bank &amp; Credit Card Statement Analyser</title>
 
 <!-- ==========================================================================
      StatementIQ — single-file, offline, browser-only statement analyser.
@@ -807,7 +807,7 @@ main{padding-top:24px}
   </div>
   <div class="brand-txt">
     <h1>StatementIQ</h1>
-    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.35</b></small>
+    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.36</b></small>
     <div class="developer-credit">Developed by Anil Sharma, Former General Manager, Central Bank of India</div>
   </div>
   <div class="header-actions">
@@ -912,7 +912,7 @@ main{padding-top:24px}
       <div class="card"><h3>Financial health</h3><p class="hint">A simple analytical score based only on the loaded statements — not financial advice.</p><div id="healthBox"></div></div>
     </div>
     <div class="card"><h3>Top spending categories</h3><p class="hint">Consumption spending excludes transfers to self, credit-card settlements, investments, loan principal and matched reversals.</p><div class="tblwrap"><table id="dashCatTbl"></table></div></div>
-    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.35 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
+    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.36 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
   </div>
 </section>
 
@@ -1536,6 +1536,7 @@ main{padding-top:24px}
 <button class="btn sm" type="button" onclick="interestAddSlab()">+ Add slab</button>
 <button class="btn sm" type="button" onclick="interestResetSlabs()">Reset built-in slabs</button>
 <button class="btn sm danger" type="button" onclick="resetInterestAccountStatements()">↻ Reset account statements</button>
+<button class="btn sm danger" type="button" onclick="removeParsedFilesOnly()">🗑 Remove parsed files</button>
 </div>
 <div id="interestSlabTotal" class="hint" style="margin-top:10px"></div><div id="interestSaveStatus" class="hint" style="margin-top:4px;color:var(--green)">✓ Slab settings are saved automatically on this device.</div>
 <div style="margin-top:14px"><div class="slab-grid interest-settings-head" style="font-weight:800;margin-bottom:6px"><div class="wide">Slab</div><div>Upto amount</div><div>Rate %</div><div>Coverage</div><div></div></div><div id="interestSlabs"></div></div>
@@ -1596,7 +1597,7 @@ main{padding-top:24px}
 
 <footer>
   <p class="disc">This tool extracts and analyses data from statements you provide. Always verify the extracted figures against your original statement before using them for tax filing, loan applications, or any financial decision. This is not financial or tax advice.</p>
-  <p>StatementIQ v2.35 · runs entirely offline in your browser · no account, no upload, no tracking</p>
+  <p>StatementIQ v2.36 · runs entirely offline in your browser · no account, no upload, no tracking</p>
 </footer>
 
 <!-- password modal -->
@@ -1625,7 +1626,7 @@ main{padding-top:24px}
 <div id="toasts"></div>
 
 <script>
-/* v2.35 slab editor hardening — direct delegated handlers so the Add slab control cannot be lost. */
+/* v2.36 slab editor hardening — direct delegated handlers so the Add slab control cannot be lost. */
 document.addEventListener('click', function(e){
   const add=e.target.closest && e.target.closest('#emiAddSlabBtn');
   if(add){
@@ -1671,12 +1672,12 @@ const S = {
   sort: {tx:{k:'date',dir:1}}
 };
 
-// v2.35: statement-session guard. Only datasets created in the current
+// v2.36: statement-session guard. Only datasets created in the current
 // browser session are allowed into the Interest Comparison selector. This
 // prevents stale objects restored by iOS/browser page caching from appearing
 // after Clear All Data. Saved slab settings are intentionally separate.
 let SIQ_SESSION_ID = 'siq-' + Date.now() + '-' + Math.random().toString(36).slice(2);
-// v2.35: statements explicitly reset from Bank Interest Calculator are hidden
+// v2.36: statements explicitly reset from Bank Interest Calculator are hidden
 // from that calculator without deleting the original upload from the main app.
 const SIQ_INTEREST_RESET = new Set();
 
@@ -6004,7 +6005,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 <script id="siq-interest-audit-v228">
 (function(){
-  // v2.35: make the audit layer use the actual calculation result, and
+  // v2.36: make the audit layer use the actual calculation result, and
   // classify both interest and non-interest bank charges from statement rows.
   function siqChargeClass(r){
     const n=String(r?.narration||'').toLowerCase();
@@ -6779,7 +6780,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 
 <style id="siq-v231-loader-fix">
-/* v2.35 — keep the uploaded statement available to Interest Calculator.
+/* v2.36 — keep the uploaded statement available to Interest Calculator.
    The Reset button clears calculation output, not the uploaded source. */
 </style>
 <script id="siq-v231-loader-fix">
@@ -6904,14 +6905,14 @@ document.addEventListener('DOMContentLoaded', function(){
       if(typeof window.SIQRenderInterestAudit==='function') window.SIQRenderInterestAudit();
     }catch(e){}
 
-    // Keep the definitive v2.35 audit register in sync if present.
+    // Keep the definitive v2.36 audit register in sync if present.
     try{
       const finalCard=document.getElementById('siqFinalDailyCard');
       if(finalCard && typeof window.SIQRenderFinalAudit==='function') window.SIQRenderFinalAudit(result,ds);
     }catch(e){}
   };
 
-  // Expose the final audit renderer if v2.35 has created it.
+  // Expose the final audit renderer if v2.36 has created it.
   if(typeof window.renderFinal==='function') window.SIQRenderFinalAudit=window.renderFinal;
 
   // After any successful upload, immediately refresh the Interest Calculator
@@ -6972,7 +6973,7 @@ const oldHandle=window.handleFiles;if(typeof oldHandle==='function')window.handl
 
 
 <style id="siq-v233-source-fix">
-/* v2.35 — unified source bridge: the Interest Calculator reads the same
+/* v2.36 — unified source bridge: the Interest Calculator reads the same
    in-memory statement store used by Upload/Review. */
 #interestStatement:not(:disabled){opacity:1}
 </style>
@@ -7196,7 +7197,7 @@ const oldHandle=window.handleFiles;if(typeof oldHandle==='function')window.handl
 (function(){
   'use strict';
 
-  /* v2.35 ROOT FIX
+  /* v2.36 ROOT FIX
      Earlier versions created captureCharges()/chargeRows() inside separate
      IIFEs. The final interestRun could not call those private functions, so
      the calculated interest worked but the bank-interest/charges comparison
