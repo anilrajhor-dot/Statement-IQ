@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>StatementIQ v2.36 — Bank &amp; Credit Card Statement Analyser</title>
+<title>StatementIQ v2.37 — Bank &amp; Credit Card Statement Analyser</title>
 
 <!-- ==========================================================================
      StatementIQ — single-file, offline, browser-only statement analyser.
@@ -791,6 +791,20 @@ main{padding-top:24px}
 #slabInterestSummary{border:2px solid var(--amber);border-radius:20px}
 @media(max-width:700px){#slabCalculateBar>div{display:block!important}#calculateSlabEmiBtn{width:100%;margin-top:12px}.slab-interest-hero .hero-value{font-size:28px}}
 </style>
+
+<style id="siq-v237-interest-actions">
+.interest-actions{display:flex;flex-direction:column;gap:9px;width:100%}
+.interest-action-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;width:100%}
+.interest-action-row.main-actions .btn.primary{min-width:220px}
+.interest-action-row.reset-actions{border-top:1px solid var(--line);padding-top:9px}
+.interest-action-row.reset-actions .danger{border-color:#f05a28;color:#e94d22;background:#fff}
+@media(max-width:700px){
+  .interest-action-row{align-items:stretch}
+  .interest-action-row .btn,.interest-action-row select{min-height:48px}
+  .interest-action-row.main-actions .btn.primary,.interest-action-row.main-actions .btn.sm,.interest-action-row.reset-actions .btn{width:100%;min-width:0}
+  .interest-action-row select{width:100%;min-width:0!important}
+}
+</style>
 </head>
 <body>
 
@@ -912,7 +926,7 @@ main{padding-top:24px}
       <div class="card"><h3>Financial health</h3><p class="hint">A simple analytical score based only on the loaded statements — not financial advice.</p><div id="healthBox"></div></div>
     </div>
     <div class="card"><h3>Top spending categories</h3><p class="hint">Consumption spending excludes transfers to self, credit-card settlements, investments, loan principal and matched reversals.</p><div class="tblwrap"><table id="dashCatTbl"></table></div></div>
-    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.36 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
+    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.37 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
   </div>
 </section>
 
@@ -1530,13 +1544,21 @@ main{padding-top:24px}
 <h2>Bank Interest Calculator — Daily Product & Bank Interest Comparison</h2>
 <p class="hint">Compare bank interest credited with independently calculated interest using daily closing balances, progressive slabs and the Daily Product ÷ 365 × rate method.</p>
 <div class="formula-box"><b>Interest formula:</b> Daily Product ÷ 365 × applicable rate (%).</div><div class="formula-box"><b>Slab settings:</b> Three slabs are built in. The first slab covers the first ₹3,00,000. You can add more. All upper amounts and rates are editable.</div>
-<div class="row" style="margin-top:12px;align-items:center;gap:8px;flex-wrap:wrap">
-<label class="f" style="min-width:110px">Statement</label><select id="interestStatement" style="min-width:240px"></select>
-<button class="btn primary" type="button" onclick="interestRun()">Calculate interest</button>
-<button class="btn sm" type="button" onclick="interestAddSlab()">+ Add slab</button>
-<button class="btn sm" type="button" onclick="interestResetSlabs()">Reset built-in slabs</button>
-<button class="btn sm danger" type="button" onclick="resetInterestAccountStatements()">↻ Reset account statements</button>
-<button class="btn sm danger" type="button" onclick="removeParsedFilesOnly()">🗑 Remove parsed files</button>
+<div class="interest-actions" style="margin-top:12px">
+  <div class="interest-action-row">
+    <label class="f" style="min-width:110px">Statement</label>
+    <select id="interestStatement" style="min-width:240px;flex:1"></select>
+  </div>
+  <div class="interest-action-row main-actions">
+    <button class="btn primary" type="button" onclick="interestRun()">Calculate interest</button>
+    <button class="btn sm" type="button" onclick="interestAddSlab()">+ Add slab</button>
+    <button class="btn sm" type="button" onclick="interestResetSlabs()">Reset built-in slabs</button>
+  </div>
+  <div class="interest-action-row reset-actions">
+    <button class="btn sm" type="button" onclick="resetInterestAccountStatements()">↻ Reset calculation</button>
+    <button class="btn sm danger" type="button" onclick="removeParsedFilesOnly()">🗑 Remove uploaded statements</button>
+  </div>
+  <div class="hint" style="margin-top:5px"><b>Reset calculation</b> keeps the uploaded statement. <b>Remove uploaded statements</b> deletes the parsed statements from this session and clears the Interest Comparison dropdown.</div>
 </div>
 <div id="interestSlabTotal" class="hint" style="margin-top:10px"></div><div id="interestSaveStatus" class="hint" style="margin-top:4px;color:var(--green)">✓ Slab settings are saved automatically on this device.</div>
 <div style="margin-top:14px"><div class="slab-grid interest-settings-head" style="font-weight:800;margin-bottom:6px"><div class="wide">Slab</div><div>Upto amount</div><div>Rate %</div><div>Coverage</div><div></div></div><div id="interestSlabs"></div></div>
@@ -1597,7 +1619,7 @@ main{padding-top:24px}
 
 <footer>
   <p class="disc">This tool extracts and analyses data from statements you provide. Always verify the extracted figures against your original statement before using them for tax filing, loan applications, or any financial decision. This is not financial or tax advice.</p>
-  <p>StatementIQ v2.36 · runs entirely offline in your browser · no account, no upload, no tracking</p>
+  <p>StatementIQ v2.37 · runs entirely offline in your browser · no account, no upload, no tracking</p>
 </footer>
 
 <!-- password modal -->
@@ -1672,12 +1694,12 @@ const S = {
   sort: {tx:{k:'date',dir:1}}
 };
 
-// v2.36: statement-session guard. Only datasets created in the current
+// v2.37: statement-session guard. Only datasets created in the current
 // browser session are allowed into the Interest Comparison selector. This
 // prevents stale objects restored by iOS/browser page caching from appearing
 // after Clear All Data. Saved slab settings are intentionally separate.
 let SIQ_SESSION_ID = 'siq-' + Date.now() + '-' + Math.random().toString(36).slice(2);
-// v2.36: statements explicitly reset from Bank Interest Calculator are hidden
+// v2.37: statements explicitly reset from Bank Interest Calculator are hidden
 // from that calculator without deleting the original upload from the main app.
 const SIQ_INTEREST_RESET = new Set();
 
@@ -4747,12 +4769,41 @@ document.getElementById('btnClear').onclick = ()=>clearAll(false);
 // v2.21 HARD SESSION RESET: if a browser retains stale DOM state, rebuild the
 // page after clearing. Saved interest-slab preferences remain in localStorage.
 window.removeParsedFilesOnly = function(){
-  if(!(S.files.length || S.sets.length)){
-    toast('No parsed files to remove.','ok');
+  const hasFiles = Array.isArray(S.files) && S.files.length;
+  const hasSets = Array.isArray(S.sets) && S.sets.length;
+  if(!hasFiles && !hasSets){
+    toast('No parsed statements to remove.','ok');
     return;
   }
-  if(!confirm('Remove all parsed statement files from this session?\n\nThis removes the uploaded statement cards, parsed rows and calculation results from the app. Your saved slab settings are retained.')) return;
-  hardResetStatementSession();
+  if(!confirm('Remove all uploaded/parsed statements?\n\nThis will remove the files from the Upload list and Interest Comparison dropdown, clear parsed rows and calculation results, and keep your saved slab settings.')) return;
+
+  // Deterministic hard wipe: do not merely hide statements from the selector.
+  S.files.length=0; S.sets.length=0; S.txns.length=0; S.cardMeta.length=0; S.books=null;
+  S.recon={c2b:null,b2b:null};
+  try{ SIQ_INTEREST_RESET.clear(); }catch(e){}
+  window.SIQInterestLast=null;
+  try{ Object.values(S.charts||{}).forEach(c=>{try{c.destroy()}catch(e){}}); }catch(e){}
+  S.charts={};
+  const fi=document.getElementById('fileInput'); if(fi) fi.value='';
+
+  // Clear every statement selector and every output table immediately.
+  document.querySelectorAll('select#interestStatement, select[data-interest-statement], .interest-statement-select').forEach(sel=>{
+    sel.innerHTML='<option value="">No bank statement loaded</option>';
+    sel.value=''; sel.disabled=true;
+  });
+  ['interestResults','interestDaily','interestSlabTotal','interestComparisonSummary'].forEach(id=>{const e=document.getElementById(id);if(e)e.innerHTML='';});
+  ['interestChargesTable','interestMonthSummaryTable','interestDailyDetailsTable'].forEach(id=>{
+    const b=document.getElementById(id)?.querySelector('tbody');
+    if(b){const cols=id==='interestChargesTable'?5:(id==='interestMonthSummaryTable'?7:9);b.innerHTML='<tr><td colspan="'+cols+'" class="hint">No statement loaded.</td></tr>';}
+  });
+  try{ renderFiles(); }catch(e){}
+  try{ updateParsedFilesAction(); }catch(e){}
+  try{ renderMapping(); }catch(e){}
+  try{ buildReview(); }catch(e){}
+  try{ renderInterestComparisonPanel(); }catch(e){}
+  try{ refreshInterestSource(); }catch(e){}
+  try{ setStep(1); }catch(e){}
+  toast('Uploaded statements removed. Interest Comparison is now empty.','ok');
 };
 
 window.hardResetStatementSession = function(){
@@ -6005,7 +6056,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 <script id="siq-interest-audit-v228">
 (function(){
-  // v2.36: make the audit layer use the actual calculation result, and
+  // v2.37: make the audit layer use the actual calculation result, and
   // classify both interest and non-interest bank charges from statement rows.
   function siqChargeClass(r){
     const n=String(r?.narration||'').toLowerCase();
@@ -7128,7 +7179,7 @@ const oldHandle=window.handleFiles;if(typeof oldHandle==='function')window.handl
     }catch(e){}
   };
 
-  /* Reset calculations, not the uploaded source. */
+  /* Reset calculations only; the uploaded source is intentionally retained. */
   window.resetInterestAccountStatements = function(){
     window.SIQInterestLast = null;
 
