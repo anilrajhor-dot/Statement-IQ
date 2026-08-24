@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>StatementIQ v2.25 — Bank &amp; Credit Card Statement Analyser</title>
+<title>StatementIQ v2.26 — Bank &amp; Credit Card Statement Analyser</title>
 
 <!-- ==========================================================================
      StatementIQ — single-file, offline, browser-only statement analyser.
@@ -807,7 +807,7 @@ main{padding-top:24px}
   </div>
   <div class="brand-txt">
     <h1>StatementIQ</h1>
-    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.25</b></small>
+    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.26</b></small>
     <div class="developer-credit">Developed by Anil Sharma, Former General Manager, Central Bank of India</div>
   </div>
   <div class="header-actions">
@@ -909,7 +909,7 @@ main{padding-top:24px}
       <div class="card"><h3>Financial health</h3><p class="hint">A simple analytical score based only on the loaded statements — not financial advice.</p><div id="healthBox"></div></div>
     </div>
     <div class="card"><h3>Top spending categories</h3><p class="hint">Consumption spending excludes transfers to self, credit-card settlements, investments, loan principal and matched reversals.</p><div class="tblwrap"><table id="dashCatTbl"></table></div></div>
-    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.25 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
+    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.26 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
   </div>
 </section>
 
@@ -1536,6 +1536,51 @@ main{padding-top:24px}
 </div>
 <div id="interestSlabTotal" class="hint" style="margin-top:10px"></div><div id="interestSaveStatus" class="hint" style="margin-top:4px;color:var(--green)">✓ Slab settings are saved automatically on this device.</div>
 <div style="margin-top:14px"><div class="slab-grid interest-settings-head" style="font-weight:800;margin-bottom:6px"><div class="wide">Slab</div><div>Upto amount</div><div>Rate %</div><div>Coverage</div><div></div></div><div id="interestSlabs"></div></div>
+
+<div id="interestChargesCaptured" class="card" style="margin-top:14px">
+  <h3>🏦 Interest &amp; Charges Captured from Bank Statement</h3>
+  <p class="hint">Bank interest/charges detected from statement narration. These are shown separately from principal movements for comparison and audit.</p>
+  <div class="table-scroll">
+    <table id="interestChargesTable">
+      <thead><tr>
+        <th>Date</th><th>Narration</th><th>Amount</th><th>Type</th><th>Included in comparison?</th>
+      </tr></thead>
+      <tbody><tr><td colspan="5" class="hint">Load a bank statement to detect interest and charges.</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<div id="interestMonthSummary" class="card" style="margin-top:14px">
+  <h3>📅 Month-wise Interest Summary</h3>
+  <p class="hint">Calendar-month daily product, calculated interest, bank interest/charges and difference.</p>
+  <div class="table-scroll">
+    <table id="interestMonthSummaryTable">
+      <thead><tr>
+        <th>Month</th><th>Days</th><th>Opening Balance</th><th>Total Daily Product</th>
+        <th>Calculated Interest</th><th>Bank Interest / Charges</th><th>Difference</th>
+      </tr></thead>
+      <tbody><tr><td colspan="7" class="hint">Calculate interest to generate the month-wise summary.</td></tr></tbody>
+      <tfoot><tr id="interestMonthSummaryTotal"><th>Total</th><th></th><th></th><th></th><th></th><th></th><th></th></tr></tfoot>
+    </table>
+  </div>
+</div>
+
+<div id="interestDailyDetails" class="card" style="margin-top:14px">
+  <h3>📊 Daily Product Details</h3>
+  <p class="hint">Every calendar day is shown, including days with no transaction. Daily product = balance × number of days.</p>
+  <div class="table-scroll" style="max-height:520px">
+    <table id="interestDailyDetailsTable">
+      <thead><tr>
+        <th>Date</th><th>Opening Balance</th><th>Debit</th><th>Credit</th>
+        <th>Closing / Outstanding Balance</th><th>Days</th><th>Daily Product</th>
+        <th>Rate %</th><th>Daily Interest</th>
+      </tr></thead>
+      <tbody><tr><td colspan="9" class="hint">Calculate interest to generate daily details.</td></tr></tbody>
+      <tfoot><tr id="interestDailyDetailsTotal"><th>Total</th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tr></tfoot>
+    </table>
+  </div>
+</div>
+
 <div id="interestResults" style="margin-top:14px"><div class="hint">Edit the slabs if required, then press <b>Calculate interest</b>.</div></div>
 <div id="interestDaily"></div>
 </div></section>
@@ -1548,7 +1593,7 @@ main{padding-top:24px}
 
 <footer>
   <p class="disc">This tool extracts and analyses data from statements you provide. Always verify the extracted figures against your original statement before using them for tax filing, loan applications, or any financial decision. This is not financial or tax advice.</p>
-  <p>StatementIQ v2.25 · runs entirely offline in your browser · no account, no upload, no tracking</p>
+  <p>StatementIQ v2.26 · runs entirely offline in your browser · no account, no upload, no tracking</p>
 </footer>
 
 <!-- password modal -->
@@ -1577,7 +1622,7 @@ main{padding-top:24px}
 <div id="toasts"></div>
 
 <script>
-/* v2.25 slab editor hardening — direct delegated handlers so the Add slab control cannot be lost. */
+/* v2.26 slab editor hardening — direct delegated handlers so the Add slab control cannot be lost. */
 document.addEventListener('click', function(e){
   const add=e.target.closest && e.target.closest('#emiAddSlabBtn');
   if(add){
@@ -1623,12 +1668,12 @@ const S = {
   sort: {tx:{k:'date',dir:1}}
 };
 
-// v2.25: statement-session guard. Only datasets created in the current
+// v2.26: statement-session guard. Only datasets created in the current
 // browser session are allowed into the Interest Comparison selector. This
 // prevents stale objects restored by iOS/browser page caching from appearing
 // after Clear All Data. Saved slab settings are intentionally separate.
 let SIQ_SESSION_ID = 'siq-' + Date.now() + '-' + Math.random().toString(36).slice(2);
-// v2.25: statements explicitly reset from Bank Interest Calculator are hidden
+// v2.26: statements explicitly reset from Bank Interest Calculator are hidden
 // from that calculator without deleting the original upload from the main app.
 const SIQ_INTEREST_RESET = new Set();
 
@@ -5781,5 +5826,147 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 
 </script>
+
+<script id="siq-interest-audit-v226">
+(function(){
+  const money = v => {
+    const n=Number(v);
+    return Number.isFinite(n) ? n.toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2}) : '—';
+  };
+  const dateText = d => {
+    try {
+      const x = d instanceof Date ? d : new Date(d);
+      return isNaN(x) ? String(d||'') : x.toLocaleDateString('en-GB');
+    } catch(e){ return String(d||''); }
+  };
+  const esc2 = v => String(v==null?'':v).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+
+  function statementRows(ds){
+    return (ds && Array.isArray(ds.rows)) ? ds.rows.slice().sort((a,b)=>{
+      const da=new Date(a.date), db=new Date(b.date);
+      return da-db;
+    }) : [];
+  }
+
+  function rowAmount(r){
+    return Number(r.amount ?? r.debit ?? r.credit ?? r.value ?? 0) || 0;
+  }
+
+  function narration(r){
+    return String(r.narration ?? r.description ?? r.particulars ?? r.details ?? '').trim();
+  }
+
+  function detectType(r){
+    const n=narration(r).toLowerCase();
+    if(/penal|late|overdue|additional interest/.test(n)) return 'Penal / Additional Interest';
+    if(/interest|int\.?\b|finance charge|interest charged|interest debit|interest applied/.test(n)) return 'Interest';
+    if(/charge|fee|commission/.test(n)) return 'Charge / Fee';
+    return null;
+  }
+
+  function renderCapturedCharges(ds){
+    const body=document.querySelector('#interestChargesTable tbody');
+    if(!body) return;
+    const rows=statementRows(ds);
+    const hits=rows.map(r=>({r,type:detectType(r)})).filter(x=>x.type);
+    if(!hits.length){
+      body.innerHTML='<tr><td colspan="5" class="hint">No interest or charge entries were detected from the statement narration.</td></tr>';
+      return;
+    }
+    body.innerHTML=hits.map(x=>{
+      const r=x.r;
+      const amt=rowAmount(r);
+      return `<tr>
+        <td>${esc2(dateText(r.date))}</td>
+        <td>${esc2(narration(r))}</td>
+        <td class="num">${money(amt)}</td>
+        <td>${esc2(x.type)}</td>
+        <td>Yes</td>
+      </tr>`;
+    }).join('');
+  }
+
+  function renderAuditTables(){
+    try{
+      const sel=document.getElementById('interestStatement');
+      const ds=(window.S && Array.isArray(S.sets))
+        ? (S.sets.find(x=>x.id===sel?.value && x.kind==='bank') || S.sets.find(x=>x.kind==='bank'))
+        : null;
+      if(!ds) return;
+
+      renderCapturedCharges(ds);
+
+      const result=window.SIQInterestLast;
+      if(!result) return;
+
+      // Support common result shapes without changing the calculation engine.
+      const daily = result.daily || result.dailyRows || result.rows || result.details || [];
+      const monthRows = result.monthly || result.monthRows || result.monthSummary || [];
+
+      const dailyBody=document.querySelector('#interestDailyDetailsTable tbody');
+      if(dailyBody && Array.isArray(daily) && daily.length){
+        let tp=0, ti=0, td=0, tc=0;
+        dailyBody.innerHTML=daily.map(r=>{
+          const op=Number(r.openingBalance ?? r.opening ?? r.balance ?? 0)||0;
+          const debit=Number(r.debit ?? 0)||0;
+          const credit=Number(r.credit ?? 0)||0;
+          const cl=Number(r.closingBalance ?? r.closing ?? r.balance ?? 0)||0;
+          const days=Number(r.days ?? 1)||1;
+          const prod=Number(r.dailyProduct ?? r.product ?? (Math.abs(cl)*days))||0;
+          const rate=Number(r.rate ?? r.ratePct ?? 0)||0;
+          const intr=Number(r.interest ?? r.dailyInterest ?? 0)||0;
+          tp+=prod; ti+=intr; td+=debit; tc+=credit;
+          return `<tr>
+            <td>${esc2(dateText(r.date))}</td><td class="num">${money(op)}</td>
+            <td class="num">${money(debit)}</td><td class="num">${money(credit)}</td>
+            <td class="num">${money(cl)}</td><td class="num">${days}</td>
+            <td class="num">${money(prod)}</td><td class="num">${rate.toFixed(2)}</td>
+            <td class="num">${money(intr)}</td>
+          </tr>`;
+        }).join('');
+        const f=document.querySelector('#interestDailyDetailsTotal');
+        if(f) f.innerHTML=`<th>Total</th><th></th><th class="num">${money(td)}</th><th class="num">${money(tc)}</th><th></th><th></th><th class="num">${money(tp)}</th><th></th><th class="num">${money(ti)}</th>`;
+      }
+
+      const mb=document.querySelector('#interestMonthSummaryTable tbody');
+      if(mb && Array.isArray(monthRows) && monthRows.length){
+        let p=0, ci=0, bi=0;
+        mb.innerHTML=monthRows.map(r=>{
+          const product=Number(r.dailyProduct ?? r.product ?? r.totalProduct ?? 0)||0;
+          const calc=Number(r.calculatedInterest ?? r.interest ?? 0)||0;
+          const bank=Number(r.bankInterest ?? r.bankCharges ?? r.chargedInterest ?? 0)||0;
+          p+=product; ci+=calc; bi+=bank;
+          const diff=bank-calc;
+          return `<tr>
+            <td>${esc2(r.month ?? r.label ?? '')}</td>
+            <td class="num">${Number(r.days ?? 0)||0}</td>
+            <td class="num">${money(r.openingBalance ?? r.opening ?? 0)}</td>
+            <td class="num">${money(product)}</td>
+            <td class="num">${money(calc)}</td>
+            <td class="num">${money(bank)}</td>
+            <td class="num">${money(diff)}</td>
+          </tr>`;
+        }).join('');
+        const f=document.querySelector('#interestMonthSummaryTotal');
+        if(f) f.innerHTML=`<th>Total</th><th></th><th></th><th class="num">${money(p)}</th><th class="num">${money(ci)}</th><th class="num">${money(bi)}</th><th class="num">${money(bi-ci)}</th>`;
+      }
+    }catch(e){ console.warn('Interest audit rendering:',e); }
+  }
+
+  window.SIQRenderInterestAudit=renderAuditTables;
+
+  // Re-render after the existing interest calculation finishes.
+  document.addEventListener('click',function(ev){
+    const el=ev.target.closest && ev.target.closest('button');
+    if(!el) return;
+    const t=(el.innerText||'').toLowerCase();
+    if(t.includes('calculate interest')){
+      setTimeout(renderAuditTables,50);
+      setTimeout(renderAuditTables,300);
+    }
+  },true);
+})();
+</script>
+
 </body>
 </html>
