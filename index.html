@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>StatementIQ v2.38 — Bank &amp; Credit Card Statement Analyser</title>
+<title>StatementIQ v2.39 — Bank &amp; Credit Card Statement Analyser</title>
 
 <!-- ==========================================================================
      StatementIQ — single-file, offline, browser-only statement analyser.
@@ -821,7 +821,7 @@ main{padding-top:24px}
   </div>
   <div class="brand-txt">
     <h1>StatementIQ</h1>
-    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.38</b></small>
+    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.39</b></small>
     <div class="developer-credit">Developed by Anil Sharma, Former General Manager, Central Bank of India</div>
   </div>
   <div class="header-actions">
@@ -926,7 +926,7 @@ main{padding-top:24px}
       <div class="card"><h3>Financial health</h3><p class="hint">A simple analytical score based only on the loaded statements — not financial advice.</p><div id="healthBox"></div></div>
     </div>
     <div class="card"><h3>Top spending categories</h3><p class="hint">Consumption spending excludes transfers to self, credit-card settlements, investments, loan principal and matched reversals.</p><div class="tblwrap"><table id="dashCatTbl"></table></div></div>
-    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.38 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
+    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.39 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
   </div>
 </section>
 
@@ -1563,7 +1563,7 @@ main{padding-top:24px}
 <div id="interestSlabTotal" class="hint" style="margin-top:10px"></div><div id="interestSaveStatus" class="hint" style="margin-top:4px;color:var(--green)">✓ Slab settings are saved automatically on this device.</div>
 <div style="margin-top:14px"><div class="slab-grid interest-settings-head" style="font-weight:800;margin-bottom:6px"><div class="wide">Slab</div><div>Upto amount</div><div>Rate %</div><div>Coverage</div><div></div></div><div id="interestSlabs"></div></div>
 
-<div id="interestChargesCaptured" class="card" style="margin-top:14px">
+<div id="interestChargesCaptured" class="card" style="margin-top:14px"><div class="banner warn" style="margin-top:10px"><span>!</span><div><b>Interest-credit rule:</b> only an explicit bank interest credit is included in the comparison. Interest credited for FD / fixed deposit / term deposit is excluded.</div></div>
   <h3>🏦 Interest &amp; Charges Captured from Bank Statement</h3>
   <p class="hint">Bank interest/charges detected from statement narration. These are shown separately from principal movements for comparison and audit.</p>
   <div class="table-scroll">
@@ -1619,7 +1619,7 @@ main{padding-top:24px}
 
 <footer>
   <p class="disc">This tool extracts and analyses data from statements you provide. Always verify the extracted figures against your original statement before using them for tax filing, loan applications, or any financial decision. This is not financial or tax advice.</p>
-  <p>StatementIQ v2.38 · runs entirely offline in your browser · no account, no upload, no tracking</p>
+  <p>StatementIQ v2.39 · runs entirely offline in your browser · no account, no upload, no tracking</p>
 </footer>
 
 <!-- password modal -->
@@ -1694,12 +1694,12 @@ const S = {
   sort: {tx:{k:'date',dir:1}}
 };
 
-// v2.38: statement-session guard. Only datasets created in the current
+// v2.39: statement-session guard. Only datasets created in the current
 // browser session are allowed into the Interest Comparison selector. This
 // prevents stale objects restored by iOS/browser page caching from appearing
 // after Clear All Data. Saved slab settings are intentionally separate.
 let SIQ_SESSION_ID = 'siq-' + Date.now() + '-' + Math.random().toString(36).slice(2);
-// v2.38: statements explicitly reset from Bank Interest Calculator are hidden
+// v2.39: statements explicitly reset from Bank Interest Calculator are hidden
 // from that calculator without deleting the original upload from the main app.
 const SIQ_INTEREST_RESET = new Set();
 
@@ -3186,10 +3186,28 @@ function interestCalculateDaily(ds, slabs){
   // and credit (deposit) entries, but do not treat unrelated closing balances
   // or statement totals as bank interest.
   (ds.rows||[]).forEach(r=>{
-    const narration=String(r.narration||'');
-    const isInterest=/\binterest\b|\bint\.?\b|finance\s+charge|penal|additional\s+interest|interest\s+charged|interest\s+debited|interest\s+credited/i.test(narration);
+    const narration=String(r.narration||'').toLowerCase().replace(/[_\-\/]+/g,' ').replace(/\s+/g,' ').trim();
+    const dr=Math.abs(Number(r.debit||0)||0);
+    const cr=Math.abs(Number(r.credit||0)||0);
+    const isFdCredit=cr>0 && /\b(?:fd|f\.d\.|fixed\s+deposit|term\s+deposit|td|t\.d\.)\b/.test(narration);
+    const isCreditInterest=cr>0 && !isFdCredit && (
+      /^interest$/.test(narration) ||
+      /\binterest\s+(?:credit|credited|cr)\b/.test(narration) ||
+      /\b(?:int|intt)\s*(?:cr|credit|credited)\b/.test(narration) ||
+      /\b(?:credit|credited)\s+(?:for|towards|as)\s+(?:bank\s+)?interest\b/.test(narration) ||
+      /\b(?:bank|savings|saving|sb)\s+interest\b/.test(narration)
+    );
+    const isDebitInterest=dr>0 && (
+      /^interest$/.test(narration) ||
+      /\binterest\s+(?:charge|charged|debit|debited|applied)\b/.test(narration) ||
+      /\b(?:int|intt)\s*(?:dr|debit|debited)\b/.test(narration) ||
+      /\bfinance\s+charge\b/.test(narration) ||
+      /\bpenal\s+interest\b/.test(narration) ||
+      /\badditional\s+interest\b/.test(narration)
+    );
+    const isInterest=isCreditInterest || isDebitInterest;
     if(isInterest){
-      const amount=Math.abs(Number(r.debit||0))+Math.abs(Number(r.credit||0));
+      const amount=dr+cr;
       if(amount>0){
         const k=monthKey(r.date);
         const m=by[k]||(by[k]={month:k,days:new Date(r.date.getFullYear(),r.date.getMonth()+1,0).getDate(),calculatedDays:0,dailyProduct:0,interest:0,slabProducts:slabs.map(()=>0),slabInterest:slabs.map(()=>0),actualInterest:0});
@@ -6056,7 +6074,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 <script id="siq-interest-audit-v228">
 (function(){
-  // v2.38: make the audit layer use the actual calculation result, and
+  // v2.39: make the audit layer use the actual calculation result, and
   // classify both interest and non-interest bank charges from statement rows.
   function siqChargeClass(r){
     const n=String(r?.narration||'').toLowerCase();
@@ -6523,14 +6541,44 @@ document.addEventListener('DOMContentLoaded', function(){
 
   function classify2(r){
     const n=narration2(r).toLowerCase().replace(/[_\-\/]+/g,' ').replace(/\s+/g,' ').trim();
+    const dr=debit2(r), cr=credit2(r);
 
-    // Exact patterns present in the user's Central Bank loan statement:
-    if(/^interest$/.test(n) || /\binterest\b/.test(n) ||
-       /\bint\b/.test(n) || /\bintt\b/.test(n) ||
-       /finance\s+charge/.test(n) || /penal\s+interest/.test(n) ||
-       /additional\s+interest/.test(n) || /interest\s+(charged|debited|credited|applied)/.test(n)){
-      return 'Interest';
-    }
+    /*
+     * IMPORTANT:
+     * A credit containing the word "interest" is NOT automatically the
+     * interest for the account being tested. A bank statement may contain
+     * interest on an FD/term deposit credited into the same account.
+     *
+     * For CREDIT entries, therefore, only explicit bank-interest-credit
+     * narrations are accepted. FD / fixed-deposit / term-deposit interest is
+     * explicitly excluded.
+     *
+     * For DEBIT entries (normally a loan/OD interest debit), the wider
+     * interest patterns remain available because these are actual interest
+     * debits charged by the bank.
+     */
+    const isFdCredit = cr>0 && /\b(?:fd|f\.d\.|fixed\s+deposit|term\s+deposit|td|t\.d\.)\b/.test(n);
+
+    const explicitCreditInterest =
+      cr>0 && !isFdCredit && (
+        /^interest$/.test(n) ||
+        /\binterest\s+(?:credit|credited|cr)\b/.test(n) ||
+        /\b(?:int|intt)\s*(?:cr|credit|credited)\b/.test(n) ||
+        /\b(?:credit|credited)\s+(?:for|towards|as)\s+(?:bank\s+)?interest\b/.test(n) ||
+        /\b(?:bank|savings|saving|sb)\s+interest\b/.test(n)
+      );
+
+    const explicitDebitInterest =
+      dr>0 && (
+        /^interest$/.test(n) ||
+        /\binterest\s+(?:charge|charged|debit|debited|applied)\b/.test(n) ||
+        /\b(?:int|intt)\s*(?:dr|debit|debited)\b/.test(n) ||
+        /\bfinance\s+charge\b/.test(n) ||
+        /\bpenal\s+interest\b/.test(n) ||
+        /\badditional\s+interest\b/.test(n)
+      );
+
+    if(explicitCreditInterest || explicitDebitInterest) return 'Interest';
 
     if(/qtr\s+lgr\s+fol\s+chg|quarterly\s+ledger|ledger\s+folio|folio\s+charge/.test(n))
       return 'Ledger / Folio charge';
