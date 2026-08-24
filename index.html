@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>StatementIQ v2.26 — Bank &amp; Credit Card Statement Analyser</title>
+<title>StatementIQ v2.27 — Bank &amp; Credit Card Statement Analyser</title>
 
 <!-- ==========================================================================
      StatementIQ — single-file, offline, browser-only statement analyser.
@@ -807,7 +807,7 @@ main{padding-top:24px}
   </div>
   <div class="brand-txt">
     <h1>StatementIQ</h1>
-    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.26</b></small>
+    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.27</b></small>
     <div class="developer-credit">Developed by Anil Sharma, Former General Manager, Central Bank of India</div>
   </div>
   <div class="header-actions">
@@ -909,7 +909,7 @@ main{padding-top:24px}
       <div class="card"><h3>Financial health</h3><p class="hint">A simple analytical score based only on the loaded statements — not financial advice.</p><div id="healthBox"></div></div>
     </div>
     <div class="card"><h3>Top spending categories</h3><p class="hint">Consumption spending excludes transfers to self, credit-card settlements, investments, loan principal and matched reversals.</p><div class="tblwrap"><table id="dashCatTbl"></table></div></div>
-    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.26 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
+    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.27 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
   </div>
 </section>
 
@@ -1593,7 +1593,7 @@ main{padding-top:24px}
 
 <footer>
   <p class="disc">This tool extracts and analyses data from statements you provide. Always verify the extracted figures against your original statement before using them for tax filing, loan applications, or any financial decision. This is not financial or tax advice.</p>
-  <p>StatementIQ v2.26 · runs entirely offline in your browser · no account, no upload, no tracking</p>
+  <p>StatementIQ v2.27 · runs entirely offline in your browser · no account, no upload, no tracking</p>
 </footer>
 
 <!-- password modal -->
@@ -1622,7 +1622,7 @@ main{padding-top:24px}
 <div id="toasts"></div>
 
 <script>
-/* v2.26 slab editor hardening — direct delegated handlers so the Add slab control cannot be lost. */
+/* v2.27 slab editor hardening — direct delegated handlers so the Add slab control cannot be lost. */
 document.addEventListener('click', function(e){
   const add=e.target.closest && e.target.closest('#emiAddSlabBtn');
   if(add){
@@ -1668,12 +1668,12 @@ const S = {
   sort: {tx:{k:'date',dir:1}}
 };
 
-// v2.26: statement-session guard. Only datasets created in the current
+// v2.27: statement-session guard. Only datasets created in the current
 // browser session are allowed into the Interest Comparison selector. This
 // prevents stale objects restored by iOS/browser page caching from appearing
 // after Clear All Data. Saved slab settings are intentionally separate.
 let SIQ_SESSION_ID = 'siq-' + Date.now() + '-' + Math.random().toString(36).slice(2);
-// v2.26: statements explicitly reset from Bank Interest Calculator are hidden
+// v2.27: statements explicitly reset from Bank Interest Calculator are hidden
 // from that calculator without deleting the original upload from the main app.
 const SIQ_INTEREST_RESET = new Set();
 
@@ -3101,18 +3101,17 @@ function interestBuildDaily(ds){
       else movements.forEach(r=>{balance+=Number(r.debit||0)-Number(r.credit||0);});
     }
 
-    // For a loan/OD account, interest is normally posted on the last day
-    // after the daily-product calculation. Do not let that interest (or the
-    // charges/GST posted with it) earn interest on the same day. The posted
-    // closing balance still carries forward to the next month.
+    // Interest/charges posted by the bank are NOT principal movements for
+    // the daily-product calculation. Reverse those postings for the day so
+    // the product is based on the balance immediately before the bank
+    // interest/charge was posted. This works for both loan debits and deposit
+    // interest credits. The posted amount still remains in the statement
+    // closing balance and therefore carries forward normally.
     let productBalance=balance;
     if(tx.length){
-      const hasMonthEndInterest=tx.some(r=>/\binterest\b/i.test(String(r.narration||'')));
-      if(hasMonthEndInterest && d.getDate()===new Date(d.getFullYear(),d.getMonth()+1,0).getDate()){
-        const postInterest=tx.filter(r=>/\binterest\b|qtr\s+lgr|gst|ne?s?l|charge|fee/i.test(String(r.narration||'')));
-        const postAmount=postInterest.reduce((a,r)=>a+Number(r.debit||0)-Number(r.credit||0),0);
-        productBalance=balance-postAmount;
-      }
+      const bankPostings=tx.filter(r=>/\binterest\b|qtr\s+lgr|gst|ne?s?l|charge|fee|finance charge|penal/i.test(String(r.narration||'')));
+      const postAmount=bankPostings.reduce((a,r)=>a+Number(r.debit||0)-Number(r.credit||0),0);
+      if(Math.abs(postAmount)>0) productBalance=balance-postAmount;
     }
 
     days.push({
@@ -3157,12 +3156,19 @@ function interestCalculateDaily(ds, slabs){
     m.interest += x.interest;
     x.parts.forEach((p,i)=>{m.slabProducts[i]+=p.portion;m.slabInterest[i]+=p.portion/365*p.rate/100;});
   });
-  // Interest actually credited in the statement for comparison.
+  // Actual interest/charges posted by the bank. Capture both debit (loan/OD)
+  // and credit (deposit) entries, but do not treat unrelated closing balances
+  // or statement totals as bank interest.
   (ds.rows||[]).forEach(r=>{
-    if(r.credit>0 && /(monthly\s+interest|interest\s+(credit|credited|paid|payment)|\bint\.?\s*(credit|credited)|interest)/i.test(r.narration||'')){
-      const k=monthKey(r.date);
-      const m=by[k]||(by[k]={month:k,days:new Date(r.date.getFullYear(),r.date.getMonth()+1,0).getDate(),calculatedDays:0,dailyProduct:0,interest:0,slabProducts:slabs.map(()=>0),slabInterest:slabs.map(()=>0),actualInterest:0});
-      m.actualInterest += Number(r.credit||0);
+    const narration=String(r.narration||'');
+    const isInterest=/\binterest\b|\bint\.?\b|finance\s+charge|penal|additional\s+interest|interest\s+charged|interest\s+debited|interest\s+credited/i.test(narration);
+    if(isInterest){
+      const amount=Math.abs(Number(r.debit||0))+Math.abs(Number(r.credit||0));
+      if(amount>0){
+        const k=monthKey(r.date);
+        const m=by[k]||(by[k]={month:k,days:new Date(r.date.getFullYear(),r.date.getMonth()+1,0).getDate(),calculatedDays:0,dailyProduct:0,interest:0,slabProducts:slabs.map(()=>0),slabInterest:slabs.map(()=>0),actualInterest:0});
+        m.actualInterest += amount;
+      }
     }
   });
   return {...daily, daily:out, monthly:Object.values(by).sort((a,b)=>a.month.localeCompare(b.month)), total};
@@ -3256,7 +3262,7 @@ function interestShowDaily(){
   const {result,slabs}=last;
   const days=result.daily||[];
 
-  const totalDailyProduct=days.reduce((a,d)=>a+(Number(d.balance)||0),0);
+  const totalDailyProduct=days.reduce((a,d)=>a+(Number(d.productBalance??d.balance)||0),0);
   const totalDailyInterest=days.reduce((a,d)=>a+(Number(d.interest)||0),0);
 
   // Slab-wise totals for the whole displayed period.
@@ -3270,10 +3276,10 @@ function interestShowDaily(){
 
   let h=
     '<div class="banner ok" style="margin-top:12px"><span>✓</span><div><b>Daily-product period:</b> '+(result.firstMonthMode==='from-first-transaction'?'First month starts on '+fmtDate(result.startDate)+' because no brought-forward balance was available; subsequent months start on the 1st.':'Each month runs from the 1st through month-end, using the actual calendar days.')+'</div></div>'+'<div class="row" style="justify-content:space-between;align-items:center;margin-top:14px">'+
-      '<h4 style="margin:0">Daily product calculation</h4>'+
+      '<h4 style="margin:0">Daily Product Details</h4>'+
       '<span class="hint">'+days.length+' day(s) displayed</span>'+
     '</div>'+
-    '<p class="daily-scroll-note">Swipe left/right to see all slab columns on a mobile screen.</p>'+
+    '<p class="daily-scroll-note"><b>Daily Product = applicable balance × 1 day.</b> Monthly daily product is the sum of these daily products. Swipe left/right to see all columns.</p>'+
     '<div class="tblwrap" style="margin-top:8px;max-height:560px">'+
       '<table class="interest-table"><thead><tr>'+
         '<th>Date</th><th class="r">Days in month</th><th class="r">Closing balance</th>'+
@@ -3360,6 +3366,9 @@ function interestRun(){
   if(!ds){ document.getElementById('interestResults').innerHTML='<div class="banner warn"><span>?</span><div>No bank statement is loaded.</div></div>'; return; }
   const result=interestCalculateDaily(ds,slabs);
   interestRenderResults(result,slabs);
+  // Always show the auditable daily-product table immediately after calculation.
+  // The user should not have to discover a separate "Show daily calculation" button.
+  interestShowDaily();
 }
 function resetInterestAccountStatements(){
   const banks=S.sets.filter(x=>x.kind==='bank' && x._session===SIQ_SESSION_ID);
