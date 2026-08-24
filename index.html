@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>StatementIQ v2.32 — Bank &amp; Credit Card Statement Analyser</title>
+<title>StatementIQ v2.33 — Bank &amp; Credit Card Statement Analyser</title>
 
 <!-- ==========================================================================
      StatementIQ — single-file, offline, browser-only statement analyser.
@@ -807,7 +807,7 @@ main{padding-top:24px}
   </div>
   <div class="brand-txt">
     <h1>StatementIQ</h1>
-    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.32</b></small>
+    <small>Bank &amp; credit card statement analyser · runs offline in your browser · <b>v2.33</b></small>
     <div class="developer-credit">Developed by Anil Sharma, Former General Manager, Central Bank of India</div>
   </div>
   <div class="header-actions">
@@ -909,7 +909,7 @@ main{padding-top:24px}
       <div class="card"><h3>Financial health</h3><p class="hint">A simple analytical score based only on the loaded statements — not financial advice.</p><div id="healthBox"></div></div>
     </div>
     <div class="card"><h3>Top spending categories</h3><p class="hint">Consumption spending excludes transfers to self, credit-card settlements, investments, loan principal and matched reversals.</p><div class="tblwrap"><table id="dashCatTbl"></table></div></div>
-    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.32 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
+    <div class="card"><h3>About this analysis</h3><p class="hint">StatementIQ v2.33 adds a dashboard, economic transaction classification, anomaly flags and a financial-health view while retaining the existing extraction, review, reconciliation and export workflow.</p></div>
   </div>
 </section>
 
@@ -1593,7 +1593,7 @@ main{padding-top:24px}
 
 <footer>
   <p class="disc">This tool extracts and analyses data from statements you provide. Always verify the extracted figures against your original statement before using them for tax filing, loan applications, or any financial decision. This is not financial or tax advice.</p>
-  <p>StatementIQ v2.32 · runs entirely offline in your browser · no account, no upload, no tracking</p>
+  <p>StatementIQ v2.33 · runs entirely offline in your browser · no account, no upload, no tracking</p>
 </footer>
 
 <!-- password modal -->
@@ -1622,7 +1622,7 @@ main{padding-top:24px}
 <div id="toasts"></div>
 
 <script>
-/* v2.32 slab editor hardening — direct delegated handlers so the Add slab control cannot be lost. */
+/* v2.33 slab editor hardening — direct delegated handlers so the Add slab control cannot be lost. */
 document.addEventListener('click', function(e){
   const add=e.target.closest && e.target.closest('#emiAddSlabBtn');
   if(add){
@@ -1668,12 +1668,12 @@ const S = {
   sort: {tx:{k:'date',dir:1}}
 };
 
-// v2.32: statement-session guard. Only datasets created in the current
+// v2.33: statement-session guard. Only datasets created in the current
 // browser session are allowed into the Interest Comparison selector. This
 // prevents stale objects restored by iOS/browser page caching from appearing
 // after Clear All Data. Saved slab settings are intentionally separate.
 let SIQ_SESSION_ID = 'siq-' + Date.now() + '-' + Math.random().toString(36).slice(2);
-// v2.32: statements explicitly reset from Bank Interest Calculator are hidden
+// v2.33: statements explicitly reset from Bank Interest Calculator are hidden
 // from that calculator without deleting the original upload from the main app.
 const SIQ_INTEREST_RESET = new Set();
 
@@ -5980,7 +5980,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 <script id="siq-interest-audit-v228">
 (function(){
-  // v2.32: make the audit layer use the actual calculation result, and
+  // v2.33: make the audit layer use the actual calculation result, and
   // classify both interest and non-interest bank charges from statement rows.
   function siqChargeClass(r){
     const n=String(r?.narration||'').toLowerCase();
@@ -6755,7 +6755,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 
 <style id="siq-v231-loader-fix">
-/* v2.32 — keep the uploaded statement available to Interest Calculator.
+/* v2.33 — keep the uploaded statement available to Interest Calculator.
    The Reset button clears calculation output, not the uploaded source. */
 </style>
 <script id="siq-v231-loader-fix">
@@ -6880,14 +6880,14 @@ document.addEventListener('DOMContentLoaded', function(){
       if(typeof window.SIQRenderInterestAudit==='function') window.SIQRenderInterestAudit();
     }catch(e){}
 
-    // Keep the definitive v2.32 audit register in sync if present.
+    // Keep the definitive v2.33 audit register in sync if present.
     try{
       const finalCard=document.getElementById('siqFinalDailyCard');
       if(finalCard && typeof window.SIQRenderFinalAudit==='function') window.SIQRenderFinalAudit(result,ds);
     }catch(e){}
   };
 
-  // Expose the final audit renderer if v2.32 has created it.
+  // Expose the final audit renderer if v2.33 has created it.
   if(typeof window.renderFinal==='function') window.SIQRenderFinalAudit=window.renderFinal;
 
   // After any successful upload, immediately refresh the Interest Calculator
@@ -6943,6 +6943,221 @@ window.getCurrentStatement=current;window.renderInterestComparisonPanel=function
 window.resetInterestAccountStatements=function(){window.SIQInterestLast=null;if(Q('interestResults'))Q('interestResults').innerHTML='<div class="siq-source-ok"><b>Statement retained.</b> Press <b>Calculate interest</b> to regenerate the analysis.</div>';if(Q('interestDaily'))Q('interestDaily').innerHTML='';['interestChargesTable','interestMonthSummaryTable','interestDailyDetailsTable'].forEach(id=>{const t=Q(id),b=t?.querySelector('tbody');if(b)b.innerHTML=`<tr><td colspan="${id==='interestChargesTable'?5:id==='interestMonthSummaryTable'?7:9}" class="hint">Calculate interest to regenerate this table.</td></tr>`});selector();try{toast('Calculation reset. Uploaded statement retained.','ok')}catch(e){}};
 window.interestRun=function(){const slabs=interestNormaliseSlabs(interestSlabRows()),errs=interestValidateSlabs(slabs);if(errs.length){Q('interestResults').innerHTML='<div class="banner bad"><span>!</span><div>'+errs.map(E).join('<br>')+'</div></div>';return}interestSaveConfig(slabs);const ds=current();if(!ds){Q('interestResults').innerHTML='<div class="banner warn"><span>?</span><div><b>No parsed bank statement is available.</b><br>Upload the loan/deposit statement and map Date, Debit, Credit and Balance.</div></div>';return}const r=interestCalculateDaily(ds,slabs);if(typeof captureCharges==='function'){try{r.bankPostings=captureCharges(ds)}catch(e){}}if(!Array.isArray(r.bankPostings))r.bankPostings=[];r.bankInterest=r.bankPostings.filter(x=>x.type==='Interest').reduce((a,x)=>a+Number(x.amount||0),0);r.otherCharges=r.bankPostings.filter(x=>x.type!=='Interest').reduce((a,x)=>a+Number(x.amount||0),0);(r.monthly||[]).forEach(m=>{const p=r.bankPostings.filter(x=>x.month===m.month);m.bankInterestCharged=p.filter(x=>x.type==='Interest'&&Number(x.debit||0)>0).reduce((a,x)=>a+Number(x.debit||0),0);m.bankInterestCredited=p.filter(x=>x.type==='Interest'&&Number(x.credit||0)>0).reduce((a,x)=>a+Number(x.credit||0),0);m.actualInterest=m.bankInterestCharged||m.bankInterestCredited||0;m.bankCharges=p.filter(x=>x.type!=='Interest').reduce((a,x)=>a+Number(x.amount||0),0)});window.SIQInterestLast={result:r,slabs,dsId:ds.id};interestRenderResults(r,slabs);oldTables(r);charges(r);try{if(typeof renderFinal==='function')renderFinal(r,ds)}catch(e){}selector()};
 const oldHandle=window.handleFiles;if(typeof oldHandle==='function')window.handleFiles=async function(list){const incoming=Array.from(list||[]),existing=new Set((S.files||[]).filter(f=>f.kind==='bank').map(f=>String(f.name)+'|'+String(f.size))),fresh=incoming.filter(f=>{const k=String(f.name)+'|'+String(f.size);if(existing.has(k))return false;existing.add(k);return true});if(!fresh.length){try{toast('This statement is already loaded. Duplicate upload skipped.','ok')}catch(e){}selector();try{renderFiles()}catch(e){};return}await oldHandle.call(this,fresh);dedupe();selector();try{renderFiles()}catch(e){}};const oldFiles=window.renderFiles;window.renderFiles=function(){dedupe();if(typeof oldFiles==='function')oldFiles()};setTimeout(()=>{dedupe();selector()},500);
+})();
+</script>
+
+
+<style id="siq-v233-source-fix">
+/* v2.33 — unified source bridge: the Interest Calculator reads the same
+   in-memory statement store used by Upload/Review. */
+#interestStatement:not(:disabled){opacity:1}
+</style>
+<script id="siq-v233-source-fix">
+(function(){
+  'use strict';
+
+  /* CRITICAL: S is the application's actual statement store. Earlier repair
+     layers incorrectly looked for window.S. Expose the same object so all
+     calculator/audit layers use the identical source. */
+  window.S = S;
+  window.SIQ_INTEREST_RESET = SIQ_INTEREST_RESET;
+
+  const escV = v => String(v == null ? '' : v).replace(/[&<>"']/g,m=>({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[m]));
+
+  function loadedBanks(){
+    return S.sets.filter(x => x && x.kind === 'bank' &&
+      Array.isArray(x.rows) && x.rows.length);
+  }
+
+  function refreshInterestSource(){
+    const sel = document.getElementById('interestStatement');
+    if(!sel) return null;
+
+    const banks = loadedBanks();
+    const wanted = sel.value;
+    sel.innerHTML = banks.length
+      ? banks.map(x=>`<option value="${escV(x.id)}">${escV(x.name || 'Bank statement')}</option>`).join('')
+      : '<option value="">No bank statement loaded</option>';
+
+    if(banks.length){
+      const found = banks.find(x=>String(x.id) === String(wanted));
+      sel.value = found ? found.id : banks[banks.length-1].id;
+      sel.disabled = false;
+      return found || banks[banks.length-1];
+    }
+
+    sel.value = '';
+    sel.disabled = true;
+    return null;
+  }
+
+  /* Always use the actual parsed statement store. No session filter and no
+     interest-reset filter can hide a statement that is currently loaded. */
+  window.getCurrentStatement = function(){
+    const banks = loadedBanks();
+    const sel = document.getElementById('interestStatement');
+    return banks.find(x=>String(x.id) === String(sel?.value))
+      || banks[banks.length-1] || null;
+  };
+
+  /* Replace only the public interest runner. The existing calculation engine
+     and slab editor remain unchanged. */
+  window.interestRun = function(){
+    const box = document.getElementById('interestResults');
+
+    const slabs = interestNormaliseSlabs(interestSlabRows());
+    const errors = interestValidateSlabs(slabs);
+    if(errors.length){
+      box.innerHTML = '<div class="banner bad"><span>!</span><div>'+
+        errors.map(escV).join('<br>')+'</div></div>';
+      return;
+    }
+
+    interestSaveConfig(slabs);
+
+    const ds = window.getCurrentStatement();
+    if(!ds){
+      refreshInterestSource();
+      box.innerHTML =
+        '<div class="banner warn"><span>?</span><div>'+
+        '<b>No parsed bank statement is available.</b><br>'+
+        'The statement must appear as <b>Parsed</b> with transaction rows before interest can be calculated.'+
+        '</div></div>';
+      return;
+    }
+
+    let result;
+    try{
+      result = interestCalculateDaily(ds, slabs);
+    }catch(e){
+      box.innerHTML = '<div class="banner bad"><span>!</span><div>'+
+        '<b>Interest calculation error.</b><br>'+escV(e.message || e)+
+        '</div></div>';
+      return;
+    }
+
+    /* Preserve and populate actual bank interest/charge entries. */
+    try{
+      if(typeof captureCharges === 'function'){
+        result.bankPostings = captureCharges(ds) || [];
+      }
+    }catch(e){ result.bankPostings = []; }
+
+    if(!Array.isArray(result.bankPostings)) result.bankPostings = [];
+
+    result.bankInterest = result.bankPostings
+      .filter(x=>x.type === 'Interest')
+      .reduce((a,x)=>a + Number(x.amount||0),0);
+
+    result.otherCharges = result.bankPostings
+      .filter(x=>x.type !== 'Interest')
+      .reduce((a,x)=>a + Number(x.amount||0),0);
+
+    const byMonth = {};
+    (result.monthly || []).forEach(m=>{
+      byMonth[m.month] = m;
+      m.bankInterestCharged = 0;
+      m.bankInterestCredited = 0;
+      m.bankCharges = 0;
+    });
+
+    result.bankPostings.forEach(p=>{
+      const m = byMonth[p.month];
+      if(!m) return;
+      if(p.type === 'Interest'){
+        m.bankInterestCharged += Number(p.debit||0);
+        m.bankInterestCredited += Number(p.credit||0);
+      }else{
+        m.bankCharges += Number(p.amount||0);
+      }
+    });
+
+    result.monthly.forEach(m=>{
+      m.actualInterest = m.bankInterestCharged || m.bankInterestCredited || 0;
+    });
+
+    window.SIQInterestLast = {result, slabs, dsId:ds.id};
+
+    try{ interestRenderResults(result, slabs); }catch(e){}
+    try{
+      if(typeof oldTables === 'function') oldTables(result);
+    }catch(e){}
+    try{
+      if(typeof charges === 'function') charges(result);
+    }catch(e){}
+    try{
+      if(typeof renderFinal === 'function') renderFinal(result, ds);
+    }catch(e){}
+    try{
+      if(typeof window.SIQRenderInterestAudit === 'function')
+        window.SIQRenderInterestAudit();
+    }catch(e){}
+
+    refreshInterestSource();
+
+    try{
+      if(typeof toast === 'function')
+        toast('Interest calculated from '+(ds.name || 'loaded statement')+'.','ok');
+    }catch(e){}
+  };
+
+  /* Reset calculations, not the uploaded source. */
+  window.resetInterestAccountStatements = function(){
+    window.SIQInterestLast = null;
+
+    const r = document.getElementById('interestResults');
+    if(r) r.innerHTML =
+      '<div class="siq-source-ok"><b>Calculation reset.</b> The uploaded statement is retained. Press <b>Calculate interest</b> to regenerate the analysis.</div>';
+
+    ['interestDaily','interestComparisonSummary'].forEach(id=>{
+      const el=document.getElementById(id);
+      if(el) el.innerHTML='';
+    });
+
+    ['interestChargesTable','interestMonthSummaryTable','interestDailyDetailsTable'].forEach(id=>{
+      const table=document.getElementById(id);
+      const body=table?.querySelector('tbody');
+      if(!body) return;
+      const cols=id==='interestChargesTable'?5:(id==='interestMonthSummaryTable'?7:9);
+      body.innerHTML=`<tr><td colspan="${cols}" class="hint">Calculate interest to regenerate this table.</td></tr>`;
+    });
+
+    refreshInterestSource();
+    try{ if(typeof toast==='function') toast('Calculation reset. Statement retained.','ok'); }catch(e){}
+  };
+
+  /* Make the upload pipeline refresh the Interest Calculator after parsing.
+     The original parser remains responsible for reading/mapping the file. */
+  const originalHandleFiles = window.handleFiles;
+  if(typeof originalHandleFiles === 'function'){
+    window.handleFiles = async function(fileList){
+      const result = await originalHandleFiles.call(this, fileList);
+      refreshInterestSource();
+      try{
+        if(typeof renderInterestComparisonPanel === 'function')
+          renderInterestComparisonPanel();
+      }catch(e){}
+      return result;
+    };
+  }
+
+  /* Also refresh after the mapping/review step, because that is where rows are
+     definitively available for calculation. */
+  const originalRenderMapping = window.renderMapping;
+  if(typeof originalRenderMapping === 'function'){
+    window.renderMapping = function(){
+      const result = originalRenderMapping.apply(this, arguments);
+      setTimeout(refreshInterestSource, 0);
+      return result;
+    };
+  }
+
+  /* Initial synchronisation for statements already loaded in this page. */
+  refreshInterestSource();
+  setTimeout(refreshInterestSource, 100);
+  setTimeout(refreshInterestSource, 500);
 })();
 </script>
 
