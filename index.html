@@ -1548,7 +1548,7 @@ main{padding-top:24px}
 
 <footer>
   <p class="disc">This tool extracts and analyses data from statements you provide. Always verify the extracted figures against your original statement before using them for tax filing, loan applications, or any financial decision. This is not financial or tax advice.</p>
-  <p>StatementIQ v2.23 · runs entirely offline in your browser · no account, no upload, no tracking</p>
+  <p>StatementIQ v2.24 · runs entirely offline in your browser · no account, no upload, no tracking</p>
 </footer>
 
 <!-- password modal -->
@@ -1577,7 +1577,7 @@ main{padding-top:24px}
 <div id="toasts"></div>
 
 <script>
-/* v2.23 slab editor hardening — direct delegated handlers so the Add slab control cannot be lost. */
+/* v2.24 slab editor hardening — direct delegated handlers so the Add slab control cannot be lost. */
 document.addEventListener('click', function(e){
   const add=e.target.closest && e.target.closest('#emiAddSlabBtn');
   if(add){
@@ -1628,7 +1628,7 @@ const S = {
 // prevents stale objects restored by iOS/browser page caching from appearing
 // after Clear All Data. Saved slab settings are intentionally separate.
 let SIQ_SESSION_ID = 'siq-' + Date.now() + '-' + Math.random().toString(36).slice(2);
-// v2.23: statements explicitly reset from Bank Interest Calculator are hidden
+// v2.24: statements explicitly reset from Bank Interest Calculator are hidden
 // from that calculator without deleting the original upload from the main app.
 const SIQ_INTEREST_RESET = new Set();
 
@@ -3024,7 +3024,7 @@ function interestBuildDaily(ds){
       const fr=byDay[dayKey(first)]||[];
       const wb=fr.filter(r=>r.balance!==null && isFinite(Number(r.balance)));
       if(wb.length){
-        const movement=fr.reduce((a,r)=>a+Number(r.credit||0)-Number(r.debit||0),0);
+        const movement=fr.reduce((a,r)=>a+Number(r.debit||0)-Number(r.credit||0),0);
         opening=Number(wb[wb.length-1].balance)-movement;
       }
     }
@@ -3053,13 +3053,27 @@ function interestBuildDaily(ds){
       const movements=tx.filter(r=>Number(r.credit||0)!==0 || Number(r.debit||0)!==0);
       const withBal=movements.filter(r=>r.balance!==null && isFinite(Number(r.balance)));
       if(withBal.length) balance=Number(withBal[withBal.length-1].balance);
-      else movements.forEach(r=>{balance+=Number(r.credit||0)-Number(r.debit||0);});
+      else movements.forEach(r=>{balance+=Number(r.debit||0)-Number(r.credit||0);});
+    }
+
+    // For a loan/OD account, interest is normally posted on the last day
+    // after the daily-product calculation. Do not let that interest (or the
+    // charges/GST posted with it) earn interest on the same day. The posted
+    // closing balance still carries forward to the next month.
+    let productBalance=balance;
+    if(tx.length){
+      const hasMonthEndInterest=tx.some(r=>/\binterest\b/i.test(String(r.narration||'')));
+      if(hasMonthEndInterest && d.getDate()===new Date(d.getFullYear(),d.getMonth()+1,0).getDate()){
+        const postInterest=tx.filter(r=>/\binterest\b|qtr\s+lgr|gst|ne?s?l|charge|fee/i.test(String(r.narration||'')));
+        const postAmount=postInterest.reduce((a,r)=>a+Number(r.debit||0)-Number(r.credit||0),0);
+        productBalance=balance-postAmount;
+      }
     }
 
     days.push({
       date:new Date(d),month:mKey,
       daysInMonth:new Date(d.getFullYear(),d.getMonth()+1,0).getDate(),
-      opening:openingForDay,monthOpening,balance,
+      opening:openingForDay,monthOpening,balance,productBalance,
       hasTransaction:tx.length>0,txCount:tx.length
     });
     d.setDate(d.getDate()+1);
@@ -3084,7 +3098,7 @@ function interestCalculateDaily(ds, slabs){
   const out=[];
   let total=0;
   daily.days.forEach(x=>{
-    const parts=interestAllocate(x.balance,slabs);
+    const parts=interestAllocate(x.productBalance,slabs);
     let interest=0;
     parts.forEach(p=> interest += p.portion/365*p.rate/100);
     total += interest;
@@ -3093,7 +3107,7 @@ function interestCalculateDaily(ds, slabs){
   const by={};
   out.forEach(x=>{
     const m=by[x.month]||(by[x.month]={month:x.month,days:x.daysInMonth,calculatedDays:0,dailyProduct:0,interest:0,slabProducts:slabs.map(()=>0),slabInterest:slabs.map(()=>0),actualInterest:0,openingBalance:x.monthOpening,closingBalance:x.balance});
-    m.dailyProduct += x.balance; m.closingBalance=x.balance;
+    m.dailyProduct += x.productBalance; m.closingBalance=x.balance;
     m.calculatedDays += 1;
     m.interest += x.interest;
     x.parts.forEach((p,i)=>{m.slabProducts[i]+=p.portion;m.slabInterest[i]+=p.portion/365*p.rate/100;});
@@ -3232,8 +3246,8 @@ function interestShowDaily(){
     h+='<tr>'+
       '<td>'+fmtDate(d.date)+'</td>'+
       '<td class="r num">'+d.daysInMonth+'</td>'+
-      '<td class="r num">'+inr(d.balance)+'</td>'+
-      '<td class="r num">'+inr(d.balance)+'</td>';
+      '<td class="r num">'+inr(d.productBalance??d.balance)+'</td>'+
+      '<td class="r num">'+inr(d.productBalance??d.balance)+'</td>';
 
     slabs.forEach((s,i)=>{
       const p=d.parts[i]||{portion:0,rate:s.rate};
