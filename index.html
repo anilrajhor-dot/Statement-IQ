@@ -1552,7 +1552,7 @@ main{padding-top:24px}
   <div class="interest-action-row">
     <label class="f" style="min-width:110px">Account type</label>
     <select id="interestAccountType" style="min-width:240px;flex:1">
-      <option value="deposit">Deposit / Savings (quarterly compounding — matches Deposits Calculator)</option>
+      <option value="deposit">Deposit / Savings (quarterly-grouped daily-balance interest — no compounding)</option>
       <option value="loan">Loan / OD / CC (monthly reducing balance — matches Loan/EMI Calculator)</option>
     </select>
   </div>
@@ -1599,8 +1599,8 @@ main{padding-top:24px}
 </div>
 
 <div id="interestPeriodicCard" class="card" style="margin-top:14px">
-  <h3>🔁 Periodic Interest Comparison — same method as the Financial Calculators</h3>
-  <p class="hint">For a <b>Deposit / Savings</b> account this uses the same quarterly-compounding formula as the Deposits (FD) Calculator: interest for each quarter = opening balance of that quarter &times; quarterly rate, added into the balance carried forward. For a <b>Loan / OD / CC</b> account this uses the same monthly reducing-balance formula as the Loan/EMI Calculator: interest for each month = opening balance of that month &times; monthly rate. This is a cross-check alongside the daily-product method above, not a replacement for it.</p>
+  <h3>🔁 Quarter/Month-wise Interest Comparison</h3>
+  <p class="hint">A <b>Savings account does not compound interest</b> — interest is calculated on the daily closing balance and simply <em>credited</em> every quarter, without interest earning further interest within the quarter. For a <b>Deposit / Savings</b> account this view takes the same day-by-day interest as the daily-product method above and re-groups it into calendar quarters, matching how banks actually credit savings interest. For a <b>Loan / OD / CC</b> account this uses the same monthly reducing-balance formula as the Loan/EMI Calculator: interest for each month = opening balance of that month &times; monthly rate — accurate for a standard EMI-style term loan where the balance only changes on the instalment date; for an OD/CC account with daily balance movement, the daily-product comparison above remains the more accurate figure. This is a cross-check alongside the daily-product method above, not a replacement for it.</p>
   <div id="interestPeriodicResults"><div class="hint">Calculate interest to generate this comparison.</div></div>
 </div>
 
@@ -3332,47 +3332,43 @@ function interestRenderResults(result,slabs){
   window.SIQInterestLast={result,slabs};
 }
 
-/* ---------- Periodic (reducing-balance / compounding) comparison ----------
-   Reuses the calendar-month buckets already produced by interestCalculateDaily
-   (opening balance, closing balance, and the bank's actual interest for that
-   month), and re-groups them into the SAME period length and SAME
-   opening-balance × period-rate formula used by the Financial Calculators:
+/* ---------- Quarter/Month-wise comparison ----------
    — Loan / OD / CC: monthly periods, matching computeSchedule()'s
      interest = opening balance × (annual rate/100 × 1/12), i.e. the
-     reducing-balance method behind the Loan/EMI calculator.
-   — Deposit / Savings: quarterly periods, matching computeFD()'s
-     cum-quarterly mode — interest = opening balance × (annual rate/100 × 1/4),
-     i.e. the same compounding-period method behind the Deposits calculator.
-   Progressive slabs (the same slabs used above) are applied via the existing
-   interestAllocate() so both methods stay on one consistent rate table. ---------- */
+     reducing-balance method behind the Loan/EMI calculator. This assumes
+     one balance figure per month, which is exactly right for a standard
+     EMI-style term loan (the balance only changes on the instalment date)
+     but is an approximation for an OD/CC account that moves daily.
+   — Deposit / Savings: a savings account does NOT compound. Interest is
+     calculated on the daily closing balance (identical to the daily-product
+     method above) and simply credited every quarter — the money is paid
+     out/added to the balance, it does not itself start earning a
+     compounded rate. So this re-groups the SAME already-computed daily
+     interest into calendar quarters, purely to match the quarter in which
+     a bank would actually credit it; it does not recompute interest using
+     a single quarter-opening balance. ---------- */
 function interestQuarterOf(monthKeyStr){
   const [y,m]=monthKeyStr.split('-').map(Number);
   return y+'-Q'+(Math.floor((m-1)/3)+1);
 }
 function interestPeriodicSchedule(result, accountType, slabs){
+  return accountType==='loan'
+    ? interestLoanReducingBalanceSchedule(result, slabs)
+    : interestSavingsQuarterlySchedule(result, slabs);
+}
+function interestLoanReducingBalanceSchedule(result, slabs){
   const months=(result.monthly||[]).slice().sort((a,b)=>a.month.localeCompare(b.month));
-  if(!months.length) return {rows:[],total:0,bankTotal:0,accountType,periodMonths:accountType==='loan'?1:3};
+  if(!months.length) return {rows:[],total:0,bankTotal:0,chargesTotal:0,effectiveRate:null,accountType:'loan',periodMonths:1};
 
-  const periodMonths=accountType==='loan' ? 1 : 3;
-  const periodRateFactor=periodMonths/12;
-
-  let groups;
-  if(periodMonths===1){
-    groups=months.map(m=>[m]);
-  }else{
-    const byQ={};
-    months.forEach(m=>{ const qk=interestQuarterOf(m.month); (byQ[qk]=byQ[qk]||[]).push(m); });
-    groups=Object.keys(byQ).sort().map(qk=>byQ[qk]);
-  }
-
+  const periodRateFactor=1/12;
   const rows=[]; let total=0, bankTotal=0, chargesTotal=0, exposureTotal=0;
-  groups.forEach((grp,i)=>{
-    const opening=Number(grp[0].openingBalance||0);
+  months.forEach((m,i)=>{
+    const opening=Number(m.openingBalance||0);
     const parts=interestAllocate(Math.abs(opening),slabs);
     let interest=0;
     parts.forEach(p=>{ interest += p.portion*p.rate/100*periodRateFactor; });
-    const bankAmt=grp.reduce((a,m)=>a+Number(m.actualInterest||0),0);
-    const chargesAmt=grp.reduce((a,m)=>a+Number(m.bankCharges||0),0);
+    const bankAmt=Number(m.actualInterest||0);
+    const chargesAmt=Number(m.bankCharges||0);
     // "Exposure" is the balance × period-fraction-of-year this period's
     // interest was based on — the same denominator used to back out the
     // bank's own effective annual rate for this period.
@@ -3380,26 +3376,65 @@ function interestPeriodicSchedule(result, accountType, slabs){
     const effRate=(bankAmt>0 && exposure>0) ? (bankAmt/exposure*100) : null;
     total+=interest; bankTotal+=bankAmt; chargesTotal+=chargesAmt; exposureTotal+=exposure;
     rows.push({
-      period:i+1,
-      label: periodMonths===1 ? monthLabel(grp[0].month) : (monthLabel(grp[0].month)+' – '+monthLabel(grp[grp.length-1].month)),
+      period:i+1, label: monthLabel(m.month),
       opening, interest, bankAmt, chargesAmt, diff: interest-bankAmt, effRate,
-      closing: Number(grp[grp.length-1].closingBalance||0)
+      closing: Number(m.closingBalance||0)
     });
   });
   const effectiveRate=(bankTotal>0 && exposureTotal>0) ? (bankTotal/exposureTotal*100) : null;
-  return {rows,total,bankTotal,chargesTotal,effectiveRate,accountType,periodMonths};
+  return {rows,total,bankTotal,chargesTotal,effectiveRate,accountType:'loan',periodMonths:1};
+}
+function interestSavingsQuarterlySchedule(result, slabs){
+  const days=result.daily||[];
+  if(!days.length) return {rows:[],total:0,bankTotal:0,chargesTotal:0,effectiveRate:null,accountType:'deposit',periodMonths:3};
+
+  const monthsByKey={};
+  (result.monthly||[]).forEach(m=>{ monthsByKey[m.month]=m; });
+
+  const byQ={};
+  days.forEach(d=>{
+    const qk=interestQuarterOf(d.month);
+    if(!byQ[qk]) byQ[qk]={months:new Set(),days:[]};
+    byQ[qk].months.add(d.month);
+    byQ[qk].days.push(d);
+  });
+
+  const rows=[]; let total=0, bankTotal=0, chargesTotal=0, productTotal=0;
+  Object.keys(byQ).sort().forEach((qk,i)=>{
+    const grp=byQ[qk];
+    const sortedDays=grp.days.slice().sort((a,b)=>a.date-b.date);
+    const opening=sortedDays[0].opening; // real statement balance at the start of the quarter
+    const closing=sortedDays[sortedDays.length-1].balance;
+    // Sum the SAME per-day interest already computed by the daily-product
+    // method — no compounding, no single representative balance assumed.
+    const interest=sortedDays.reduce((a,d)=>a+Number(d.interest||0),0);
+    const product=sortedDays.reduce((a,d)=>a+Number(d.productBalance||0),0);
+    const monthKeys=Array.from(grp.months).sort();
+    const bankAmt=monthKeys.reduce((a,mk)=>a+Number(monthsByKey[mk]?.actualInterest||0),0);
+    const chargesAmt=monthKeys.reduce((a,mk)=>a+Number(monthsByKey[mk]?.bankCharges||0),0);
+    const effRate=(bankAmt>0 && product>0) ? (bankAmt*365/product*100) : null;
+    total+=interest; bankTotal+=bankAmt; chargesTotal+=chargesAmt; productTotal+=product;
+    rows.push({
+      period:i+1,
+      label: monthKeys.length>1 ? (monthLabel(monthKeys[0])+' – '+monthLabel(monthKeys[monthKeys.length-1])) : monthLabel(monthKeys[0]),
+      opening, interest, bankAmt, chargesAmt, diff: interest-bankAmt, effRate, closing
+    });
+  });
+  const effectiveRate=(bankTotal>0 && productTotal>0) ? (bankTotal*365/productTotal*100) : null;
+  return {rows,total,bankTotal,chargesTotal,effectiveRate,accountType:'deposit',periodMonths:3};
 }
 function interestRenderPeriodic(p){
   const box=document.getElementById('interestPeriodicResults');
   if(!box) return;
   if(!p || !p.rows.length){ box.innerHTML='<div class="hint">Calculate interest to generate this comparison.</div>'; return; }
   const isLoan=p.accountType==='loan';
-  const methodLabel=isLoan ? 'Monthly reducing-balance method — matches the Loan/EMI Calculator' : 'Quarterly compounding method — matches the Deposits (FD) Calculator';
-  const sourceLabel=isLoan ? 'Loan/EMI' : 'Deposits (FD)';
+  const methodLabel=isLoan
+    ? 'Monthly reducing-balance method — matches the Loan/EMI Calculator. Interest for each month = opening balance of that month &times; monthly rate (annual rate &divide; 12).'
+    : 'Quarterly-grouped daily-balance method. A savings account does not compound — the same daily interest as the method above is simply totalled by calendar quarter, matching how a bank actually credits it.';
   const diff=p.total-p.bankTotal;
   const hasBank=p.bankTotal>0;
   const hasCharges=p.chargesTotal>0;
-  let h='<div class="formula-box"><b>Method:</b> '+methodLabel+'. Interest for each period = opening balance of that period &times; period rate (annual rate &divide; '+(isLoan?'12':'4')+'), the same formula used by the '+sourceLabel+' calculator. Interest and other bank charges (GST, processing/folio fees, penal charges, etc.) are kept separate and are never added together.</div>';
+  let h='<div class="formula-box"><b>Method:</b> '+methodLabel+' Interest and other bank charges (GST, processing/folio fees, penal charges, etc.) are kept separate and are never added together.</div>';
   h+='<div class="calc-grid" style="margin-top:12px">';
   h+='<div class="calc-result" style="margin-top:0"><div class="hint">CALCULATED INTEREST ('+(isLoan?'MONTHLY':'QUARTERLY')+')</div><div class="big">'+inr(p.total)+'</div></div>';
   h+='<div class="calc-result" style="margin-top:0"><div class="hint">BANK INTEREST</div><div class="big">'+(hasBank?inr(p.bankTotal):'—')+'</div></div>';
@@ -3411,10 +3446,10 @@ function interestRenderPeriodic(p){
     const match=Math.abs(diff)<0.01;
     h+='<div class="banner '+(match?'ok':'warn')+'" style="margin-top:10px"><span>'+(match?'✓':'!')+'</span><div>'+
       (match ? '<b style="color:var(--green)">✓ Matches bank interest under this method.</b>'
-        : '<b>Difference of '+inr(Math.abs(diff))+' from bank interest under this period-opening-balance method.</b> This is expected to differ from the daily-product comparison above, since this method uses one balance figure per period rather than every day\'s balance.')+
+        : '<b>Difference of '+inr(Math.abs(diff))+' from bank interest under this '+(isLoan?'reducing-balance':'quarterly-grouped')+' method.</b> '+(isLoan?'This is expected to differ from the daily-product comparison above for an OD/CC account, since this method uses one balance figure per month rather than every day\'s balance.':'This should closely track the daily-product comparison above, since both use the same day-by-day interest — the only difference is monthly vs quarterly grouping.'))+
       '</div></div>';
     if(p.effectiveRate!==null){
-      h+='<div class="hint" style="margin-top:6px">Based on the period-opening balances, the bank\'s actual interest implies an effective rate of <b>'+p.effectiveRate.toFixed(4)+'% p.a.</b></div>';
+      h+='<div class="hint" style="margin-top:6px">The bank\'s actual interest implies an effective rate of <b>'+p.effectiveRate.toFixed(4)+'% p.a.</b></div>';
     }
   }
   h+='<div class="tblwrap" style="margin-top:12px"><table class="interest-table"><thead><tr><th>#</th><th>Period</th><th class="r">Opening balance</th><th class="r">Calculated interest</th><th class="r">Bank interest</th><th class="r">Other bank charges</th><th class="r">Difference (interest only)</th><th class="r">Implied rate</th><th class="r">Closing balance</th></tr></thead><tbody>';
