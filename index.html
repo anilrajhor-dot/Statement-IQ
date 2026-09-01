@@ -3279,10 +3279,18 @@ function interestRenderComparison(result){
   const bank=months.reduce((a,m)=>a+Number(m.actualInterest||0),0);
   const hasBank=months.some(m=>Number(m.actualInterest||0)>0);
   const diff=calculated-bank;
+  const totalProduct=months.reduce((a,m)=>a+Number(m.dailyProduct||0),0);
+  // The bank's own effective annual rate, backed out from its actual interest
+  // figure using the same Daily Product ÷ 365 × rate formula, solved for rate.
+  // Works the same way whether the account is a deposit (interest credited)
+  // or a loan/OD/CC (interest charged) — the formula does not depend on
+  // direction, only on the amount and the balance-days it was charged on.
+  const effectiveRate=(hasBank && totalProduct>0) ? (bank*365/totalProduct*100) : null;
   let h='<div class="calc-grid" style="margin-top:12px">';
   h+='<div class="calc-result" style="margin-top:0"><div class="hint">INTEREST CALCULATED</div><div class="big">'+inr(calculated)+'</div></div>';
   h+='<div class="calc-result" style="margin-top:0"><div class="hint">INTEREST CHARGED / CREDITED BY BANK</div><div class="big">'+(hasBank?inr(bank):'—')+'</div></div>';
   h+='<div class="calc-result" style="margin-top:0"><div class="hint">DIFFERENCE</div><div class="big">'+(hasBank?inr(Math.abs(diff)):'—')+'</div></div>';
+  h+='<div class="calc-result" style="margin-top:0"><div class="hint">EFFECTIVE RATE CHARGED/CREDITED BY BANK</div><div class="big">'+(effectiveRate===null?'—':effectiveRate.toFixed(4)+' % p.a.')+'</div></div>';
   h+='</div>';
   if(hasBank){
     const status=Math.abs(diff)<0.01
@@ -3291,6 +3299,9 @@ function interestRenderComparison(result){
         ? '<b style="color:var(--red)">Calculated interest is higher than bank interest by '+inr(Math.abs(diff))+'.</b>'
         : '<b style="color:var(--red)">Bank interest is higher than calculated interest by '+inr(Math.abs(diff))+'.</b>');
     h+='<div class="banner '+(Math.abs(diff)<0.01?'ok':'warn')+'" style="margin-top:10px"><span>'+(Math.abs(diff)<0.01?'✓':'!')+'</span><div>'+status+'</div></div>';
+    if(effectiveRate!==null){
+      h+='<div class="hint" style="margin-top:6px">The bank\'s actual interest implies an effective rate of <b>'+effectiveRate.toFixed(4)+'% p.a.</b>, based on the total daily product and the 365-day divisor.</div>';
+    }
   }else{
     h+='<div class="banner warn" style="margin-top:10px"><span>!</span><div><b>Bank interest entry not identified.</b> The comparison requires the actual interest credit entry in the uploaded statement; closing balance or other statement totals are never used as bank interest.</div></div>';
   }
@@ -3304,12 +3315,16 @@ function interestRenderResults(result,slabs){
   let h='<div class="formula-box"><b>Method:</b> Daily product ÷ 365 × applicable slab rate (%). Where a brought-forward/opening balance is available, calculation starts on the 1st of the month; for every later month, the opening balance is the previous month closing balance; an opening-balance row is not treated as a transaction. Progressive slabs are applied to each daily balance.</div>';
   h+=interestRenderComparison(result);
   if(result.partial){ const mode=result.firstMonthMode==='from-first-transaction' ? 'No brought-forward balance was available, so the first month is calculated from the first transaction date through month-end. Later months are calculated from the 1st through month-end using the carried closing balance.' : 'The calculation uses the 1st through the last day of each calendar month. Where the statement starts mid-month without a brought-forward balance, the first month starts on the first transaction date.'; h+='<div class="banner warn" style="margin-top:10px"><span>!</span><div><b>Statement period rule.</b> '+mode+'</div></div>'; }
-  h+='<div class="tblwrap" style="margin-top:12px"><table class="interest-table"><thead><tr><th>Month</th><th class="r">Opening balance</th><th class="r">Calendar days</th><th class="r">Calculated days</th><th class="r">Daily product</th><th class="r">Calculated interest</th><th class="r">Interest credited</th><th class="r">Difference</th></tr></thead><tbody>';
+  h+='<div class="tblwrap" style="margin-top:12px"><table class="interest-table"><thead><tr><th>Month</th><th class="r">Opening balance</th><th class="r">Calendar days</th><th class="r">Calculated days</th><th class="r">Daily product</th><th class="r">Calculated interest</th><th class="r">Interest credited</th><th class="r">Difference</th><th class="r">Implied rate</th></tr></thead><tbody>';
   months.forEach(m=>{
     const diff=m.actualInterest ? m.interest-m.actualInterest : null;
-    h+='<tr><td>'+esc(monthLabel(m.month))+'</td><td class="r num">'+inr(m.openingBalance||0)+'</td><td class="r num">'+m.days+'</td><td class="r num">'+m.calculatedDays+'</td><td class="r num">'+inr(m.dailyProduct)+'</td><td class="r num">'+inr(m.interest)+'</td><td class="r num">'+(m.actualInterest?inr(m.actualInterest):'—')+'</td><td class="r num">'+(diff===null?'—':inr(diff))+'</td></tr>';
+    const mRate=(m.actualInterest && m.dailyProduct>0) ? (m.actualInterest*365/m.dailyProduct*100) : null;
+    h+='<tr><td>'+esc(monthLabel(m.month))+'</td><td class="r num">'+inr(m.openingBalance||0)+'</td><td class="r num">'+m.days+'</td><td class="r num">'+m.calculatedDays+'</td><td class="r num">'+inr(m.dailyProduct)+'</td><td class="r num">'+inr(m.interest)+'</td><td class="r num">'+(m.actualInterest?inr(m.actualInterest):'—')+'</td><td class="r num">'+(diff===null?'—':inr(diff))+'</td><td class="r num">'+(mRate===null?'—':mRate.toFixed(4)+'%')+'</td></tr>';
   });
-  h+='</tbody><tfoot><tr><th>Total</th><th></th><th class="r num">'+months.reduce((a,m)=>a+m.calculatedDays,0)+'</th><th class="r num">'+inr(months.reduce((a,m)=>a+m.dailyProduct,0))+'</th><th class="r num">'+inr(result.total)+'</th><th class="r num">'+inr(months.reduce((a,m)=>a+(m.actualInterest||0),0))+'</th><th></th></tr></tfoot></table></div>';
+  const totalProductForFoot=months.reduce((a,m)=>a+m.dailyProduct,0);
+  const totalBankForFoot=months.reduce((a,m)=>a+(m.actualInterest||0),0);
+  const footRate=(totalBankForFoot>0 && totalProductForFoot>0) ? (totalBankForFoot*365/totalProductForFoot*100) : null;
+  h+='</tbody><tfoot><tr><th>Total</th><th></th><th class="r num">'+months.reduce((a,m)=>a+m.calculatedDays,0)+'</th><th class="r num">'+inr(totalProductForFoot)+'</th><th class="r num">'+inr(result.total)+'</th><th class="r num">'+inr(totalBankForFoot)+'</th><th></th><th class="r num">'+(footRate===null?'—':footRate.toFixed(4)+'%')+'</th></tr></tfoot></table></div>';
   h+='<div class="row" style="margin-top:12px"><button class="btn sm" type="button" onclick="interestShowDaily()">Show daily calculation</button></div>';
   box.innerHTML=h;
   const dailyBox=document.getElementById('interestDaily');
@@ -3350,7 +3365,7 @@ function interestPeriodicSchedule(result, accountType, slabs){
     groups=Object.keys(byQ).sort().map(qk=>byQ[qk]);
   }
 
-  const rows=[]; let total=0, bankTotal=0, chargesTotal=0;
+  const rows=[]; let total=0, bankTotal=0, chargesTotal=0, exposureTotal=0;
   groups.forEach((grp,i)=>{
     const opening=Number(grp[0].openingBalance||0);
     const parts=interestAllocate(Math.abs(opening),slabs);
@@ -3358,15 +3373,21 @@ function interestPeriodicSchedule(result, accountType, slabs){
     parts.forEach(p=>{ interest += p.portion*p.rate/100*periodRateFactor; });
     const bankAmt=grp.reduce((a,m)=>a+Number(m.actualInterest||0),0);
     const chargesAmt=grp.reduce((a,m)=>a+Number(m.bankCharges||0),0);
-    total+=interest; bankTotal+=bankAmt; chargesTotal+=chargesAmt;
+    // "Exposure" is the balance × period-fraction-of-year this period's
+    // interest was based on — the same denominator used to back out the
+    // bank's own effective annual rate for this period.
+    const exposure=Math.abs(opening)*periodRateFactor;
+    const effRate=(bankAmt>0 && exposure>0) ? (bankAmt/exposure*100) : null;
+    total+=interest; bankTotal+=bankAmt; chargesTotal+=chargesAmt; exposureTotal+=exposure;
     rows.push({
       period:i+1,
       label: periodMonths===1 ? monthLabel(grp[0].month) : (monthLabel(grp[0].month)+' – '+monthLabel(grp[grp.length-1].month)),
-      opening, interest, bankAmt, chargesAmt, diff: interest-bankAmt,
+      opening, interest, bankAmt, chargesAmt, diff: interest-bankAmt, effRate,
       closing: Number(grp[grp.length-1].closingBalance||0)
     });
   });
-  return {rows,total,bankTotal,chargesTotal,accountType,periodMonths};
+  const effectiveRate=(bankTotal>0 && exposureTotal>0) ? (bankTotal/exposureTotal*100) : null;
+  return {rows,total,bankTotal,chargesTotal,effectiveRate,accountType,periodMonths};
 }
 function interestRenderPeriodic(p){
   const box=document.getElementById('interestPeriodicResults');
@@ -3384,6 +3405,7 @@ function interestRenderPeriodic(p){
   h+='<div class="calc-result" style="margin-top:0"><div class="hint">BANK INTEREST</div><div class="big">'+(hasBank?inr(p.bankTotal):'—')+'</div></div>';
   h+='<div class="calc-result" style="margin-top:0"><div class="hint">OTHER BANK CHARGES</div><div class="big">'+(hasCharges?inr(p.chargesTotal):'—')+'</div></div>';
   h+='<div class="calc-result" style="margin-top:0"><div class="hint">DIFFERENCE (INTEREST ONLY)</div><div class="big">'+(hasBank?inr(Math.abs(diff)):'—')+'</div></div>';
+  h+='<div class="calc-result" style="margin-top:0"><div class="hint">EFFECTIVE RATE '+(isLoan?'CHARGED':'CREDITED')+' BY BANK</div><div class="big">'+(p.effectiveRate===null?'—':p.effectiveRate.toFixed(4)+' % p.a.')+'</div></div>';
   h+='</div>';
   if(hasBank){
     const match=Math.abs(diff)<0.01;
@@ -3391,12 +3413,15 @@ function interestRenderPeriodic(p){
       (match ? '<b style="color:var(--green)">✓ Matches bank interest under this method.</b>'
         : '<b>Difference of '+inr(Math.abs(diff))+' from bank interest under this period-opening-balance method.</b> This is expected to differ from the daily-product comparison above, since this method uses one balance figure per period rather than every day\'s balance.')+
       '</div></div>';
+    if(p.effectiveRate!==null){
+      h+='<div class="hint" style="margin-top:6px">Based on the period-opening balances, the bank\'s actual interest implies an effective rate of <b>'+p.effectiveRate.toFixed(4)+'% p.a.</b></div>';
+    }
   }
-  h+='<div class="tblwrap" style="margin-top:12px"><table class="interest-table"><thead><tr><th>#</th><th>Period</th><th class="r">Opening balance</th><th class="r">Calculated interest</th><th class="r">Bank interest</th><th class="r">Other bank charges</th><th class="r">Difference (interest only)</th><th class="r">Closing balance</th></tr></thead><tbody>';
+  h+='<div class="tblwrap" style="margin-top:12px"><table class="interest-table"><thead><tr><th>#</th><th>Period</th><th class="r">Opening balance</th><th class="r">Calculated interest</th><th class="r">Bank interest</th><th class="r">Other bank charges</th><th class="r">Difference (interest only)</th><th class="r">Implied rate</th><th class="r">Closing balance</th></tr></thead><tbody>';
   p.rows.forEach(r=>{
-    h+='<tr><td>'+r.period+'</td><td>'+esc(r.label)+'</td><td class="r num">'+inr(r.opening)+'</td><td class="r num">'+inr(r.interest)+'</td><td class="r num">'+(r.bankAmt?inr(r.bankAmt):'—')+'</td><td class="r num">'+(r.chargesAmt?inr(r.chargesAmt):'—')+'</td><td class="r num">'+(r.bankAmt?inr(r.diff):'—')+'</td><td class="r num">'+inr(r.closing)+'</td></tr>';
+    h+='<tr><td>'+r.period+'</td><td>'+esc(r.label)+'</td><td class="r num">'+inr(r.opening)+'</td><td class="r num">'+inr(r.interest)+'</td><td class="r num">'+(r.bankAmt?inr(r.bankAmt):'—')+'</td><td class="r num">'+(r.chargesAmt?inr(r.chargesAmt):'—')+'</td><td class="r num">'+(r.bankAmt?inr(r.diff):'—')+'</td><td class="r num">'+(r.effRate===null?'—':r.effRate.toFixed(4)+'%')+'</td><td class="r num">'+inr(r.closing)+'</td></tr>';
   });
-  h+='</tbody><tfoot><tr><th colspan="2">Total</th><th></th><th class="r num">'+inr(p.total)+'</th><th class="r num">'+(hasBank?inr(p.bankTotal):'—')+'</th><th class="r num">'+(hasCharges?inr(p.chargesTotal):'—')+'</th><th class="r num">'+(hasBank?inr(diff):'—')+'</th><th></th></tr></tfoot></table></div>';
+  h+='</tbody><tfoot><tr><th colspan="2">Total</th><th></th><th class="r num">'+inr(p.total)+'</th><th class="r num">'+(hasBank?inr(p.bankTotal):'—')+'</th><th class="r num">'+(hasCharges?inr(p.chargesTotal):'—')+'</th><th class="r num">'+(hasBank?inr(diff):'—')+'</th><th class="r num">'+(p.effectiveRate===null?'—':p.effectiveRate.toFixed(4)+'%')+'</th><th></th></tr></tfoot></table></div>';
   box.innerHTML=h;
 }
 function interestShowDaily(){
